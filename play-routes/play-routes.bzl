@@ -55,7 +55,7 @@ play_routes = rule(
       executable = True,
       cfg = "host",
       allow_files = True,
-      default = Label("//rules_play_routes:routes-compiler"),
+      default = Label("//routes-compiler"),
     )
   },
   outputs = {

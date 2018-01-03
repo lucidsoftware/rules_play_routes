@@ -1,5 +1,5 @@
 load("@io_bazel_rules_scala//scala:scala.bzl", "scala_binary")
-load(":play-routes.bzl", "play_routes")
+load("//play-routes:play-routes.bzl", "play_routes")
 
 play_routes(
   name = "routes-test",
