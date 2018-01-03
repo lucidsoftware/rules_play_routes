@@ -1,0 +1,14 @@
+# Routes
+# This file defines all application routes (Higher priority routes first)
+# ~~~~
+
+GET     /                       com.lucidchart.services.sentinel.controllers.SentinelController.index
+POS    /install                com.lucidchart.services.sentinel.controllers.SentinelController.install
+GET     /install                com.lucidchart.services.sentinel.controllers.SentinelController.status
+GET     /install/current        com.lucidchart.services.sentinel.controllers.SentinelController.current
+GET     /services               com.lucidchart.services.sentinel.controllers.SentinelController.services
+GET     /service                com.lucidchart.services.sentinel.controllers.SentinelController.service(name: String)
+POST    /service/state      com.lucidchart.services.sentinel.controllers.SentinelController.changeState
+GET     /host                   com.lucidchart.services.sentinel.controllers.SentinelController.hostName
+GET     /apk/:branch/:version   com.lucidchart.services.sentinel.controllers.SentinelController.downloadApk(branch: String,version: String)
+GET     /obr/:branch/:target    com.lucidchart.services.sentinel.controllers.SentinelController.downloadObr(branch: String, target: String)
