@@ -7,14 +7,14 @@
 ## Overview
 `rules_play_routes` compiles [Play Framework routes files](https://www.playframework.com/documentation/latest/ScalaRouting) templates to [Scala](http://www.scala-lang.org/), so they can be used with [`rules_scala`](https://github.com/bazelbuild/rules_scala).
 
-For more information about Play Framework, see [the Play documentation](https://www.playframework.com/documentation/latest).
+For more information about the Play Framework, see [the Play documentation](https://www.playframework.com/documentation/latest).
 
 ## Installation
 Create a file called at the top of your repository named `WORKSPACE` and add the following snippet to it.
 
 ```python
 # update version as needed
-rules_play_routes_version = "70d55b08999d7ef4c981c5ef5d5eeebee6e72c96"
+rules_play_routes_version = "edb88dff735227832b42bec16380944e1674093c"
 http_archive(
   name = "io_bazel_rules_play_routes",
   url = "https://github.com/lucidsoftware/rules_play_routes/archive/%s.zip"%rules_play_routes_version,
