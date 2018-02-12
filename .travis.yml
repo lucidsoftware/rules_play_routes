@@ -48,5 +48,5 @@ deploy:
       - ./tools/ci-skydoc-update.sh
     on:
       branch: master
-      os: linux
-      condition: "$DOC_VERSION=true"
+      condition: $DOC_VERSION = true
+      condition: $TRAVIS_OS_NAME = linux
