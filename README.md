@@ -14,7 +14,7 @@ Create a file called at the top of your repository named `WORKSPACE` and add the
 
 ```python
 # update version as needed
-rules_play_routes_version = "edb88dff735227832b42bec16380944e1674093c"
+rules_play_routes_version = "cba8a4383d81e6519730ba2b0203f74fd2c9b765"
 http_archive(
   name = "io_bazel_rules_play_routes",
   url = "https://github.com/lucidsoftware/rules_play_routes/archive/%s.zip"%rules_play_routes_version,
