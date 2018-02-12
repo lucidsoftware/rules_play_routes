@@ -19,7 +19,7 @@ def _sanitize_string_for_usage(s):
       res_array.append("_")
   return "".join(res_array)
 
-def format_import_args(imports):
+def _format_import_args(imports):
   return ["--routesImport={}".format(i) for i in imports]
 
 def _impl(ctx):
@@ -30,9 +30,9 @@ def _impl(ctx):
   args = [gendir.path] + [",".join(paths)]
 
   if ctx.attr.include_play_imports:
-    args = args + format_import_args(play_imports)
+    args = args + _format_import_args(play_imports)
 
-  args = args + format_import_args(ctx.attr.routes_imports)
+  args = args + _format_import_args(ctx.attr.routes_imports)
 
   if ctx.attr.generate_reverse_router:
     args = args + ["--generateReverseRouter"]
