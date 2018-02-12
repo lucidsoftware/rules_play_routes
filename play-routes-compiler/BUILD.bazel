@@ -1,7 +1,7 @@
 load("@io_bazel_rules_scala//scala:scala.bzl", "scala_binary")
 
 scala_binary(
-  name = "routes-compiler",
+  name = "play-routes-compiler",
   srcs = glob(["src/main/**/*.scala"]),
   visibility = ["//visibility:public"],
   main_class = "rulesplayroutes.routes.CommandLinePlayRoutesCompiler",
