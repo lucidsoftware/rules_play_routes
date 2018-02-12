@@ -8,9 +8,9 @@ git:
   depth: 1
 os:
   - linux
-#  - osx
+  - osx
 env:
-#  - V=0.9.0
+  - V=0.9.0
   - V=0.10.0 DOC_VERSION=true
 before_install:
   # Borrowed from rules_scala
