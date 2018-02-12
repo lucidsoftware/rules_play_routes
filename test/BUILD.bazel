@@ -1,0 +1,126 @@
+load("@io_bazel_rules_scala//scala:scala.bzl", "scala_specs2_junit_test")
+load("//play-routes:play-routes.bzl", "play_routes")
+
+play_routes(
+  name = "play-routes-basic",
+  srcs = ["conf/routes", "conf/basic2.routes"],
+  include_play_imports = True,
+)
+
+play_routes(
+  name = "play-routes-additional-imports",
+  srcs = ["conf/additional_imports.routes"],
+  include_play_imports = True,
+  routes_imports = [
+    "rulesplayroutes.test.User",
+    "rulesplayroutes.test.binders._",
+  ],
+)
+
+play_routes(
+  name = "play-routes-different-generator",
+  srcs = ["conf/generator.routes"],
+  include_play_imports = True,
+  routes_generator = "play.routes.compiler.StaticRoutesGenerator",
+)
+
+play_routes(
+  name = "play-routes-reverse-router",
+  srcs = ["conf/reverse_router.routes"],
+  include_play_imports = True,
+  generate_reverse_router = True,
+)
+
+# TOOD: Figure out what this does and add the test for it
+# play_routes(
+#   name = "play-routes-namespace-router",
+#   srcs = ["conf/namespace_router.routes"],
+#   include_play_imports = True,
+#   generate_reverse_router = True,
+#   namespace_reverse_router = True,
+# )
+
+scala_specs2_junit_test(
+  name = "play-routes-compiler-test",
+  suffixes = ["Test"],
+  srcs = glob(["app/**/*.scala"]) + [
+    "PlayRoutesCompilerTest.scala",
+    ":play-routes-basic",
+    ":play-routes-additional-imports",
+    ":play-routes-different-generator",
+    ":play-routes-reverse-router",
+    # ":play-routes-namespace-router",
+  ],
+  deps = [
+    "@aopalliance_aopalliance//jar",
+    "@ch_qos_logback_logback_classic//jar",
+    "@ch_qos_logback_logback_core//jar",
+    "@com_fasterxml_jackson_core_jackson_core//jar",
+    "@com_google_guava_guava//jar",
+    "@com_google_inject_guice//jar",
+    "@com_typesafe_akka_akka_actor_2_11//jar",
+    "@com_typesafe_akka_akka_slf4j_2_11//jar",
+    "@com_typesafe_akka_akka_stream_2_11//jar",
+    "@com_typesafe_config//jar",
+    "@com_typesafe_play_play_2_11//jar",
+    "@com_typesafe_play_play_exceptions//jar",
+    "@com_typesafe_play_play_iteratees_2_11//jar",
+    "@com_typesafe_play_play_logback_2_11//jar",
+    "@com_typesafe_play_play_server_2_11//jar",
+    "@com_typesafe_play_play_specs2_2_11//jar",
+    "@com_typesafe_play_play_streams_2_11//jar",
+    "@com_typesafe_play_play_test_2_11//jar",
+    "@com_typesafe_play_twirl_api_2_11//jar",
+    "@joda_time_joda_time//jar",
+    "@org_fluentlenium_fluentlenium_core//jar",
+    "@org_reactivestreams_reactive_streams//jar",
+    "@org_seleniumhq_selenium_selenium_api//jar",
+    "@org_seleniumhq_selenium_selenium_firefox_driver//jar",
+    "@org_seleniumhq_selenium_selenium_htmlunit_driver//jar",
+    "@org_seleniumhq_selenium_selenium_remote_driver//jar",
+    "@org_slf4j_jcl_over_slf4j//jar",
+    "@org_slf4j_jul_to_slf4j//jar",
+    "@org_slf4j_slf4j_api//jar",
+    "@xerces_xercesImpl//jar",
+  ]
+)
+
+# scala_specs2_junit_test(
+#   name = "play-routes-compiler-additional-imports-test",
+#   deps = play_deps,
+#   suffixes = ["Test"],
+#   srcs = glob(["app/**/*.scala"]) + [
+#     "PlayRoutesCompilerBasicTest.scala",
+#     ":play-routes-additional-imports",
+#   ],
+# )
+
+# scala_specs2_junit_test(
+#   name = "play-routes-compiler-generator-test",
+#   deps = play_deps,
+#   suffixes = ["Test"],
+#   srcs = glob(["app/**/*.scala"]) + [
+#     "PlayRoutesCompilerBasicTest.scala",
+#     ":play-routes-different-generator",
+#   ],
+# )
+
+# scala_specs2_junit_test(
+#   name = "play-routes-compiler-reverse-router-test",
+#   deps = play_deps,
+#   suffixes = ["Test"],
+#   srcs = glob(["app/**/*.scala"]) + [
+#     "PlayRoutesCompilerBasicTest.scala",
+#     ":play-routes-reverse-router",
+#   ],
+# )
+
+# scala_specs2_junit_test(
+#   name = "play-routes-compiler-namespace-reverse-router-test",
+#   deps = play_deps,
+#   suffixes = ["Test"],
+#   srcs = glob(["app/**/*.scala"]) + [
+#     "PlayRoutesCompilerBasicTest.scala",
+#     ":play-routes-basic-namespace-router",
+#   ],
+# )

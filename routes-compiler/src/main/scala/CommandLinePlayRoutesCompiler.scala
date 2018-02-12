@@ -1,4 +1,4 @@
-package com.lucid.play.routes
+package rulesplayroutes.routes
 
 import java.io.File
 import scala.io.Codec
@@ -9,7 +9,7 @@ import play.routes.compiler.RoutesCompiler.RoutesCompilerTask
 import scala.reflect.runtime.universe
 import scala.Console._
 
-object LucidPlayRoutesCompiler {
+object CommandLinePlayRoutesCompiler {
 
   case class Config(
     sources: Seq[File] = Seq.empty[File],
@@ -21,7 +21,7 @@ object LucidPlayRoutesCompiler {
   )
 
   val parser = new scopt.OptionParser[Config]("scopt") {
-    head("Lucid Play Routes Compiler", "0.1")
+    head("Command Line Play Routes Compiler", "0.1")
 
     arg[File]("<outputDirectory>").required().action { (value, config) =>
       config.copy(generatedDirectory = value)
@@ -86,7 +86,7 @@ object LucidPlayRoutesCompiler {
         case Right(generatedFiles) =>
           true
         case Left(errors) =>
-          Console.err.println(s"${RESET}${RED}Twirl Compilation Error:${RESET} Failed to compile routes for ${file}. Errors: ${errors}")
+          Console.err.println(s"${RESET}${RED}Play Routes Compilation Error:${RESET} Failed to compile routes for ${file}. Errors: ${errors}")
           false
       }
     }

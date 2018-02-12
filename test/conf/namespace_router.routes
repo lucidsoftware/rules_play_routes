@@ -1,0 +1,1 @@
+GET /okNameReverse/:id rulesplayroutes.test.NamespaceReverseRoutesController.ok(id: Int)

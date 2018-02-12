@@ -1,0 +1,2 @@
+GET /ok2 rulesplayroutes.test.Controller2.ok()
+GET /ok3 rulesplayroutes.test.Controller3.ok()

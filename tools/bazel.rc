@@ -1,0 +1,10 @@
+startup --expand_configs_in_place
+
+common:ci --color=yes
+build:ci --verbose_failures
+build:ci --sandbox_debug
+build:ci --spawn_strategy=standalone
+build:ci --genrule_strategy=standalone
+test:ci --test_strategy=standalone
+test:ci --test_output=errors
+test:ci --local_resources=2048,0.5,1.0

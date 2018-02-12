@@ -1,0 +1,1 @@
+GET /okUser/:user rulesplayroutes.test.UserController.ok(user: rulesplayroutes.test.User)

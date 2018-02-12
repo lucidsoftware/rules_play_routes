@@ -1,0 +1,1 @@
+GET /okGenerator rulesplayroutes.test.GeneratorController.ok()
