@@ -4,16 +4,13 @@ scala_binary(
   name = "play-routes-compiler",
   srcs = glob(["src/main/**/*.scala"]),
   visibility = ["//visibility:public"],
+  scalacopts = ["-Ywarn-unused-import"],
   main_class = "rulesplayroutes.routes.CommandLinePlayRoutesCompiler",
   deps = [
     "@com_typesafe_play_routes_compiler_2_11//jar",
     "@scala//:scala-library",
     "@scala//:scala-parser-combinators",
-    "@scala//:scala-compiler",
     "@scala//:scala-reflect",
-    "@scala//:scala-xml",
     "@com_github_scopt_scopt_2_11//jar",
-    "@commons_io_commons_io//jar",
-    "@com_typesafe_play_twirl_api_2_11//jar",
   ],
 )

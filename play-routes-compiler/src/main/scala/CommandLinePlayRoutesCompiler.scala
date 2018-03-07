@@ -1,9 +1,6 @@
 package rulesplayroutes.routes
 
 import java.io.File
-import scala.io.Codec
-import scala.io.Source
-import scala.reflect.internal.AnnotationInfos
 import play.routes.compiler._
 import play.routes.compiler.RoutesCompiler.RoutesCompilerTask
 import scala.reflect.runtime.universe
