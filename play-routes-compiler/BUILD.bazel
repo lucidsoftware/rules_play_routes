@@ -13,4 +13,9 @@ scala_binary(
     "@scala//:scala-reflect",
     "@com_github_scopt_scopt_2_11//jar",
   ],
+  runtime_deps = [
+    "@commons_io_commons_io//jar",
+    "@com_typesafe_play_twirl_api_2_11//jar",
+    "@scala//:scala-xml",
+  ],
 )
