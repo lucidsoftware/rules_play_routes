@@ -1,2 +1,6 @@
 /bazel-*
+/external-tools/
 /lemur_rsa
+/tools/ignore.rc
+
+target/

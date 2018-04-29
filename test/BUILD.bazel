@@ -1,4 +1,4 @@
-load("@io_bazel_rules_scala//scala:scala.bzl", "scala_specs2_junit_test")
+load("@rules_scala_annex//rules:scala.bzl", scala_test = "annex_scala_test")
 load("//play-routes:play-routes.bzl", "play_routes")
 
 play_routes(
@@ -40,9 +40,8 @@ play_routes(
 #   namespace_reverse_router = True,
 # )
 
-scala_specs2_junit_test(
+scala_test(
   name = "play-routes-compiler-test",
-  suffixes = ["Test"],
   srcs = glob(["app/**/*.scala"]) + [
     "PlayRoutesCompilerTest.scala",
     ":play-routes-basic",
@@ -52,36 +51,13 @@ scala_specs2_junit_test(
     # ":play-routes-namespace-router",
   ],
   deps = [
-    "@aopalliance_aopalliance//jar",
-    "@ch_qos_logback_logback_classic//jar",
-    "@ch_qos_logback_logback_core//jar",
-    "@com_fasterxml_jackson_core_jackson_core//jar",
-    "@com_google_guava_guava//jar",
-    "@com_google_inject_guice//jar",
+    "@org_specs2_specs2_common_2_11//jar",
+    "@org_specs2_specs2_core_2_11",
+    "@org_specs2_specs2_matcher_2_11//jar",
     "@com_typesafe_akka_akka_actor_2_11//jar",
-    "@com_typesafe_akka_akka_slf4j_2_11//jar",
-    "@com_typesafe_akka_akka_stream_2_11//jar",
-    "@com_typesafe_config//jar",
     "@com_typesafe_play_play_2_11//jar",
-    "@com_typesafe_play_play_exceptions//jar",
-    "@com_typesafe_play_play_iteratees_2_11//jar",
-    "@com_typesafe_play_play_logback_2_11//jar",
-    "@com_typesafe_play_play_server_2_11//jar",
     "@com_typesafe_play_play_specs2_2_11//jar",
-    "@com_typesafe_play_play_streams_2_11//jar",
     "@com_typesafe_play_play_test_2_11//jar",
-    "@com_typesafe_play_twirl_api_2_11//jar",
-    "@joda_time_joda_time//jar",
-    "@org_fluentlenium_fluentlenium_core//jar",
-    "@org_reactivestreams_reactive_streams//jar",
-    "@org_seleniumhq_selenium_selenium_api//jar",
-    "@org_seleniumhq_selenium_selenium_firefox_driver//jar",
-    "@org_seleniumhq_selenium_selenium_htmlunit_driver//jar",
-    "@org_seleniumhq_selenium_selenium_remote_driver//jar",
-    "@org_slf4j_jcl_over_slf4j//jar",
-    "@org_slf4j_jul_to_slf4j//jar",
-    "@org_slf4j_slf4j_api//jar",
-    "@xerces_xercesImpl//jar",
   ]
 )
 

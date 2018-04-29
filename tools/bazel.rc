@@ -1,3 +1,5 @@
+import %workspace%/tools/ignore.rc
+
 startup --expand_configs_in_place
 
 common:ci --color=yes

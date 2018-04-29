@@ -1,0 +1,30 @@
+options:
+  languages:
+    - java
+    - scala:2.11.11
+  resolvers:
+    - id: central
+      type: default
+      url: http://central.maven.org/maven2/
+  transtivity: deps
+
+dependencies:
+  com.typesafe.play:
+    play:
+      lang: scala
+      version: 2.5.18
+    play-specs2:
+      lang: scala
+      version: 2.5.18
+    play-test:
+      lang: scala
+      version: 2.5.18
+
+replacements:
+  org.scala-lang:
+    scala-library:
+      lang: java
+      target: '@scala_scala_library//jar'
+    scala-reflect:
+      lang: java
+      target: '@scala_scala_reflect//jar'

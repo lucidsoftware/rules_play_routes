@@ -1,0 +1,29 @@
+options:
+  languages:
+    - java
+    - scala:2.11.11
+  namePrefix: play_routes_
+  resolvers:
+    - id: central
+      type: default
+      url: http://central.maven.org/maven2/
+  transtivity: deps
+
+dependencies:
+  com.github.scopt:
+    scopt:
+      lang: scala
+      version: 3.7.0
+  com.typesafe.play:
+    routes-compiler:
+      lang: scala
+      version: 2.5.18
+
+replacements:
+  org.scala-lang:
+    scala-library:
+      lang: java
+      target: '@scala_scala_library//jar'
+    scala-reflect:
+      lang: java
+      target: '@scala_scala_reflect//jar'

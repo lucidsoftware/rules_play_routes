@@ -1,12 +1,12 @@
 package rulesplayroutes.test
 
-import org.specs2.mutable.SpecificationWithJUnit
+import org.specs2.mutable.Specification
 import play.api.test._
 import play.api.test.WithApplication
 import play.api.test.Helpers._
 import rulesplayroutes.test.routes.ReverseRoutesController
 
-class PlayRoutesCompilerTest extends SpecificationWithJUnit {
+class PlayRoutesCompilerTest extends Specification {
 
   val app = new FakeApplication()
 

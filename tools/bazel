@@ -1,0 +1,4 @@
+#!/bin/bash
+WORKSPACE="$(dirname "${BASH_SOURCE[0]}")/.."
+"$WORKSPACE/tools/gen-ignore.sh" > /dev/null
+exec "$BAZEL_REAL" "$@"
