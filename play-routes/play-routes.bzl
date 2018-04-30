@@ -51,12 +51,13 @@ def _impl(ctx):
     executable = ctx.executable._play_routes_compiler,
   )
 
-  ctx.actions.run(
-    inputs = [gendir],
+  # TODO: something more portable
+  ctx.actions.run_shell(
+    inputs = [ctx.executable._zipper, gendir],
     outputs = [ctx.outputs.srcjar],
-    arguments = ["cfM"] + [ctx.outputs.srcjar.path] + [gendir.path],
+    arguments = [ctx.executable._zipper.path, gendir.path, gendir.short_path, ctx.outputs.srcjar.path],
+    command = r"""$1 c $4 META-INF/= $(find -L $2 -type f | sed "s,$2/\(.*\),$3/\1=\0,")""",
     progress_message = "Bundling compiled play routes into srcjar",
-    executable = "jar",
   )
 
 play_routes = rule(
@@ -73,7 +74,8 @@ play_routes = rule(
       cfg = "host",
       allow_files = True,
       default = Label("//play-routes-compiler"),
-    )
+    ),
+    "_zipper": attr.label(cfg = "host", default = "@bazel_tools//tools/zip:zipper", executable = True),
   },
   outputs = {
     "srcjar": "play_routes_%{name}.srcjar",
