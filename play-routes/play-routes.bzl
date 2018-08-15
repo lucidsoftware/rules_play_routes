@@ -54,11 +54,12 @@ def _impl(ctx):
 
   # TODO: something more portable
   ctx.actions.run_shell(
-    inputs = [ctx.executable._zipper, gendir],
+    inputs = [gendir],
     outputs = [ctx.outputs.srcjar],
     arguments = [ctx.executable._zipper.path, gendir.path, gendir.short_path, ctx.outputs.srcjar.path],
     command = r"""$1 c $4 META-INF/= $(find -L $2 -type f | sed "s,$2/\(.*\),$3/\1=\0,")""",
     progress_message = "Bundling compiled play routes into srcjar",
+    tools = [ctx.executable._zipper],
   )
 
 play_routes = rule(
