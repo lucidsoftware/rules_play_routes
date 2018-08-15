@@ -19,6 +19,7 @@ http_archive(
     strip_prefix = "bazel-skylib-%s" % skylib_version,
     type = "zip",
     url = "https://github.com/bazelbuild/bazel-skylib/archive/%s.zip" % skylib_version,
+    sha256 = "16a2534ee255c0006db7300d234d624a22898ae055c9f52f30440bc65393d68b",
 )
 
 # To use the JavaScript version of Sass, we need to first install nodejs
