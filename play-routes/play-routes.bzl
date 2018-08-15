@@ -12,7 +12,8 @@ play_imports = [
 
 def _sanitize_string_for_usage(s):
   res_array = []
-  for c in s:
+  for i in range(len(s)):
+    c = s[i]
     if c.isalnum() or c == ".":
       res_array.append(c)
     else:
