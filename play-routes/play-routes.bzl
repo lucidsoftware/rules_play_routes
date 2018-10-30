@@ -57,7 +57,7 @@ def _impl(ctx):
     inputs = [gendir],
     outputs = [ctx.outputs.srcjar],
     arguments = [ctx.executable._zipper.path, gendir.path, gendir.short_path, ctx.outputs.srcjar.path],
-    command = r"""$1 c $4 META-INF/= $(find -L $2 -type f | sed "s,$2/\(.*\),$3/\1=\0,")""",
+    command = """$1 c $4 META-INF/= $(find -L $2 -type f | while read v; do echo ${v#"${2%$3}"}=$v; done)""",
     progress_message = "Bundling compiled play routes into srcjar",
     tools = [ctx.executable._zipper],
   )
