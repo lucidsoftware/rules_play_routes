@@ -1,3 +1,7 @@
+"""
+Load 3rd party maven dependencies
+"""
+
 load("@bazel_tools//tools/build_defs/repo:java.bzl", "java_import_external")
 load("//3rdparty:maven.bzl", "list_dependencies")
 

@@ -1,8 +1,8 @@
 # Play Framework Routes File Rules for Bazel
 
-| Travis | Skydoc
+| Travis | Stardoc
 | --- | --- |
-| [![Build Status](https://travis-ci.org/lucidsoftware/rules_play_routes.svg)](https://travis-ci.org/lucidsoftware/rules_play_routes) | [Skydoc](http://lucidsoftware.github.io/rules_play_routes/) |
+| [![Build Status](https://travis-ci.org/lucidsoftware/rules_play_routes.svg)](https://travis-ci.org/lucidsoftware/rules_play_routes) | [Stardoc](http://lucidsoftware.github.io/rules_play_routes/) |
 
 ## Overview
 `rules_play_routes` compiles [Play Framework routes files](https://www.playframework.com/documentation/latest/ScalaRouting) templates to [Scala](http://www.scala-lang.org/), so they can be used with [`rules_scala`](https://github.com/bazelbuild/rules_scala).
@@ -25,14 +25,16 @@ http_archive(
 
 This installs `rules_play_routes` to your `WORKSPACE` at the specified commit. Update the commit as needed.
 
-## Skydoc Documentation
+## Stardoc Documentation
 http://lucidsoftware.github.io/rules_play_routes/
 
-### Updating Skydoc
-Skydoc is automatically updated on build merged into the master branch. To update the documentation, please submit a pull request. The doc will be updated when it is merged.
+Stardoc is replacing Skydoc and is currently under development. Doc is likely going to look funny for a while.
+
+### Updating Stardoc
+Stardoc is automatically updated on build merged into the master branch. To update the documentation, please submit a pull request. The doc will be updated when it is merged.
 
 ### Deploying documentation
-The Skydoc site for `rules_play_routes` is deployed from the `gh-pages` branch. That branch is deployed with each build of the master branch.
+The Stardoc site for `rules_play_routes` is deployed from the `gh-pages` branch. That branch is deployed with each build of the master branch.
 
 ## Usage
 The `play_routes` rule compiles Play routes files to a source jar that can be used with the `rules_scala` rules. For example,
@@ -55,7 +57,7 @@ scala_binary(
 )
 ```
 
-See the [Skydoc documentation](https://lucidsoftware.github.io/rules_play_routes/play-routes/play-routes.html#play_routes) for the full list of options for `play_routes`.
+See the [Stardoc documentation](https://lucidsoftware.github.io/rules_play_routes/play-routes/play-routes.html#play_routes) for the full list of options for `play_routes`.
 
 ### Use with the Play Framework
 `play_routes` can be used with [`rules_twirl`](https://github.com/lucidsoftware/rules_twirl) to run a Play Framework Service. For example

@@ -1,8 +1,7 @@
-load("@io_bazel_skydoc//skylark:skylark.bzl", "skylark_doc")
+load("@io_bazel_skydoc//skylark:stardoc.bzl", "stardoc")
 
-skylark_doc(
+stardoc(
     name = "play-routes-docs",
-    srcs = ["play-routes.bzl"],
-    format = "html",
-    site_root = "/rules_play_routes",
+    input = "play-routes.bzl",
+    out = "index.md",
 )

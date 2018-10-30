@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 
-# Used to update the skydoc github pages site from travis
+# Used to update the stardoc github pages site from travis
 set -e
 
 eval "$(ssh-agent -s)"
@@ -10,7 +10,7 @@ ssh-add ./lemur_rsa
 docs_folder=docs
 rm -rf ${docs_folder}
 mkdir ${docs_folder}
-unzip $(bazel info bazel-bin)/play-routes/play-routes-docs-skydoc.zip -d $(bazel info workspace)/${docs_folder}/
+mv $(bazel info bazel-bin)/play-routes/index.md $(bazel info workspace)/${docs_folder}/
 
 git config user.email "ops+lucidlemur@lucidchart.com"
 git config user.name "Lucid Lemur"

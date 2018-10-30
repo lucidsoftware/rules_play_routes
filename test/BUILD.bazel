@@ -1,4 +1,4 @@
-load("@rules_scala_annex//rules:scala.bzl", scala_test = "annex_scala_test")
+load("@rules_scala_annex//rules:scala.bzl", "scala_test")
 load("//play-routes:play-routes.bzl", "play_routes")
 
 play_routes(

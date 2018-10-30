@@ -64,13 +64,32 @@ def _impl(ctx):
 
 play_routes = rule(
   implementation = _impl,
+  doc = "Compiles Play routes files templates to Scala sources files.",
   attrs = {
-    "srcs": attr.label_list(allow_files = True, mandatory = True),
-    "routes_imports": attr.string_list(),
-    "routes_generator": attr.string(default = ""),
-    "generate_reverse_router": attr.bool(default = False),
-    "namespace_reverse_router": attr.bool(default = False),
-    "include_play_imports": attr.bool(default = False),
+    "srcs": attr.label_list(
+      doc = "Play routes files",
+      allow_files = True,
+      mandatory = True
+    ),
+    "routes_imports": attr.string_list(
+      doc = "Additional imports to import to the Play routes",
+    ),
+    "routes_generator": attr.string(
+      doc = "The full class of the routes generator, e.g., `play.routes.compiler.InjectedRoutesGenerator`",
+      default = ""
+    ),
+    "generate_reverse_router": attr.bool(
+      doc = "Whether the reverse router should be generated. Setting to false may reduce compile times if it's not needed.",
+      default = False
+    ),
+    "namespace_reverse_router": attr.bool(
+      doc = "Whether the reverse router should be namespaced. Useful if you have many routers that use the same actions.",
+      default = False
+    ),
+    "include_play_imports": attr.bool(
+      doc = "If true, include the imports the Play project includes by default.",
+      default = False
+    ),
     "_play_routes_compiler": attr.label(
       executable = True,
       cfg = "host",
@@ -83,13 +102,3 @@ play_routes = rule(
     "srcjar": "play_routes_%{name}.srcjar",
   }
 )
-"""Compiles Play routes files templates to Scala sources files.
-
-Args:
-  srcs: Play routes files
-  routes_imports: Additional imports to import to the Play routes
-  routes_generator: The full class of the routes generator, e.g., `play.routes.compiler.InjectedRoutesGenerator`
-  include_play_imports: If true, include the imports the Play project includes by default.
-  generate_reverse_router: Whether the reverse router should be generated. Setting to false may reduce compile times if it's not needed.
-  namespace_reverse_router: Whether the reverse router should be namespaced. Useful if you have many routers that use the same actions.
-"""

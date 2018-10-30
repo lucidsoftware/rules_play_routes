@@ -1,51 +1,59 @@
 workspace(name = "io_bazel_rules_play_routes")
 
-rules_scala_annex_version = "24f560a5460020399777f93c6091a726de63ca01" # update this as needed
+rules_scala_annex_version = "7d053fc1be463e79c5e9e35d2123b1759cfd16e8" # update this as needed
 http_archive(
     name = "rules_scala_annex",
-    sha256 = "b6c1ac64d013fdf855f71dfd065f7f5b38c0120d18d64c0593f4b256033bdb02",
+    sha256 = "ad0a269ba6965d2321a81331ac065d4603e62576c9d3c6f65b8c9c3a709b8536",
     strip_prefix = "rules_scala_annex-%s" % rules_scala_annex_version,
-    url = "https://github.com/lucidsoftware/rules_scala_annex/archive/%s.zip" % rules_scala_annex_version,
+    url = "https://github.com/andyscott/rules_scala_annex/archive/%s.zip" % rules_scala_annex_version,
 )
 
-load("@rules_scala_annex//rules/scala:workspace.bzl", "annex_scala_register_toolchains", "annex_scala_repository", "annex_scala_repositories")
-annex_scala_repositories()
-annex_scala_register_toolchains()
-annex_scala_repository("scala", ("org.scala-lang", "2.11.12"), "@compiler_bridge_2_11//:src")
+load("@rules_scala_annex//rules/scala:workspace.bzl", "scala_register_toolchains", "scala_repository", "scala_repositories")
+scala_repositories()
+scala_register_toolchains()
+scala_repository("scala", ("org.scala-lang", "2.11.12"), "@compiler_bridge_2_11//:src")
 
-skylib_version = "7490380c6bbf9a5a060df78dc2222e7de6ffae5c"  # update this as needed
+skylib_version = "8cecf885c8bf4c51e82fd6b50b9dd68d2c98f757"  # update this as needed
 http_archive(
     name = "bazel_skylib",
     strip_prefix = "bazel-skylib-%s" % skylib_version,
     type = "zip",
     url = "https://github.com/bazelbuild/bazel-skylib/archive/%s.zip" % skylib_version,
-    sha256 = "16a2534ee255c0006db7300d234d624a22898ae055c9f52f30440bc65393d68b",
+    sha256 = "d54e5372d784ceb365f7d38c3dad7773f73b3b8ebc8fb90d58435a92b6a20256",
 )
 
 # To use the JavaScript version of Sass, we need to first install nodejs
+rules_nodejs_version = "84882ba224f51f85d589e9cd45b30758cfdbf006"
 http_archive(
     name = "build_bazel_rules_nodejs",
-    url = "https://github.com/bazelbuild/rules_nodejs/archive/0.8.0.zip",
-    strip_prefix = "rules_nodejs-0.8.0",
-    sha256 = "4e40dd49ae7668d245c3107645f2a138660fcfd975b9310b91eda13f0c973953",
+    sha256 = "8662ffdaedbee7b85d4aadbbe8005a65cceea128bb0d07aa892998e3683caea2",
+    strip_prefix = "rules_nodejs-{}".format(rules_nodejs_version),
+    type = "zip",
+    url = "https://github.com/bazelbuild/rules_nodejs/archive/{}.zip".format(rules_nodejs_version),
 )
+load("@build_bazel_rules_nodejs//:package.bzl", "rules_nodejs_dependencies")
+rules_nodejs_dependencies()
+
 load("@build_bazel_rules_nodejs//:defs.bzl", "node_repositories")
 node_repositories(package_json = [])
 
-rules_sass_version = "96e5bee5c6c0727a320b8d092eff762c81c33c19" # update this as needed
+rules_sass_version = "8b61ad6953fde55031658e1731c335220f881369" # update this as needed
 http_archive(
     name = "io_bazel_rules_sass",
-    sha256 = "1febebd855d2582950e967bbc09ef6e3a558ad33e0ca9ef33dad3bfa76f95a0e",
+    sha256 = "afb08f0ae0060c1dbdd11d22578972d087e5463e647ce35dfc2b6c2a41682da8",
     strip_prefix = "rules_sass-%s" % rules_sass_version,
     url = "https://github.com/bazelbuild/rules_sass/archive/%s.zip" % rules_sass_version,
 )
+load("@io_bazel_rules_sass//:package.bzl", "rules_sass_dependencies")
+rules_sass_dependencies()
+
 load("@io_bazel_rules_sass//sass:sass_repositories.bzl", "sass_repositories")
 sass_repositories()
 
-skydoc_version = "f531844d137c7accc44d841c08a2a2a366688571" # update this as needed
+skydoc_version = "77e5399258f6d91417d23634fce97d73b40cf337" # update this as needed
 http_archive(
     name = "io_bazel_skydoc",
-    sha256 = "071536265b1d99c1eea3bd59df8f0c28e806b00c8e8e3ca8e2d82ede96a561bc",
+    sha256 = "4e9bd9ef65af54dedd997b408fa26c2e70c30ee8e078bcc1b51a33cf7d7f9d7e",
     strip_prefix = "skydoc-%s" % skydoc_version,
     url = "https://github.com/bazelbuild/skydoc/archive/%s.zip" % skydoc_version,
 )
@@ -57,8 +65,8 @@ skydoc_repositories()
 # much simpler
 http_archive(
     name = "io_bazel",
-    url = "https://github.com/bazelbuild/bazel/releases/download/0.16.0/bazel-0.16.0-dist.zip",
-    sha256 = "c730593916ef0ba62f3d113cc3a268e45f7e8039daf7b767c8641b6999bd49b1",
+    url = "https://github.com/bazelbuild/bazel/releases/download/0.19.0/bazel-0.19.0-dist.zip",
+    sha256 = "ee6135c5c47306c8421d43ad83aabc4f219cb065376ee37797f2c8ba9a615315",
 )
 # Also for Skylint. Comes from
 # https://github.com/cgrushko/proto_library/blob/master/WORKSPACE
