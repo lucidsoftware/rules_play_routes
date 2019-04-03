@@ -90,7 +90,7 @@ play_routes = rule(
       doc = "If true, include the imports the Play project includes by default.",
       default = False
     ),
-    "_play_routes_compiler": attr.label(
+    "play_routes_compiler": attr.label(
       executable = True,
       cfg = "host",
       allow_files = True,
