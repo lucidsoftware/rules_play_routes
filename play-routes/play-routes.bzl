@@ -49,7 +49,7 @@ def _impl(ctx):
     outputs = [gendir],
     arguments = args,
     progress_message = "Compiling play routes",
-    executable = ctx.executable._play_routes_compiler,
+    executable = ctx.executable.play_routes_compiler,
   )
 
   # TODO: something more portable
