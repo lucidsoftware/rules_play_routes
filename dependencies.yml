@@ -1,7 +1,7 @@
 options:
   languages:
     - java
-    - scala:2.11.11
+    - scala:2.11.12
   namePrefix: play_routes_
   resolvers:
     - id: central
@@ -13,17 +13,28 @@ dependencies:
   com.github.scopt:
     scopt:
       lang: scala
-      version: 3.7.0
+      version: "3.7.0"
+
   com.typesafe.play:
     routes-compiler:
       lang: scala
-      version: 2.5.18
+      version: "2.5.12"
 
-replacements:
+  org.scala-sbt:
+    test-interface:
+      lang: java
+      version: "1.0"
+    zinc:
+      lang: scala
+      version: "1.2.1"
+
   org.scala-lang:
+    scala-compiler:
+      lang: java
+      version: "2.11.12"
     scala-library:
       lang: java
-      target: '@scala_scala_library//jar'
+      version: "2.11.12"
     scala-reflect:
       lang: java
-      target: '@scala_scala_reflect//jar'
+      version: "2.11.12"

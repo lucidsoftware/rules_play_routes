@@ -1,0 +1,3 @@
+#GET /ok rulesplayroutes.test.Controller1.ok()
+#GET /badRequest rulesplayroutes.test.Controller1.badRequest()
+#GET /500 rulesplayroutes.test.Controller1.fiveHundred()

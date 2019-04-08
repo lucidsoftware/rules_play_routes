@@ -9,6 +9,6 @@ scala_binary(
   deps = [
     "@play_routes_com_typesafe_play_routes_compiler_2_11//jar",
     "@play_routes_com_github_scopt_scopt_2_11//jar",
-    "@scala_scala_reflect//jar",
+    "@play_routes_org_scala_lang_scala_reflect",
   ],
 )

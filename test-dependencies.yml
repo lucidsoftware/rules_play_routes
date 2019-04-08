@@ -1,7 +1,7 @@
 options:
   languages:
     - java
-    - scala:2.11.11
+    - scala:2.11.12
   resolvers:
     - id: central
       type: default
@@ -20,11 +20,10 @@ dependencies:
       lang: scala
       version: 2.5.18
 
-replacements:
   org.scala-lang:
     scala-library:
       lang: java
-      target: '@scala_scala_library//jar'
+      version: "2.11.12"
     scala-reflect:
       lang: java
-      target: '@scala_scala_reflect//jar'
+      version: "2.11.12"

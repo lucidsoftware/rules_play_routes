@@ -10,8 +10,8 @@ os:
   - linux
   - osx
 env:
-  - V=0.18.0
-  - V=0.19.0 DOC_VERSION=true
+  - V=0.22.0
+  - V=0.23.0
 before_install:
   # Borrowed from rules_scala
   - |
