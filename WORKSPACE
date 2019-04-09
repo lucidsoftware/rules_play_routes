@@ -1,24 +1,30 @@
 workspace(name = "io_bazel_rules_play_routes")
 
-rules_scala_annex_version = "7d053fc1be463e79c5e9e35d2123b1759cfd16e8" # update this as needed
+load("@bazel_tools//tools/build_defs/repo:http.bzl", "http_archive")
+
+rules_scala_annex_version = "eeefae00b6e12ffd514f49c399f8d0abff7e4182" # update this as needed
 http_archive(
     name = "rules_scala_annex",
-    sha256 = "ad0a269ba6965d2321a81331ac065d4603e62576c9d3c6f65b8c9c3a709b8536",
-    strip_prefix = "rules_scala_annex-%s" % rules_scala_annex_version,
-    url = "https://github.com/andyscott/rules_scala_annex/archive/%s.zip" % rules_scala_annex_version,
+    sha256 = "7d0bfa327d177ae3258483082b5a2c2dff763aca53a20b07b6b2cc5e866ae9fd",
+    strip_prefix = "rules_scala-{}".format(rules_scala_annex_version),
+    url = "https://github.com/higherkindness/rules_scala/archive/{}.zip".format(rules_scala_annex_version),
 )
 
-load("@rules_scala_annex//rules/scala:workspace.bzl", "scala_register_toolchains", "scala_repository", "scala_repositories")
+bind(
+    name = "default_scala",
+    actual = "//scala:default_scala",
+)
+
+load("@rules_scala_annex//rules/scala:workspace.bzl", "scala_register_toolchains", "scala_repositories")
 scala_repositories()
 scala_register_toolchains()
-scala_repository("scala", ("org.scala-lang", "2.11.12"), "@compiler_bridge_2_11//:src")
 
 skylib_version = "8cecf885c8bf4c51e82fd6b50b9dd68d2c98f757"  # update this as needed
 http_archive(
     name = "bazel_skylib",
-    strip_prefix = "bazel-skylib-%s" % skylib_version,
+    strip_prefix = "bazel-skylib-{}".format(skylib_version),
     type = "zip",
-    url = "https://github.com/bazelbuild/bazel-skylib/archive/%s.zip" % skylib_version,
+    url = "https://github.com/bazelbuild/bazel-skylib/archive/{}.zip".format(skylib_version),
     sha256 = "d54e5372d784ceb365f7d38c3dad7773f73b3b8ebc8fb90d58435a92b6a20256",
 )
 
@@ -41,8 +47,8 @@ rules_sass_version = "8b61ad6953fde55031658e1731c335220f881369" # update this as
 http_archive(
     name = "io_bazel_rules_sass",
     sha256 = "afb08f0ae0060c1dbdd11d22578972d087e5463e647ce35dfc2b6c2a41682da8",
-    strip_prefix = "rules_sass-%s" % rules_sass_version,
-    url = "https://github.com/bazelbuild/rules_sass/archive/%s.zip" % rules_sass_version,
+    strip_prefix = "rules_sass-{}".format(rules_sass_version),
+    url = "https://github.com/bazelbuild/rules_sass/archive/{}.zip".format(rules_sass_version),
 )
 load("@io_bazel_rules_sass//:package.bzl", "rules_sass_dependencies")
 rules_sass_dependencies()
@@ -54,8 +60,8 @@ skydoc_version = "77e5399258f6d91417d23634fce97d73b40cf337" # update this as nee
 http_archive(
     name = "io_bazel_skydoc",
     sha256 = "4e9bd9ef65af54dedd997b408fa26c2e70c30ee8e078bcc1b51a33cf7d7f9d7e",
-    strip_prefix = "skydoc-%s" % skydoc_version,
-    url = "https://github.com/bazelbuild/skydoc/archive/%s.zip" % skydoc_version,
+    strip_prefix = "skydoc-{}".format(skydoc_version),
+    url = "https://github.com/bazelbuild/skydoc/archive/{}.zip".format(skydoc_version),
 )
 load("@io_bazel_skydoc//skylark:skylark.bzl", "skydoc_repositories")
 skydoc_repositories()
@@ -70,11 +76,13 @@ http_archive(
 )
 # Also for Skylint. Comes from
 # https://github.com/cgrushko/proto_library/blob/master/WORKSPACE
+protobuf_version = "0038ff49af882463c2af9049356eed7df45c3e8e"
 http_archive(
     name = "com_google_protobuf",
-    sha256 = "d7a221b3d4fb4f05b7473795ccea9e05dab3b8721f6286a95fffbffc2d926f8b",
-    strip_prefix = "protobuf-3.6.1",
-    urls = ["https://github.com/google/protobuf/archive/v3.6.1.zip"],
+    sha256 = "2c8f8614fb1be709d68abaab6b4791682aa7db2048012dd4642d3a50b4f67cb3",
+    strip_prefix = "protobuf-{}".format(protobuf_version),
+    type = "zip",
+    url = "https://github.com/protocolbuffers/protobuf/archive/{}.zip".format(protobuf_version),
 )
 
 load("//:workspace.bzl", "play_routes_repositories")

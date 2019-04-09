@@ -1,4 +1,5 @@
 startup --expand_configs_in_place
+common --incompatible_disallow_filetype=false
 
 common:ci --color=yes
 

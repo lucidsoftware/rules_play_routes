@@ -2,8 +2,21 @@ load("@rules_scala_annex//rules:scala.bzl", "scala_test")
 load("//play-routes:play-routes.bzl", "play_routes")
 
 play_routes(
-  name = "play-routes-basic",
-  srcs = ["conf/routes", "conf/basic2.routes"],
+  name = "play-routes",
+  srcs = ["conf/routes"],
+  include_play_imports = True,
+  generate_reverse_router = True,
+)
+
+play_routes(
+  name = "play-routes-basic1",
+  srcs = ["conf/basic1.routes"],
+  include_play_imports = True,
+)
+
+play_routes(
+  name = "play-routes-basic2",
+  srcs = ["conf/basic2.routes"],
   include_play_imports = True,
 )
 
@@ -44,9 +57,11 @@ scala_test(
   name = "play-routes-compiler-test",
   srcs = glob(["app/**/*.scala"]) + [
     "PlayRoutesCompilerTest.scala",
-    ":play-routes-basic",
-    ":play-routes-additional-imports",
-    ":play-routes-different-generator",
+    ":play-routes",
+    # ":play-routes-basic1",
+    # ":play-routes-basic2",
+    # ":play-routes-additional-imports",
+    # ":play-routes-different-generator",
     ":play-routes-reverse-router",
     # ":play-routes-namespace-router",
   ],
@@ -60,43 +75,3 @@ scala_test(
     "@com_typesafe_play_play_test_2_11//jar",
   ]
 )
-
-# scala_specs2_junit_test(
-#   name = "play-routes-compiler-additional-imports-test",
-#   deps = play_deps,
-#   suffixes = ["Test"],
-#   srcs = glob(["app/**/*.scala"]) + [
-#     "PlayRoutesCompilerBasicTest.scala",
-#     ":play-routes-additional-imports",
-#   ],
-# )
-
-# scala_specs2_junit_test(
-#   name = "play-routes-compiler-generator-test",
-#   deps = play_deps,
-#   suffixes = ["Test"],
-#   srcs = glob(["app/**/*.scala"]) + [
-#     "PlayRoutesCompilerBasicTest.scala",
-#     ":play-routes-different-generator",
-#   ],
-# )
-
-# scala_specs2_junit_test(
-#   name = "play-routes-compiler-reverse-router-test",
-#   deps = play_deps,
-#   suffixes = ["Test"],
-#   srcs = glob(["app/**/*.scala"]) + [
-#     "PlayRoutesCompilerBasicTest.scala",
-#     ":play-routes-reverse-router",
-#   ],
-# )
-
-# scala_specs2_junit_test(
-#   name = "play-routes-compiler-namespace-reverse-router-test",
-#   deps = play_deps,
-#   suffixes = ["Test"],
-#   srcs = glob(["app/**/*.scala"]) + [
-#     "PlayRoutesCompilerBasicTest.scala",
-#     ":play-routes-basic-namespace-router",
-#   ],
-# )

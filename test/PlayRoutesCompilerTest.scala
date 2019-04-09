@@ -11,25 +11,24 @@ class PlayRoutesCompilerTest extends Specification {
   val app = new FakeApplication()
 
   "Play Routes Compiler when run through Bazel" should {
-    "Compile Play routes" in new WithApplication() {
-      status(route(app, FakeRequest(GET, "/ok")).get) mustEqual OK
-      status(route(app, FakeRequest(GET, "/badRequest")).get) mustEqual BAD_REQUEST
-      status(route(app, FakeRequest(GET, "/500")).get) mustEqual INTERNAL_SERVER_ERROR
+    // "Compile Play routes" in new WithApplication() {
+    //   status(route(app, FakeRequest(GET, "/ok")).get) mustEqual OK
+    //   status(route(app, FakeRequest(GET, "/badRequest")).get) mustEqual BAD_REQUEST
+    //   status(route(app, FakeRequest(GET, "/500")).get) mustEqual INTERNAL_SERVER_ERROR
+    // }
 
-    }
+    // "Support multiple routes files" in new WithApplication() {
+    //   status(route(app, FakeRequest(GET, "/ok2")).get) mustEqual OK
+    //   status(route(app, FakeRequest(GET, "/ok3")).get) mustEqual OK
+    // }
 
-    "Support multiple routes files" in new WithApplication() {
-      status(route(app, FakeRequest(GET, "/ok2")).get) mustEqual OK
-      status(route(app, FakeRequest(GET, "/ok3")).get) mustEqual OK
-    }
+    // "Add additional imports when specified" in new WithApplication() {
+    //   status(route(app, FakeRequest(GET, "/okUser/1")).get) mustEqual OK
+    // }
 
-    "Add additional imports when specified" in new WithApplication() {
-      status(route(app, FakeRequest(GET, "/okUser/1")).get) mustEqual OK
-    }
-
-    "Use the specified routes generator" in new WithApplication() {
-      status(route(app, FakeRequest(GET, "/okGenerator")).get) mustEqual OK
-    }
+    // "Use the specified routes generator" in new WithApplication() {
+    //   status(route(app, FakeRequest(GET, "/okGenerator")).get) mustEqual OK
+    // }
 
     "Generate reverse routes when specified" in new WithApplication() {
       val myRoute = ReverseRoutesController.ok(3).toString
