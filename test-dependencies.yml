@@ -12,13 +12,13 @@ dependencies:
   com.typesafe.play:
     play:
       lang: scala
-      version: 2.5.18
+      version: "2.5.19"
     play-specs2:
       lang: scala
-      version: 2.5.18
+      version: "2.5.19"
     play-test:
       lang: scala
-      version: 2.5.18
+      version: "2.5.19"
 
   org.scala-lang:
     scala-library:

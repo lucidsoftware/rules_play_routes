@@ -420,15 +420,15 @@ def list_dependencies():
                     "@play_routes_org_scala_lang_modules_scala_parser_combinators_2_11",
                     "@play_routes_org_scala_lang_scala_library"
                 ],
-                "jar_sha256": "edc9b838b22aa0cdce117a93b5b3627e4567d31276c38fa771899f90a6b713e0",
+                "jar_sha256": "bc74bf8f8a4053bfebf506ade75bd917c6a91e98dbe78f8b8bb3cefaa44bebef",
                 "jar_urls": [
-                    "http://central.maven.org/maven2/com/typesafe/play/routes-compiler_2.11/2.5.12/routes-compiler_2.11-2.5.12.jar"
+                    "http://central.maven.org/maven2/com/typesafe/play/routes-compiler_2.11/2.5.19/routes-compiler_2.11-2.5.19.jar"
                 ],
                 "licenses": [ "notice" ],
                 "name": "play_routes_com_typesafe_play_routes_compiler_2_11",
-                "srcjar_sha256": "3f3e84bc7435a2fe6bbccf341f25af370cca44b72014b68ecb8b6d489c893db9",
+                "srcjar_sha256": "6b3e5fc188156fd8cb8518cddbcb0f4cf43dec876d703ff59146d73ea2f2d4b4",
                 "srcjar_urls": [
-                    "http://central.maven.org/maven2/com/typesafe/play/routes-compiler_2.11/2.5.12/routes-compiler_2.11-2.5.12-sources.jar"
+                    "http://central.maven.org/maven2/com/typesafe/play/routes-compiler_2.11/2.5.19/routes-compiler_2.11-2.5.19-sources.jar"
                 ]
             },
             "lang": "scala"
@@ -659,7 +659,7 @@ def list_dependencies():
             "lang": "java"
         },
         # duplicates in org.scala-lang.modules:scala-parser-combinators_2.11 promoted to 1.0.5
-        # - com.typesafe.play:routes-compiler_2.11:2.5.12 wanted version 1.0.4
+        # - com.typesafe.play:routes-compiler_2.11:2.5.19 wanted version 1.0.4
         # - org.scala-lang:scala-compiler:2.11.12 wanted version 1.0.4
         # - org.scala-sbt:zinc-compile-core_2.11:1.2.1 wanted version 1.0.5
         {
@@ -734,7 +734,7 @@ def list_dependencies():
         },
         # duplicates in org.scala-lang:scala-library fixed to 2.11.12
         # - com.github.scopt:scopt_2.11:3.7.0 wanted version 2.11.11
-        # - com.typesafe.play:routes-compiler_2.11:2.5.12 wanted version 2.11.7
+        # - com.typesafe.play:routes-compiler_2.11:2.5.19 wanted version 2.11.7
         # - org.scala-lang:scala-compiler:2.11.12 wanted version 2.11.12
         # - org.scala-lang:scala-reflect:2.11.12 wanted version 2.11.12
         # - org.scala-sbt:zinc_2.11:1.2.1 wanted version 2.11.12

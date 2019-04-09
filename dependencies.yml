@@ -18,7 +18,7 @@ dependencies:
   com.typesafe.play:
     routes-compiler:
       lang: scala
-      version: "2.5.12"
+      version: "2.5.19"
 
   org.scala-sbt:
     test-interface:
