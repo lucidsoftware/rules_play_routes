@@ -185,7 +185,7 @@ def list_dependencies():
         },
         # duplicates in com.google.guava:guava promoted to 19.0
         # - com.google.inject:guice:4.0 wanted version 16.0.1
-        # - com.typesafe.play:play-test_2.11:2.5.18 wanted version 19.0
+        # - com.typesafe.play:play-test_2.11:2.5.19 wanted version 19.0
         {
             "bind_args": {
                 "actual": "@com_google_guava_guava",
@@ -389,15 +389,15 @@ def list_dependencies():
             "import_args": {
                 "default_visibility": [ "//visibility:public" ],
                 "exports": [ "@com_typesafe_play_play_exceptions" ],
-                "jar_sha256": "6b5f5b5a68be45d1ebaa12b27d057f9eb4027f0a66d16a0c311e24f4411ade79",
+                "jar_sha256": "eb7c3acbb2c1f839d3b8174ce177d7dc61239888818de43cf5001d8d43d26fcf",
                 "jar_urls": [
-                    "http://central.maven.org/maven2/com/typesafe/play/build-link/2.5.18/build-link-2.5.18.jar"
+                    "http://central.maven.org/maven2/com/typesafe/play/build-link/2.5.19/build-link-2.5.19.jar"
                 ],
                 "licenses": [ "notice" ],
                 "name": "com_typesafe_play_build_link",
-                "srcjar_sha256": "c77ca6c7e05dffd77b09dc3780d880b7f6673f8c73cad791902493931cc96342",
+                "srcjar_sha256": "90c87cb07ceef84d3665a369df510dab3a68cc9933f34137d580b00a9348684a",
                 "srcjar_urls": [
-                    "http://central.maven.org/maven2/com/typesafe/play/build-link/2.5.18/build-link-2.5.18-sources.jar"
+                    "http://central.maven.org/maven2/com/typesafe/play/build-link/2.5.19/build-link-2.5.19-sources.jar"
                 ]
             },
             "lang": "java"
@@ -409,15 +409,15 @@ def list_dependencies():
             },
             "import_args": {
                 "default_visibility": [ "//visibility:public" ],
-                "jar_sha256": "a15250e05ae7a5df3ed8e7062ccbb21fdb6bda8acb0502014cb173a33bf7711b",
+                "jar_sha256": "060e74847daed5c5aa178972cd8c246d77a908da8562fc381287f2d5192d7874",
                 "jar_urls": [
-                    "http://central.maven.org/maven2/com/typesafe/play/play-datacommons_2.11/2.5.18/play-datacommons_2.11-2.5.18.jar"
+                    "http://central.maven.org/maven2/com/typesafe/play/play-datacommons_2.11/2.5.19/play-datacommons_2.11-2.5.19.jar"
                 ],
                 "licenses": [ "notice" ],
                 "name": "com_typesafe_play_play_datacommons_2_11",
-                "srcjar_sha256": "7f8eac033e642e5b448229ac862e0f26fa1c2721c8593ed321e729b3d30fcda2",
+                "srcjar_sha256": "864ffac58d6c6f2b639cae0ed16d189ebec4e8e105dc9af50d9ca0f3c260b3d1",
                 "srcjar_urls": [
-                    "http://central.maven.org/maven2/com/typesafe/play/play-datacommons_2.11/2.5.18/play-datacommons_2.11-2.5.18-sources.jar"
+                    "http://central.maven.org/maven2/com/typesafe/play/play-datacommons_2.11/2.5.19/play-datacommons_2.11-2.5.19-sources.jar"
                 ]
             },
             "lang": "java"
@@ -429,15 +429,15 @@ def list_dependencies():
             },
             "import_args": {
                 "default_visibility": [ "//visibility:public" ],
-                "jar_sha256": "754100c4790ff8446a52d61197e083c164b99672e25b68a0b5fb881a02e70a63",
+                "jar_sha256": "d8042bda5e98a8f78d9d99e13bc6eeca2b4c52e3082785ded6c70216bd664c7f",
                 "jar_urls": [
-                    "http://central.maven.org/maven2/com/typesafe/play/play-exceptions/2.5.18/play-exceptions-2.5.18.jar"
+                    "http://central.maven.org/maven2/com/typesafe/play/play-exceptions/2.5.19/play-exceptions-2.5.19.jar"
                 ],
                 "licenses": [ "notice" ],
                 "name": "com_typesafe_play_play_exceptions",
-                "srcjar_sha256": "4d46b794b2fa8c68f425018cc9149addd0c11fb6520a242860b2b633caf81460",
+                "srcjar_sha256": "d1a5b1205ea2546da8498ef558342a5fbee8823515e37b5d4bac4c44e768587c",
                 "srcjar_urls": [
-                    "http://central.maven.org/maven2/com/typesafe/play/play-exceptions/2.5.18/play-exceptions-2.5.18-sources.jar"
+                    "http://central.maven.org/maven2/com/typesafe/play/play-exceptions/2.5.19/play-exceptions-2.5.19-sources.jar"
                 ]
             },
             "lang": "java"
@@ -449,15 +449,15 @@ def list_dependencies():
             },
             "import_args": {
                 "default_visibility": [ "//visibility:public" ],
-                "jar_sha256": "586b830c746da58c088d8cf9b3fec328cd303183b3494c1cf19e364f6e0160e4",
+                "jar_sha256": "6aed47689501a037942a099b68399b52fb3130e65e93d776945a1decdb813f23",
                 "jar_urls": [
-                    "http://central.maven.org/maven2/com/typesafe/play/play-functional_2.11/2.5.18/play-functional_2.11-2.5.18.jar"
+                    "http://central.maven.org/maven2/com/typesafe/play/play-functional_2.11/2.5.19/play-functional_2.11-2.5.19.jar"
                 ],
                 "licenses": [ "notice" ],
                 "name": "com_typesafe_play_play_functional_2_11",
-                "srcjar_sha256": "3d9890c08d30ce5e50d7e05386b0f5ad4d2a1155628794be050e15962dc06732",
+                "srcjar_sha256": "362baeaa32c53c08faec08c29fe2bef6e8f56f491a10d3232c49b3cf06125ab4",
                 "srcjar_urls": [
-                    "http://central.maven.org/maven2/com/typesafe/play/play-functional_2.11/2.5.18/play-functional_2.11-2.5.18-sources.jar"
+                    "http://central.maven.org/maven2/com/typesafe/play/play-functional_2.11/2.5.19/play-functional_2.11-2.5.19-sources.jar"
                 ]
             },
             "lang": "java"
@@ -470,15 +470,15 @@ def list_dependencies():
             "import_args": {
                 "default_visibility": [ "//visibility:public" ],
                 "exports": [ "@com_typesafe_config" ],
-                "jar_sha256": "ac41212305b12119ade1852d0fabedb496906752af0aa14ee250f53d9c9e25b0",
+                "jar_sha256": "60d1030306a76afedf64481f3d528820c6cd60e3b187721ca5fb633a90f6c710",
                 "jar_urls": [
-                    "http://central.maven.org/maven2/com/typesafe/play/play-iteratees_2.11/2.5.18/play-iteratees_2.11-2.5.18.jar"
+                    "http://central.maven.org/maven2/com/typesafe/play/play-iteratees_2.11/2.5.19/play-iteratees_2.11-2.5.19.jar"
                 ],
                 "licenses": [ "notice" ],
                 "name": "com_typesafe_play_play_iteratees_2_11",
-                "srcjar_sha256": "10dad2874f0973d1c9260faacc9d32071af82164dd0b232e5c989b4dacb51258",
+                "srcjar_sha256": "c091a47d90f207201f48370f6df721089c1f35e714c56843e26704694180f021",
                 "srcjar_urls": [
-                    "http://central.maven.org/maven2/com/typesafe/play/play-iteratees_2.11/2.5.18/play-iteratees_2.11-2.5.18-sources.jar"
+                    "http://central.maven.org/maven2/com/typesafe/play/play-iteratees_2.11/2.5.19/play-iteratees_2.11-2.5.19-sources.jar"
                 ]
             },
             "lang": "java"
@@ -494,15 +494,15 @@ def list_dependencies():
                     "@com_typesafe_play_play_datacommons_2_11",
                     "@com_typesafe_play_play_functional_2_11"
                 ],
-                "jar_sha256": "48678d072e10c0d6e5d4acdc7d637ed3428679c0d934c9c391cf6172de51f1e6",
+                "jar_sha256": "06e8109d0384dcd5694881a895a72255b477145668a4a315cb896c3f2e815dbc",
                 "jar_urls": [
-                    "http://central.maven.org/maven2/com/typesafe/play/play-json_2.11/2.5.18/play-json_2.11-2.5.18.jar"
+                    "http://central.maven.org/maven2/com/typesafe/play/play-json_2.11/2.5.19/play-json_2.11-2.5.19.jar"
                 ],
                 "licenses": [ "notice" ],
                 "name": "com_typesafe_play_play_json_2_11",
-                "srcjar_sha256": "e12d906682ac2537a13c883d895cc5b95f14fea526b28ed5f57aa56aafdadb37",
+                "srcjar_sha256": "f2d8f54d9b1f474a093c8fec94dbd0344c4f37e6e846caf85f029d1802255c48",
                 "srcjar_urls": [
-                    "http://central.maven.org/maven2/com/typesafe/play/play-json_2.11/2.5.18/play-json_2.11-2.5.18-sources.jar"
+                    "http://central.maven.org/maven2/com/typesafe/play/play-json_2.11/2.5.19/play-json_2.11-2.5.19-sources.jar"
                 ]
             },
             "lang": "java"
@@ -519,15 +519,15 @@ def list_dependencies():
                     "@com_typesafe_play_play_server_2_11",
                     "@io_netty_netty_transport_native_epoll"
                 ],
-                "jar_sha256": "d2a594ec32a06b2d193b2b011e0bf9ae2a3e40c1b3217afbebe023c629a4501f",
+                "jar_sha256": "55ead32aa260a1d2d783a0733497a4f8401db3e63e5ab4f1e53cfa9127af43ca",
                 "jar_urls": [
-                    "http://central.maven.org/maven2/com/typesafe/play/play-netty-server_2.11/2.5.18/play-netty-server_2.11-2.5.18.jar"
+                    "http://central.maven.org/maven2/com/typesafe/play/play-netty-server_2.11/2.5.19/play-netty-server_2.11-2.5.19.jar"
                 ],
                 "licenses": [ "notice" ],
                 "name": "com_typesafe_play_play_netty_server_2_11",
-                "srcjar_sha256": "4d0161dca87dd88a80ade721c6097a88da9b52843034c66a1acb19c839305eec",
+                "srcjar_sha256": "afb3d40e0394a82b3ff93f9b6ea811a2f42f43591f5b345e269b6ef1ba3e214e",
                 "srcjar_urls": [
-                    "http://central.maven.org/maven2/com/typesafe/play/play-netty-server_2.11/2.5.18/play-netty-server_2.11-2.5.18-sources.jar"
+                    "http://central.maven.org/maven2/com/typesafe/play/play-netty-server_2.11/2.5.19/play-netty-server_2.11-2.5.19-sources.jar"
                 ]
             },
             "lang": "scala"
@@ -539,15 +539,15 @@ def list_dependencies():
             },
             "import_args": {
                 "default_visibility": [ "//visibility:public" ],
-                "jar_sha256": "c220a7ce94c2d14499fead6b2c66593e201a9c58d20bbec5e776f576805c4d25",
+                "jar_sha256": "2abb82520821aa79e45302e4ff3b29443ae0a57fcc0d22a9773b09388262656c",
                 "jar_urls": [
-                    "http://central.maven.org/maven2/com/typesafe/play/play-netty-utils/2.5.18/play-netty-utils-2.5.18.jar"
+                    "http://central.maven.org/maven2/com/typesafe/play/play-netty-utils/2.5.19/play-netty-utils-2.5.19.jar"
                 ],
                 "licenses": [ "notice" ],
                 "name": "com_typesafe_play_play_netty_utils",
-                "srcjar_sha256": "f94152c8c827da2522d8a6ac606fd1eac31add9bb2451647291cd0a7a79d10b9",
+                "srcjar_sha256": "42e7481b09e7239c000524b9db9c31fdf8ae9b8fcec5056454d7cc05b87a1982",
                 "srcjar_urls": [
-                    "http://central.maven.org/maven2/com/typesafe/play/play-netty-utils/2.5.18/play-netty-utils-2.5.18-sources.jar"
+                    "http://central.maven.org/maven2/com/typesafe/play/play-netty-utils/2.5.19/play-netty-utils-2.5.19-sources.jar"
                 ]
             },
             "lang": "java"
@@ -563,15 +563,15 @@ def list_dependencies():
                     "@com_typesafe_play_play_2_11",
                     "@com_typesafe_play_play_iteratees_2_11"
                 ],
-                "jar_sha256": "0875130a3b7addb492cf148a33be516fd01e2602c224f15d2c06c5a682c0a9af",
+                "jar_sha256": "6b9ef2ea096b3b9e03fca62b36146f17932f615a527e91cf6b7f036a6981993f",
                 "jar_urls": [
-                    "http://central.maven.org/maven2/com/typesafe/play/play-server_2.11/2.5.18/play-server_2.11-2.5.18.jar"
+                    "http://central.maven.org/maven2/com/typesafe/play/play-server_2.11/2.5.19/play-server_2.11-2.5.19.jar"
                 ],
                 "licenses": [ "notice" ],
                 "name": "com_typesafe_play_play_server_2_11",
-                "srcjar_sha256": "88dec4b976445432edfc3c7af290701f2955afa7f9dba03cd6ff805c86d666c1",
+                "srcjar_sha256": "15f078bbd472a90aaa29114e2feb6875369feb6423f03366275e3dae9f3b7508",
                 "srcjar_urls": [
-                    "http://central.maven.org/maven2/com/typesafe/play/play-server_2.11/2.5.18/play-server_2.11-2.5.18-sources.jar"
+                    "http://central.maven.org/maven2/com/typesafe/play/play-server_2.11/2.5.19/play-server_2.11-2.5.19-sources.jar"
                 ]
             },
             "lang": "scala"
@@ -590,15 +590,15 @@ def list_dependencies():
                     "@org_specs2_specs2_junit_2_11",
                     "@org_specs2_specs2_mock_2_11"
                 ],
-                "jar_sha256": "fbb67da184fc1b3b3c3d349cfca3957cfc9515a3aa0f0c2c13a5c09fed944b63",
+                "jar_sha256": "c0d570a18960e1744408988f56c72e934b5efc50d0af8b64930d17a8029fbe64",
                 "jar_urls": [
-                    "http://central.maven.org/maven2/com/typesafe/play/play-specs2_2.11/2.5.18/play-specs2_2.11-2.5.18.jar"
+                    "http://central.maven.org/maven2/com/typesafe/play/play-specs2_2.11/2.5.19/play-specs2_2.11-2.5.19.jar"
                 ],
                 "licenses": [ "notice" ],
                 "name": "com_typesafe_play_play_specs2_2_11",
-                "srcjar_sha256": "3d8bc7bd3270f16d1618d20427ccd9474c54560e6c08753043de7984243d426a",
+                "srcjar_sha256": "957780dc8af38dd1eef43eb7411162a6816a7a73de542b7af32bc8b95dcf4407",
                 "srcjar_urls": [
-                    "http://central.maven.org/maven2/com/typesafe/play/play-specs2_2.11/2.5.18/play-specs2_2.11-2.5.18-sources.jar"
+                    "http://central.maven.org/maven2/com/typesafe/play/play-specs2_2.11/2.5.19/play-specs2_2.11-2.5.19-sources.jar"
                 ]
             },
             "lang": "scala"
@@ -614,15 +614,15 @@ def list_dependencies():
                     "@com_typesafe_akka_akka_stream_2_11",
                     "@org_reactivestreams_reactive_streams"
                 ],
-                "jar_sha256": "95539fb32b27fd4a939ff3fc07a80deed766510a3c201380b3f60c7157da5ccd",
+                "jar_sha256": "6372c7f45431bb24320646e4029c98acd89f0cbcfe31608951fb267cac768165",
                 "jar_urls": [
-                    "http://central.maven.org/maven2/com/typesafe/play/play-streams_2.11/2.5.18/play-streams_2.11-2.5.18.jar"
+                    "http://central.maven.org/maven2/com/typesafe/play/play-streams_2.11/2.5.19/play-streams_2.11-2.5.19.jar"
                 ],
                 "licenses": [ "notice" ],
                 "name": "com_typesafe_play_play_streams_2_11",
-                "srcjar_sha256": "d33bdb658af76f892d1749ad3163944c26885c484801c94a9359b8ef3cd6080d",
+                "srcjar_sha256": "dbfc92c27ca287ba0c1c4f8e7af53d8b39ee39c5a4412ae5b93f2be082ff6b72",
                 "srcjar_urls": [
-                    "http://central.maven.org/maven2/com/typesafe/play/play-streams_2.11/2.5.18/play-streams_2.11-2.5.18-sources.jar"
+                    "http://central.maven.org/maven2/com/typesafe/play/play-streams_2.11/2.5.19/play-streams_2.11-2.5.19-sources.jar"
                 ]
             },
             "lang": "java"
@@ -644,15 +644,15 @@ def list_dependencies():
                     "@org_fluentlenium_fluentlenium_core",
                     "@org_scala_lang_scala_library"
                 ],
-                "jar_sha256": "c9d27f8cc1fd82248d0211a04be61b07f443f62d94e68294efdd63caf11eb0d6",
+                "jar_sha256": "f831ce9004fbeb1c76b3f343ac75b9fc9c003d52e0b314b3d683890236879ef3",
                 "jar_urls": [
-                    "http://central.maven.org/maven2/com/typesafe/play/play-test_2.11/2.5.18/play-test_2.11-2.5.18.jar"
+                    "http://central.maven.org/maven2/com/typesafe/play/play-test_2.11/2.5.19/play-test_2.11-2.5.19.jar"
                 ],
                 "licenses": [ "notice" ],
                 "name": "com_typesafe_play_play_test_2_11",
-                "srcjar_sha256": "7bb338ab67928b9a2e1eae30c387a6ba45e61641189f2a5e6481b89a45ec3082",
+                "srcjar_sha256": "f831437e5e9e6cb5089ab4c10341fb094ae149b6b2b64b3dfef72beed8922a8d",
                 "srcjar_urls": [
-                    "http://central.maven.org/maven2/com/typesafe/play/play-test_2.11/2.5.18/play-test_2.11-2.5.18-sources.jar"
+                    "http://central.maven.org/maven2/com/typesafe/play/play-test_2.11/2.5.19/play-test_2.11-2.5.19-sources.jar"
                 ]
             },
             "lang": "scala"
@@ -695,15 +695,15 @@ def list_dependencies():
                     "@org_slf4j_slf4j_api",
                     "@xerces_xercesImpl"
                 ],
-                "jar_sha256": "da84caa8ef028f9c4a425ccd8632581c49bf74615d8a72fcf02127da68bd1c78",
+                "jar_sha256": "c79b96d4d63ff666325649f527d3e1df06100868a810d0e602f9300522dcb28f",
                 "jar_urls": [
-                    "http://central.maven.org/maven2/com/typesafe/play/play_2.11/2.5.18/play_2.11-2.5.18.jar"
+                    "http://central.maven.org/maven2/com/typesafe/play/play_2.11/2.5.19/play_2.11-2.5.19.jar"
                 ],
                 "licenses": [ "notice" ],
                 "name": "com_typesafe_play_play_2_11",
-                "srcjar_sha256": "d9f2b9a0380c00d4fb03f668d86015598fb332808c30455202f67cdc179fcba3",
+                "srcjar_sha256": "ecbedd1a4badc7e27277d313bcba9962384e655c2a9fbc70d20db31f66bc5445",
                 "srcjar_urls": [
-                    "http://central.maven.org/maven2/com/typesafe/play/play_2.11/2.5.18/play_2.11-2.5.18-sources.jar"
+                    "http://central.maven.org/maven2/com/typesafe/play/play_2.11/2.5.19/play_2.11-2.5.19-sources.jar"
                 ]
             },
             "lang": "scala"
@@ -1624,9 +1624,9 @@ def list_dependencies():
             "lang": "java"
         },
         # duplicates in org.scala-lang:scala-library fixed to 2.11.12
-        # - com.typesafe.play:play-specs2_2.11:2.5.18 wanted version 2.11.7
-        # - com.typesafe.play:play-test_2.11:2.5.18 wanted version 2.11.7
-        # - com.typesafe.play:play_2.11:2.5.18 wanted version 2.11.7
+        # - com.typesafe.play:play-specs2_2.11:2.5.19 wanted version 2.11.7
+        # - com.typesafe.play:play-test_2.11:2.5.19 wanted version 2.11.7
+        # - com.typesafe.play:play_2.11:2.5.19 wanted version 2.11.7
         # - org.scala-lang:scala-reflect:2.11.12 wanted version 2.11.12
         {
             "bind_args": {
