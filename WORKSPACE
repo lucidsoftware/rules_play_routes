@@ -7,6 +7,7 @@ http_archive(
     name = "rules_scala_annex",
     sha256 = "7d0bfa327d177ae3258483082b5a2c2dff763aca53a20b07b6b2cc5e866ae9fd",
     strip_prefix = "rules_scala-{}".format(rules_scala_annex_version),
+    type = "zip",
     url = "https://github.com/higherkindness/rules_scala/archive/{}.zip".format(rules_scala_annex_version),
 )
 
@@ -22,10 +23,10 @@ scala_register_toolchains()
 skylib_version = "8cecf885c8bf4c51e82fd6b50b9dd68d2c98f757"  # update this as needed
 http_archive(
     name = "bazel_skylib",
+    sha256 = "d54e5372d784ceb365f7d38c3dad7773f73b3b8ebc8fb90d58435a92b6a20256",
     strip_prefix = "bazel-skylib-{}".format(skylib_version),
     type = "zip",
     url = "https://github.com/bazelbuild/bazel-skylib/archive/{}.zip".format(skylib_version),
-    sha256 = "d54e5372d784ceb365f7d38c3dad7773f73b3b8ebc8fb90d58435a92b6a20256",
 )
 
 # To use the JavaScript version of Sass, we need to first install nodejs
@@ -48,6 +49,7 @@ http_archive(
     name = "io_bazel_rules_sass",
     sha256 = "afb08f0ae0060c1dbdd11d22578972d087e5463e647ce35dfc2b6c2a41682da8",
     strip_prefix = "rules_sass-{}".format(rules_sass_version),
+    type = "zip",
     url = "https://github.com/bazelbuild/rules_sass/archive/{}.zip".format(rules_sass_version),
 )
 load("@io_bazel_rules_sass//:package.bzl", "rules_sass_dependencies")
@@ -61,6 +63,7 @@ http_archive(
     name = "io_bazel_skydoc",
     sha256 = "4e9bd9ef65af54dedd997b408fa26c2e70c30ee8e078bcc1b51a33cf7d7f9d7e",
     strip_prefix = "skydoc-{}".format(skydoc_version),
+    type = "zip",
     url = "https://github.com/bazelbuild/skydoc/archive/{}.zip".format(skydoc_version),
 )
 load("@io_bazel_skydoc//skylark:skylark.bzl", "skydoc_repositories")

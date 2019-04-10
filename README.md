@@ -14,13 +14,17 @@ Create a file called at the top of your repository named `WORKSPACE` and add the
 
 ```python
 # update version as needed
-rules_play_routes_version = "cba8a4383d81e6519730ba2b0203f74fd2c9b765"
+rules_play_routes_version = "beca1e224c9f08813b55498da6db7f91721edea7"
 http_archive(
   name = "io_bazel_rules_play_routes",
-  url = "https://github.com/lucidsoftware/rules_play_routes/archive/%s.zip"%rules_play_routes_version,
+  sha256 = "bb37e52bf5bf2d11732b07e3baa1508b0cfdb9f8ce7645f346e215a954380a41",
+  strip_prefix = "rules_play_routes-{}".format(rules_play_routes_version),
   type = "zip",
-  strip_prefix= "rules_play_routes-%s" % rules_play_routes_version
+  url = "https://github.com/lucidsoftware/rules_play_routes/archive/{}.zip".format(rules_play_routes_version),
 )
+
+load("@io_bazel_rules_play_routes//:workspace.bzl", "play_routes_repositories")
+play_routes_repositories()
 ```
 
 This installs `rules_play_routes` to your `WORKSPACE` at the specified commit. Update the commit as needed.
