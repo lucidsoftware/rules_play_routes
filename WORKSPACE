@@ -23,10 +23,10 @@ load("@play_routes_test//:defs.bzl", play_routes_test_pinned_maven_install = "pi
 play_routes_test_pinned_maven_install()
 
 # higherkindness/rules_scala
-rules_scala_annex_version = "584e319f61a7c15360831b367c9a092570df9659" # update this as needed
+rules_scala_annex_version = "8749439ccb1aacc2fc613df2bfc3355fcced234a" # update this as needed
 http_archive(
     name = "rules_scala_annex",
-    sha256 = "9c9d9b0b4d995a0ed4aedfd6e3b201fe10cbb52b35c9bbec669138da56cd4f3b",
+    sha256 = "5ef3c676d348eae114528462c331ed50323d327b9141cadb67eac89ff97f78eb",
     strip_prefix = "rules_scala-{}".format(rules_scala_annex_version),
     type = "zip",
     url = "https://github.com/higherkindness/rules_scala/archive/{}.zip".format(rules_scala_annex_version),
