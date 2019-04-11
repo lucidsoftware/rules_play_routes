@@ -2,12 +2,22 @@
 Load test 3rd party maven dependencies
 """
 
-load("@bazel_tools//tools/build_defs/repo:java.bzl", "java_import_external")
-load("//3rdparty:test_maven.bzl", "list_dependencies")
+load("@rules_jvm_external//:defs.bzl", "maven_install")
 
 def play_routes_test_repositories():
-    for dep in list_dependencies():
-        if "exports" in dep["import_args"]:
-            dep["import_args"]["deps"] = dep["import_args"]["exports"]
-            dep["import_args"].pop("exports")
-        java_import_external(**dep["import_args"])
+    maven_install(
+        name = "play_routes_test",
+        artifacts = [
+            "org.specs2:specs2-common_2.11:3.6.6",
+            "org.specs2:specs2-core_2.11:3.6.6",
+            "org.specs2:specs2-matcher_2.11:3.6.6",
+            "com.typesafe.akka:akka-actor_2.11:2.4.20",
+            "com.typesafe.play:play_2.11:2.5.19",
+            "com.typesafe.play:play-test_2.11:2.5.19",
+            "com.typesafe.play:play-specs2_2.11:2.5.19",
+        ],
+        repositories = [
+            "http://central.maven.org/maven2",
+        ],
+        fetch_sources = True,
+    )

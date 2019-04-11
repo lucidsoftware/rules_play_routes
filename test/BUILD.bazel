@@ -72,12 +72,12 @@ scala_test(
     # ":play-routes-namespace-router",
   ],
   deps = [
-    "@org_specs2_specs2_common_2_11//jar",
-    "@org_specs2_specs2_core_2_11",
-    "@org_specs2_specs2_matcher_2_11//jar",
-    "@com_typesafe_akka_akka_actor_2_11//jar",
-    "@com_typesafe_play_play_2_11//jar",
-    "@com_typesafe_play_play_specs2_2_11//jar",
-    "@com_typesafe_play_play_test_2_11//jar",
+    "@play_routes_test//:org_specs2_specs2_common_2_11",
+    "@play_routes_test//:org_specs2_specs2_core_2_11",
+    "@play_routes_test//:org_specs2_specs2_matcher_2_11",
+    "@play_routes_test//:com_typesafe_akka_akka_actor_2_11",
+    "@play_routes_test//:com_typesafe_play_play_2_11",
+    "@play_routes_test//:com_typesafe_play_play_specs2_2_11",
+    "@play_routes_test//:com_typesafe_play_play_test_2_11",
   ]
 )
