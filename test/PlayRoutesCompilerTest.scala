@@ -17,6 +17,10 @@ class PlayRoutesCompilerTest extends Specification {
       status(route(app, FakeRequest(GET, "/500")).get) mustEqual INTERNAL_SERVER_ERROR
     }
 
+    "Handle Large Routes files well" in new WithApplication() {
+      status(route(app, FakeRequest(GET, "/large/749")).get) mustEqual OK
+    }
+
     "Support multiple routes files" in new WithApplication() {
       status(route(app, FakeRequest(GET, "/ok2")).get) mustEqual OK
       status(route(app, FakeRequest(GET, "/ok3")).get) mustEqual OK
