@@ -1,8 +1,11 @@
 package rulesplayroutes.routes
 
 import java.io.File
+import java.nio.file.{Files, Paths}
 import play.routes.compiler._
 import play.routes.compiler.RoutesCompiler.RoutesCompilerTask
+import scala.collection.JavaConversions
+import scala.io.Source
 import scala.reflect.runtime.universe
 import scala.Console._
 
@@ -63,6 +66,14 @@ object CommandLinePlayRoutesCompiler {
     }.text("Whether the reverse router should be namespaced. Useful if you have many routers that use the same actions.")
   }
 
+  // The generated Routes files include non-reproducible headers
+  // We need to remove these for Bazel caching to work
+  private def stripHeader(path: String): Unit = {
+    val lines = Source.fromFile(path).getLines
+    val sansHeader = lines.span(line => line.matches("^(//.*|\\s*)$"))._2.toList
+    Files.write(Paths.get(path), JavaConversions.asJavaIterable(sansHeader))
+  }
+
   def main(args: Array[String]): Unit = {
     val config = parser.parse(args, Config()).getOrElse {
       return System.exit(1)
@@ -81,6 +92,9 @@ object CommandLinePlayRoutesCompiler {
         config.generatedDirectory
       ) match {
         case Right(generatedFiles) =>
+          generatedFiles.foreach { f =>
+            stripHeader(f.getPath)
+          }
           true
         case Left(errors) =>
           Console.err.println(s"${RESET}${RED}Play Routes Compilation Error:${RESET} Failed to compile routes for ${file}. Errors: ${errors}")

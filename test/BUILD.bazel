@@ -20,6 +20,12 @@ play_routes(
 )
 
 play_routes(
+  name = "play-routes-large",
+  srcs = ["conf/large.routes"],
+  include_play_imports = True,
+)
+
+play_routes(
   name = "play-routes-additional-imports",
   srcs = ["conf/additional_imports.routes"],
   include_play_imports = True,
@@ -57,6 +63,7 @@ scala_test(
   srcs = glob(["app/**/*.scala"]) + [
     "PlayRoutesCompilerTest.scala",
     ":play-routes",
+    ":play-routes-large",
     ":play-routes-basic1",
     ":play-routes-basic2",
     ":play-routes-additional-imports",
