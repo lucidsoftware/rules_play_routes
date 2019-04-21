@@ -7,8 +7,8 @@ scala_binary(
   scalacopts = ["-Ywarn-unused-import"],
   main_class = "rulesplayroutes.routes.CommandLinePlayRoutesCompiler",
   deps = [
-    "@play_routes_com_typesafe_play_routes_compiler_2_11//jar",
-    "@play_routes_com_github_scopt_scopt_2_11//jar",
-    "@play_routes_org_scala_lang_scala_reflect",
+    "@play_routes//:com_typesafe_play_routes_compiler_2_11",
+    "@play_routes//:com_github_scopt_scopt_2_11",
+    "@play_routes//:org_scala_lang_scala_reflect",
   ],
 )

@@ -88,6 +88,15 @@ http_archive(
     url = "https://github.com/protocolbuffers/protobuf/archive/{}.zip".format(protobuf_version),
 )
 
+RULES_JVM_EXTERNAL_TAG = "2.0.1"
+http_archive(
+    name = "rules_jvm_external",
+    sha256 = "55e8d3951647ae3dffde22b4f7f8dee11b3f70f3f89424713debd7076197eaca",
+    strip_prefix = "rules_jvm_external-{}".format(RULES_JVM_EXTERNAL_TAG),
+    type = "zip",
+    url = "https://github.com/bazelbuild/rules_jvm_external/archive/{}.zip".format(RULES_JVM_EXTERNAL_TAG),
+)
+
 load("//:workspace.bzl", "play_routes_repositories")
 play_routes_repositories()
 

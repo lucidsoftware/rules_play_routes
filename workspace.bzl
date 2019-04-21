@@ -2,12 +2,22 @@
 Load 3rd party maven dependencies
 """
 
-load("@bazel_tools//tools/build_defs/repo:java.bzl", "java_import_external")
-load("//3rdparty:maven.bzl", "list_dependencies")
+load("@rules_jvm_external//:defs.bzl", "maven_install")
 
 def play_routes_repositories():
-    for dep in list_dependencies():
-        if "exports" in dep["import_args"]:
-            dep["import_args"]["deps"] = dep["import_args"]["exports"]
-            dep["import_args"].pop("exports")
-        java_import_external(**dep["import_args"])
+    maven_install(
+        name = "play_routes",
+        artifacts = [
+            "com.github.scopt:scopt_2.11:3.7.0",
+            "com.typesafe.play:routes-compiler_2.11:2.5.19",
+            "org.scala-sbt:zinc_2.11:1.2.1",
+            "org.scala-sbt:compiler-interface:1.2.1",
+            "org.scala-sbt:util-interface:1.2.0",
+            "org.scala-lang:scala-compiler:2.11.12",
+            "org.scala-lang:scala-library:2.11.12",
+            "org.scala-lang:scala-reflect:2.11.12",
+        ],
+        repositories = [
+            "http://central.maven.org/maven2",
+        ],
+    )
