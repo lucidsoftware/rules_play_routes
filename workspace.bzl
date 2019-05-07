@@ -20,4 +20,5 @@ def play_routes_repositories():
         repositories = [
             "http://central.maven.org/maven2",
         ],
+        fetch_sources = True,
     )
