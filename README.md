@@ -23,17 +23,9 @@ http_archive(
   url = "https://github.com/lucidsoftware/rules_play_routes/archive/{}.zip".format(rules_play_routes_version),
 )
 
-RULES_JVM_EXTERNAL_TAG = "2.1"
-http_archive(
-    name = "rules_jvm_external",
-    sha256 = "515ee5265387b88e4547b34a57393d2bcb1101314bcc5360ec7a482792556f42",
-    strip_prefix = "rules_jvm_external-{}".format(RULES_JVM_EXTERNAL_TAG),
-    type = "zip",
-    url = "https://github.com/bazelbuild/rules_jvm_external/archive/{}.zip".format(RULES_JVM_EXTERNAL_TAG),
-)
+load("@rules_play_routes//play-routes:play-routes.bzl", "play_repositories")
 
-load("@io_bazel_rules_play_routes//:workspace.bzl", "play_routes_repositories")
-play_routes_repositories()
+play_repositories()
 ```
 
 This installs `rules_play_routes` to your `WORKSPACE` at the specified commit. Update the commit as needed.

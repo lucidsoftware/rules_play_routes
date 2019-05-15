@@ -10,6 +10,9 @@ play_imports = [
   "controllers.Assets.Asset",
 ]
 
+# TODO: update this
+canonical_external_repo_name = "XXX_name_goes_here"
+
 def _sanitize_string_for_usage(s):
   res_array = []
   for i in range(len(s)):
@@ -94,7 +97,7 @@ play_routes = rule(
       executable = True,
       cfg = "host",
       allow_files = True,
-      default = Label("//play-routes-compiler"),
+      default = Label("@"+canonical_external_repo_name+"//:compiler"),
     ),
     "_zipper": attr.label(cfg = "host", default = "@bazel_tools//tools/zip:zipper", executable = True),
   },
@@ -102,3 +105,82 @@ play_routes = rule(
     "srcjar": "play_routes_%{name}.srcjar",
   }
 )
+
+# This is the implementation of the repository rule. It downloads the
+# play-routes compiler as a deploy JAR from the releases page.
+#
+# See https://docs.bazel.build/versions/master/skylark/lib/globals.html#repository_rule
+def _play_app_repository_rule_implementation(repository_ctx):
+  """Implementation for play_app_repository_rule"""
+
+  base_url = "https://github.com/lucidsoftware/rules_play_routes/releases/download"
+  compiler_url = "{}/{}/play-routes-compiler_deploy.jar".format(
+    base_url,
+    repository_ctx.attr.version,
+  )
+
+  repository_ctx.report_progress("Downloading compiler from {}".format(compiler_url))
+
+  download_info = repository_ctx.download(
+    compiler_url,
+    output = "play-routes-compiler_deploy.jar",
+    sha256 = repository_ctx.attr.sha256,
+  )
+
+  repository_ctx.report_progress("Successfully downloaded compiler from {}, sha256={}".format(
+    compiler_url,
+    download_info.sha256,
+  ))
+
+  # Write a build file that turns the deployment JAR into a Java binary that
+  # we can run.
+  build_file_content = """java_import(
+  name = "deployjar",
+  jars = [":play-routes-compiler_deploy.jar"],
+)
+
+java_binary(
+  name = "compiler",
+  main_class = "rulesplayroutes.routes.CommandLinePlayRoutesCompiler",
+  visibility = ["//visibility:public"],
+  runtime_deps = [":deployjar"],
+)
+"""
+  repository_ctx.file("BUILD", content = build_file_content, executable = False)
+
+# Declares the repository rule.
+_play_app_repository_rule = repository_rule(
+  implementation = _play_app_repository_rule_implementation,
+  local = True,
+  attrs = {
+    "version": attr.string(mandatory = True),
+    "sha256": attr.string(mandatory = True),
+  },
+  doc = "play_repositories loads the Play Framework rules into a WORKSPACE"
+)
+
+# Default release versions specified to play_repositories.
+_default_compiler_version = "GITHUB RELEASE NAME HERE"
+_default_compiler_jar_sha = "JAR SHA HERE"
+
+# play_repositories is a repository rule that introduces a new external
+# repository into the WORKSPACE that invokes this rule.  This activates the
+# Play rules and is the main entrypoint for consumers of these rules. This is
+# required in the WORKSPACE that will depend on the rules.
+#
+# The rules depend on a small number of compiled binaries which are available
+# on the Github releases page for this repository. The argument to this
+# function, tools_version_and_shas, is a tuple specifying the
+#
+#   1. Name of a release (e.g. "v0.0.2")
+#   2. SHA256 of the play-routes-compiler_deploy.jar from that release.
+#
+# A default is provided.
+def play_repositories(tools_version_and_shas = (_default_compiler_version, _default_compiler_jar_sha)):
+  (compiler_vers, jar_shas) = tools_version_and_shas
+
+  _play_app_repository_rule(
+    name = canonical_external_repo_name,
+    version = compiler_vers,
+    sha256 = jar_shas,
+  )
