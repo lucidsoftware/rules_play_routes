@@ -88,10 +88,10 @@ http_archive(
     url = "https://github.com/protocolbuffers/protobuf/archive/{}.zip".format(protobuf_version),
 )
 
-RULES_JVM_EXTERNAL_TAG = "2.1"
+RULES_JVM_EXTERNAL_TAG = "5ba86835f7e4f6fe31e23e3b427f0970d81a6516"
 http_archive(
     name = "rules_jvm_external",
-    sha256 = "515ee5265387b88e4547b34a57393d2bcb1101314bcc5360ec7a482792556f42",
+    sha256 = "97bf871dccb5695548436014b4cae6b91b6450e880b2d32f4597a18a19586c28",
     strip_prefix = "rules_jvm_external-{}".format(RULES_JVM_EXTERNAL_TAG),
     type = "zip",
     url = "https://github.com/bazelbuild/rules_jvm_external/archive/{}.zip".format(RULES_JVM_EXTERNAL_TAG),
@@ -100,5 +100,11 @@ http_archive(
 load("//:workspace.bzl", "play_routes_repositories")
 play_routes_repositories()
 
+load("@play_routes//:defs.bzl", play_routes_pinned_maven_install = "pinned_maven_install")
+play_routes_pinned_maven_install()
+
 load("//:test_workspace.bzl", "play_routes_test_repositories")
 play_routes_test_repositories()
+
+load("@play_routes_test//:defs.bzl", play_routes_test_pinned_maven_install = "pinned_maven_install")
+play_routes_test_pinned_maven_install()

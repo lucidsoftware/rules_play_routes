@@ -21,4 +21,5 @@ def play_routes_repositories():
             "http://central.maven.org/maven2",
         ],
         fetch_sources = True,
+        maven_install_json = "//:play_routes_install.json",
     )
