@@ -1,7 +1,7 @@
 dist: trusty
 sudo: required
 # xcode8 has jdk8
-osx_image: xcode8
+osx_image: xcode10.1
 # Not technically required but suppresses 'Ruby' in Job status message.
 language: java
 git:
@@ -10,8 +10,8 @@ os:
   - linux
   - osx
 env:
-  - V=0.22.0
-  - V=0.23.0
+  - V=0.27.2
+  - V=0.28.0
 before_install:
   # Borrowed from rules_scala
   - |

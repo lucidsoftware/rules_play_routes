@@ -1,4 +1,4 @@
-load("@io_bazel_skydoc//skylark:stardoc.bzl", "stardoc")
+load("@io_bazel_skydoc//stardoc:stardoc.bzl", "stardoc")
 
 stardoc(
     name = "play-routes-docs",
