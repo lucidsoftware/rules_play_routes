@@ -2,92 +2,7 @@ workspace(name = "io_bazel_rules_play_routes")
 
 load("@bazel_tools//tools/build_defs/repo:http.bzl", "http_archive")
 
-rules_scala_annex_version = "eeefae00b6e12ffd514f49c399f8d0abff7e4182" # update this as needed
-http_archive(
-    name = "rules_scala_annex",
-    sha256 = "7d0bfa327d177ae3258483082b5a2c2dff763aca53a20b07b6b2cc5e866ae9fd",
-    strip_prefix = "rules_scala-{}".format(rules_scala_annex_version),
-    type = "zip",
-    url = "https://github.com/higherkindness/rules_scala/archive/{}.zip".format(rules_scala_annex_version),
-)
-
-bind(
-    name = "default_scala",
-    actual = "//scala:default_scala",
-)
-
-load("@rules_scala_annex//rules/scala:workspace.bzl", "scala_register_toolchains", "scala_repositories")
-scala_repositories()
-scala_register_toolchains()
-
-skylib_version = "8cecf885c8bf4c51e82fd6b50b9dd68d2c98f757"  # update this as needed
-http_archive(
-    name = "bazel_skylib",
-    sha256 = "d54e5372d784ceb365f7d38c3dad7773f73b3b8ebc8fb90d58435a92b6a20256",
-    strip_prefix = "bazel-skylib-{}".format(skylib_version),
-    type = "zip",
-    url = "https://github.com/bazelbuild/bazel-skylib/archive/{}.zip".format(skylib_version),
-)
-
-# To use the JavaScript version of Sass, we need to first install nodejs
-rules_nodejs_version = "84882ba224f51f85d589e9cd45b30758cfdbf006"
-http_archive(
-    name = "build_bazel_rules_nodejs",
-    sha256 = "8662ffdaedbee7b85d4aadbbe8005a65cceea128bb0d07aa892998e3683caea2",
-    strip_prefix = "rules_nodejs-{}".format(rules_nodejs_version),
-    type = "zip",
-    url = "https://github.com/bazelbuild/rules_nodejs/archive/{}.zip".format(rules_nodejs_version),
-)
-load("@build_bazel_rules_nodejs//:package.bzl", "rules_nodejs_dependencies")
-rules_nodejs_dependencies()
-
-load("@build_bazel_rules_nodejs//:defs.bzl", "node_repositories")
-node_repositories(package_json = [])
-
-rules_sass_version = "8b61ad6953fde55031658e1731c335220f881369" # update this as needed
-http_archive(
-    name = "io_bazel_rules_sass",
-    sha256 = "afb08f0ae0060c1dbdd11d22578972d087e5463e647ce35dfc2b6c2a41682da8",
-    strip_prefix = "rules_sass-{}".format(rules_sass_version),
-    type = "zip",
-    url = "https://github.com/bazelbuild/rules_sass/archive/{}.zip".format(rules_sass_version),
-)
-load("@io_bazel_rules_sass//:package.bzl", "rules_sass_dependencies")
-rules_sass_dependencies()
-
-load("@io_bazel_rules_sass//sass:sass_repositories.bzl", "sass_repositories")
-sass_repositories()
-
-skydoc_version = "77e5399258f6d91417d23634fce97d73b40cf337" # update this as needed
-http_archive(
-    name = "io_bazel_skydoc",
-    sha256 = "4e9bd9ef65af54dedd997b408fa26c2e70c30ee8e078bcc1b51a33cf7d7f9d7e",
-    strip_prefix = "skydoc-{}".format(skydoc_version),
-    type = "zip",
-    url = "https://github.com/bazelbuild/skydoc/archive/{}.zip".format(skydoc_version),
-)
-load("@io_bazel_skydoc//skylark:skylark.bzl", "skydoc_repositories")
-skydoc_repositories()
-
-# For Skylint
-# Once https://github.com/bazelbuild/bazel/issues/4086 is done, this should be
-# much simpler
-http_archive(
-    name = "io_bazel",
-    url = "https://github.com/bazelbuild/bazel/releases/download/0.19.0/bazel-0.19.0-dist.zip",
-    sha256 = "ee6135c5c47306c8421d43ad83aabc4f219cb065376ee37797f2c8ba9a615315",
-)
-# Also for Skylint. Comes from
-# https://github.com/cgrushko/proto_library/blob/master/WORKSPACE
-protobuf_version = "0038ff49af882463c2af9049356eed7df45c3e8e"
-http_archive(
-    name = "com_google_protobuf",
-    sha256 = "2c8f8614fb1be709d68abaab6b4791682aa7db2048012dd4642d3a50b4f67cb3",
-    strip_prefix = "protobuf-{}".format(protobuf_version),
-    type = "zip",
-    url = "https://github.com/protocolbuffers/protobuf/archive/{}.zip".format(protobuf_version),
-)
-
+# rules_jvm_external
 RULES_JVM_EXTERNAL_TAG = "2.1"
 http_archive(
     name = "rules_jvm_external",
@@ -102,3 +17,124 @@ play_routes_repositories()
 
 load("//:test_workspace.bzl", "play_routes_test_repositories")
 play_routes_test_repositories()
+
+# higherkindness/rules_scala
+rules_scala_annex_version = "ac2101359ec810f9e129d47aa0306608035dacf2" # update this as needed
+http_archive(
+    name = "rules_scala_annex",
+    sha256 = "5803bbc490570a188ba0183ce2a3ca2b5d1e1078466945ec0d75427b29f74aac",
+    strip_prefix = "rules_scala-{}".format(rules_scala_annex_version),
+    type = "zip",
+    url = "https://github.com/higherkindness/rules_scala/archive/{}.zip".format(rules_scala_annex_version),
+)
+
+bind(
+    name = "default_scala",
+    actual = "//scala:default_scala",
+)
+
+load("@rules_scala_annex//rules/scala:workspace.bzl", "scala_register_toolchains", "scala_repositories")
+scala_repositories()
+scala_register_toolchains()
+
+# Skylib
+skylib_version = "0.9.0"  # update this as needed
+http_archive(
+    name = "bazel_skylib",
+    sha256 = "a8677c64e2a58eb113f305784e6af9759cfa3f9a6eacb4d40531fe1bd6356aca",
+    strip_prefix = "bazel-skylib-{}".format(skylib_version),
+    type = "zip",
+    url = "https://github.com/bazelbuild/bazel-skylib/archive/{}.zip".format(skylib_version),
+)
+
+# rules_nodejs
+# To use the JavaScript version of Sass, we need to first install nodejs
+rules_nodejs_version = "0.34.0"
+http_archive(
+    name = "build_bazel_rules_nodejs",
+    sha256 = "5be393c5c7b83029c941238ea3f735ffac541538744d010fd1c3ed901386cec0",
+    strip_prefix = "rules_nodejs-{}".format(rules_nodejs_version),
+    type = "zip",
+    url = "https://github.com/bazelbuild/rules_nodejs/archive/{}.zip".format(rules_nodejs_version),
+)
+
+load("@build_bazel_rules_nodejs//:defs.bzl", "node_repositories")
+node_repositories(package_json = [])
+
+# rules_sass
+rules_sass_version = "1.22.7" # update this as needed
+http_archive(
+    name = "io_bazel_rules_sass",
+    sha256 = "a8b6d287a5d40d70662c4d6a1db282e9f3d34a0cf6acd091dfb4c85c9f7c6997",
+    strip_prefix = "rules_sass-{}".format(rules_sass_version),
+    type = "zip",
+    url = "https://github.com/bazelbuild/rules_sass/archive/{}.zip".format(rules_sass_version),
+)
+load("@io_bazel_rules_sass//:package.bzl", "rules_sass_dependencies")
+rules_sass_dependencies()
+
+load("@io_bazel_rules_sass//sass:sass_repositories.bzl", "sass_repositories")
+sass_repositories()
+
+# Skydoc
+skydoc_version = "0.3.0" # update this as needed
+http_archive(
+    name = "io_bazel_skydoc",
+    sha256 = "8762a212cff5f81505a1632630edcfe9adce381479a50a03c968bd2fc217972d",
+    strip_prefix = "skydoc-{}".format(skydoc_version),
+    type = "zip",
+    url = "https://github.com/bazelbuild/skydoc/archive/{}.zip".format(skydoc_version),
+)
+load("@io_bazel_skydoc//skylark:skylark.bzl", "skydoc_repositories")
+skydoc_repositories()
+
+# For Skylint
+# Once https://github.com/bazelbuild/bazel/issues/4086 is done, this should be
+# much simpler
+http_archive(
+    name = "io_bazel",
+    sha256 = "2d86797a5b96163b7f5e9cbb8f09cc919066e7ee0fe1a614b79680ae36a14ef3",
+    strip_prefix = "bazel-0.27.0",
+    urls = ["https://github.com/bazelbuild/bazel/archive/0.27.0.zip"],
+)
+# Also for Skylint. Comes from
+# https://github.com/cgrushko/proto_library/blob/master/WORKSPACE
+protobuf_version = "3.9.0"
+http_archive(
+    name = "com_google_protobuf",
+    sha256 = "8eb5ca331ab8ca0da2baea7fc0607d86c46c80845deca57109a5d637ccb93bb4",
+    strip_prefix = "protobuf-{}".format(protobuf_version),
+    type = "zip",
+    url = "https://github.com/protocolbuffers/protobuf/archive/v{}.zip".format(protobuf_version),
+)
+load("@com_google_protobuf//:protobuf_deps.bzl", "protobuf_deps")
+protobuf_deps()
+
+jdk_build_file_content = """
+filegroup(
+    name = "jdk",
+    srcs = glob(["**/*"]),
+    visibility = ["//visibility:public"],
+)
+filegroup(
+    name = "java",
+    srcs = ["bin/java"],
+    visibility = ["//visibility:public"],
+)
+"""
+
+http_archive(
+    name = "jdk8-linux",
+    build_file_content = jdk_build_file_content,
+    sha256 = "dd28d6d2cde2b931caf94ac2422a2ad082ea62f0beee3bf7057317c53093de93",
+    strip_prefix = "jdk8u212-b03",
+    url = "https://github.com/AdoptOpenJDK/openjdk8-binaries/releases/download/jdk8u212-b03/OpenJDK8U-jdk_x64_linux_hotspot_8u212b03.tar.gz",
+)
+
+http_archive(
+    name = "jdk8-osx",
+    build_file_content = jdk_build_file_content,
+    sha256 = "3d80857e1bb44bf4abe6d70ba3bb2aae412794d335abe46b26eb904ab6226fe0",
+    strip_prefix = "jdk8u212-b03/Contents/Home",
+    url = "https://github.com/AdoptOpenJDK/openjdk8-binaries/releases/download/jdk8u212-b03/OpenJDK8U-jdk_x64_mac_hotspot_8u212b03.tar.gz",
+)
