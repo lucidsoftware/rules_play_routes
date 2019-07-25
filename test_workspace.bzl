@@ -20,4 +20,5 @@ def play_routes_test_repositories():
             "http://central.maven.org/maven2",
         ],
         fetch_sources = True,
+        maven_install_json = "@io_bazel_rules_play_routes//:play_routes_test_install.json",
     )
