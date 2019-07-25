@@ -14,19 +14,19 @@ Create a file called at the top of your repository named `WORKSPACE` and add the
 
 ```python
 # update version as needed
-rules_play_routes_version = "beca1e224c9f08813b55498da6db7f91721edea7"
+rules_play_routes_version = "0fd1c385541a2f537ecb8e44bb5d740d554370a4"
 http_archive(
   name = "io_bazel_rules_play_routes",
-  sha256 = "bb37e52bf5bf2d11732b07e3baa1508b0cfdb9f8ce7645f346e215a954380a41",
+  sha256 = "27f95b3c798612b5ab380611161ebe315426c550aadbe6037bf15e2edec8f012",
   strip_prefix = "rules_play_routes-{}".format(rules_play_routes_version),
   type = "zip",
   url = "https://github.com/lucidsoftware/rules_play_routes/archive/{}.zip".format(rules_play_routes_version),
 )
 
-RULES_JVM_EXTERNAL_TAG = "2.1"
+RULES_JVM_EXTERNAL_TAG = "2.5"
 http_archive(
     name = "rules_jvm_external",
-    sha256 = "515ee5265387b88e4547b34a57393d2bcb1101314bcc5360ec7a482792556f42",
+    sha256 = "249e8129914be6d987ca57754516be35a14ea866c616041ff0cd32ea94d2f3a1",
     strip_prefix = "rules_jvm_external-{}".format(RULES_JVM_EXTERNAL_TAG),
     type = "zip",
     url = "https://github.com/bazelbuild/rules_jvm_external/archive/{}.zip".format(RULES_JVM_EXTERNAL_TAG),
@@ -34,6 +34,8 @@ http_archive(
 
 load("@io_bazel_rules_play_routes//:workspace.bzl", "play_routes_repositories")
 play_routes_repositories()
+load("@play_routes//:defs.bzl", play_routes_pinned_maven_install = "pinned_maven_install")
+play_routes_pinned_maven_install()
 ```
 
 This installs `rules_play_routes` to your `WORKSPACE` at the specified commit. Update the commit as needed.
