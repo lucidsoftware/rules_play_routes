@@ -3,10 +3,10 @@ workspace(name = "io_bazel_rules_play_routes")
 load("@bazel_tools//tools/build_defs/repo:http.bzl", "http_archive")
 
 # rules_jvm_external
-RULES_JVM_EXTERNAL_TAG = "2.1"
+RULES_JVM_EXTERNAL_TAG = "2.5"
 http_archive(
     name = "rules_jvm_external",
-    sha256 = "515ee5265387b88e4547b34a57393d2bcb1101314bcc5360ec7a482792556f42",
+    sha256 = "249e8129914be6d987ca57754516be35a14ea866c616041ff0cd32ea94d2f3a1",
     strip_prefix = "rules_jvm_external-{}".format(RULES_JVM_EXTERNAL_TAG),
     type = "zip",
     url = "https://github.com/bazelbuild/rules_jvm_external/archive/{}.zip".format(RULES_JVM_EXTERNAL_TAG),
@@ -14,15 +14,19 @@ http_archive(
 
 load("//:workspace.bzl", "play_routes_repositories")
 play_routes_repositories()
+load("@play_routes//:defs.bzl", play_routes_pinned_maven_install = "pinned_maven_install")
+play_routes_pinned_maven_install()
 
 load("//:test_workspace.bzl", "play_routes_test_repositories")
 play_routes_test_repositories()
+load("@play_routes_test//:defs.bzl", play_routes_test_pinned_maven_install = "pinned_maven_install")
+play_routes_test_pinned_maven_install()
 
 # higherkindness/rules_scala
-rules_scala_annex_version = "ac2101359ec810f9e129d47aa0306608035dacf2" # update this as needed
+rules_scala_annex_version = "584e319f61a7c15360831b367c9a092570df9659" # update this as needed
 http_archive(
     name = "rules_scala_annex",
-    sha256 = "5803bbc490570a188ba0183ce2a3ca2b5d1e1078466945ec0d75427b29f74aac",
+    sha256 = "9c9d9b0b4d995a0ed4aedfd6e3b201fe10cbb52b35c9bbec669138da56cd4f3b",
     strip_prefix = "rules_scala-{}".format(rules_scala_annex_version),
     type = "zip",
     url = "https://github.com/higherkindness/rules_scala/archive/{}.zip".format(rules_scala_annex_version),
@@ -35,6 +39,8 @@ bind(
 
 load("@rules_scala_annex//rules/scala:workspace.bzl", "scala_register_toolchains", "scala_repositories")
 scala_repositories()
+load("@annex//:defs.bzl", annex_pinned_maven_install = "pinned_maven_install")
+annex_pinned_maven_install()
 scala_register_toolchains()
 
 # Skylib
