@@ -1,5 +1,9 @@
 startup --expand_configs_in_place
-common --incompatible_disallow_filetype=false
+
+build --javabase="//:jdk"
+build --java_toolchain="@bazel_tools//tools/jdk:toolchain_hostjdk8"
+build --host_javabase="//:jdk"
+build --host_java_toolchain="@bazel_tools//tools/jdk:toolchain_hostjdk8"
 
 common:ci --color=yes
 
