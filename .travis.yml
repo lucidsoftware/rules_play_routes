@@ -47,5 +47,5 @@ deploy:
     script:
       - ./tools/ci-stardoc-update.sh
     on:
-      branch: master
-      condition: $DOC_VERSION = true && $TRAVIS_OS_NAME = linux
+      # branch: master
+      condition: $TRAVIS_OS_NAME = linux
