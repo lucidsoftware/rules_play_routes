@@ -35,17 +35,7 @@ before_install:
     rm -f install.sh
   - cat .bazelrc.travis >> .bazelrc
 script:
-  - ./tools/skylint.sh
+  - ./scripts/skylint.sh
   - ./test/run_all_tests.sh ci
-  - bazel build play-routes:play-routes-docs
+  - ./scripts/gen-docs.sh && git diff --exit-code docs/
   - bazel shutdown
-before_deploy:
-  - openssl aes-256-cbc -K $encrypted_90964ca3428f_key -iv $encrypted_90964ca3428f_iv -in tools/lemur_rsa.enc -out lemur_rsa -d
-deploy:
-  - provider: script
-    skip_cleanup: true
-    script:
-      - ./tools/ci-stardoc-update.sh
-    on:
-      branch: master
-      condition: $DOC_VERSION = true && $TRAVIS_OS_NAME = linux
