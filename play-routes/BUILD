@@ -38,3 +38,10 @@ bzl_library(
     name = "jdk_toolchain_utils",
     srcs = ["@bazel_tools//tools/jdk:toolchain_utils.bzl"],
 )
+
+java_binary(
+  name = "compiler-cli",
+  runtime_deps = ["@play_routes//:com_lucidchart_play_routes_compiler_cli"],
+  main_class = "rulesplayroutes.routes.CommandLinePlayRoutesCompiler",
+  visibility = ["//visibility:public"]
+)

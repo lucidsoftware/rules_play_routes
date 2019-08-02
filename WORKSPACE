@@ -22,27 +22,6 @@ play_routes_test_repositories()
 load("@play_routes_test//:defs.bzl", play_routes_test_pinned_maven_install = "pinned_maven_install")
 play_routes_test_pinned_maven_install()
 
-# higherkindness/rules_scala
-rules_scala_annex_version = "584e319f61a7c15360831b367c9a092570df9659" # update this as needed
-http_archive(
-    name = "rules_scala_annex",
-    sha256 = "9c9d9b0b4d995a0ed4aedfd6e3b201fe10cbb52b35c9bbec669138da56cd4f3b",
-    strip_prefix = "rules_scala-{}".format(rules_scala_annex_version),
-    type = "zip",
-    url = "https://github.com/higherkindness/rules_scala/archive/{}.zip".format(rules_scala_annex_version),
-)
-
-bind(
-    name = "default_scala",
-    actual = "//scala:default_scala",
-)
-
-load("@rules_scala_annex//rules/scala:workspace.bzl", "scala_register_toolchains", "scala_repositories")
-scala_repositories()
-load("@annex//:defs.bzl", annex_pinned_maven_install = "pinned_maven_install")
-annex_pinned_maven_install()
-scala_register_toolchains()
-
 # Skylib
 skylib_version = "0.9.0"  # update this as needed
 http_archive(
@@ -144,3 +123,24 @@ http_archive(
     strip_prefix = "jdk8u212-b03/Contents/Home",
     url = "https://github.com/AdoptOpenJDK/openjdk8-binaries/releases/download/jdk8u212-b03/OpenJDK8U-jdk_x64_mac_hotspot_8u212b03.tar.gz",
 )
+
+# higherkindness/rules_scala (used for tests only)
+rules_scala_annex_version = "584e319f61a7c15360831b367c9a092570df9659" # update this as needed
+http_archive(
+    name = "rules_scala_annex",
+    sha256 = "9c9d9b0b4d995a0ed4aedfd6e3b201fe10cbb52b35c9bbec669138da56cd4f3b",
+    strip_prefix = "rules_scala-{}".format(rules_scala_annex_version),
+    type = "zip",
+    url = "https://github.com/higherkindness/rules_scala/archive/{}.zip".format(rules_scala_annex_version),
+)
+
+bind(
+    name = "default_scala",
+    actual = "//scala:default_scala",
+)
+
+load("@rules_scala_annex//rules/scala:workspace.bzl", "scala_register_toolchains", "scala_repositories")
+scala_repositories()
+load("@annex//:defs.bzl", annex_pinned_maven_install = "pinned_maven_install")
+annex_pinned_maven_install()
+scala_register_toolchains()

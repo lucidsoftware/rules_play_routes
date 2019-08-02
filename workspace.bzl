@@ -9,6 +9,7 @@ def play_routes_repositories():
         name = "play_routes",
         artifacts = [
             "com.github.scopt:scopt_2.11:3.7.0",
+            "com.lucidchart:play-routes-compiler-cli:0.1",
             "com.typesafe.play:routes-compiler_2.11:2.5.19",
             "org.scala-sbt:zinc_2.11:1.2.1",
             "org.scala-sbt:compiler-interface:1.2.1",
