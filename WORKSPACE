@@ -125,6 +125,7 @@ http_archive(
 )
 
 # higherkindness/rules_scala (used for tests only)
+# TODO: Move tests into their own worskpace s.t. we don't need their dependenices here
 rules_scala_annex_version = "584e319f61a7c15360831b367c9a092570df9659" # update this as needed
 http_archive(
     name = "rules_scala_annex",
