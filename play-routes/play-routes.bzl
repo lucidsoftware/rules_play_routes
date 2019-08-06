@@ -49,7 +49,7 @@ def _impl(ctx):
     outputs = [gendir],
     arguments = args,
     progress_message = "Compiling play routes",
-    executable = ctx.executable._play_routes_compiler,
+    executable = ctx.executable.play_routes_compiler,
   )
 
   # TODO: something more portable
@@ -90,11 +90,11 @@ play_routes = rule(
       doc = "If true, include the imports the Play project includes by default.",
       default = False
     ),
-    "_play_routes_compiler": attr.label(
+    "play_routes_compiler": attr.label(
       executable = True,
       cfg = "host",
       allow_files = True,
-      default = Label("//play-routes:compiler-cli"),
+      default = Label("//compiler-cli"),
     ),
     "_zipper": attr.label(cfg = "host", default = "@bazel_tools//tools/zip:zipper", executable = True),
   },
