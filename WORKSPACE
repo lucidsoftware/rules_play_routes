@@ -12,18 +12,11 @@ http_archive(
     url = "https://github.com/bazelbuild/rules_jvm_external/archive/{}.zip".format(RULES_JVM_EXTERNAL_TAG),
 )
 
-# Load external dependencies
+# Load dependencies
 load("//:workspace.bzl", "play_routes_repositories")
-play_routes_repositories()
+play_routes_repositories("2.5")
 load("@play_routes//:defs.bzl", play_routes_pinned_maven_install = "pinned_maven_install")
 play_routes_pinned_maven_install()
-
-load("@play_2_5_routes_compiler_cli//:defs.bzl", play_2_5_compilers_pinned_maven_install = "pinned_maven_install")
-play_2_5_compilers_pinned_maven_install()
-load("@play_2_6_routes_compiler_cli//:defs.bzl", play_2_6_compilers_pinned_maven_install = "pinned_maven_install")
-play_2_6_compilers_pinned_maven_install()
-load("@play_2_7_routes_compiler_cli//:defs.bzl", play_2_7_compilers_pinned_maven_install = "pinned_maven_install")
-play_2_7_compilers_pinned_maven_install()
 
 load("//:test_workspace.bzl", "play_routes_test_repositories")
 play_routes_test_repositories()
