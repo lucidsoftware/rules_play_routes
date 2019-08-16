@@ -1,0 +1,34 @@
+java_binary(
+  name = "scala_2_11_play_2_5",
+  runtime_deps = ["@play_2_5_compilers//:com_lucidchart_play_routes_compiler_cli_2_11"],
+  main_class = "rulesplayroutes.routes.CommandLinePlayRoutesCompiler",
+  visibility = ["//visibility:public"]
+)
+
+java_binary(
+  name = "scala_2_11_play_2_6",
+  runtime_deps = ["@play_2_6_compilers//:com_lucidchart_play_routes_compiler_cli_2_11"],
+  main_class = "rulesplayroutes.routes.CommandLinePlayRoutesCompiler",
+  visibility = ["//visibility:public"]
+)
+
+java_binary(
+  name = "scala_2_11_play_2_7",
+  runtime_deps = ["@play_2_7_compilers//:com_lucidchart_play_routes_compiler_cli_2_11"],
+  main_class = "rulesplayroutes.routes.CommandLinePlayRoutesCompiler",
+  visibility = ["//visibility:public"]
+)
+
+java_binary(
+  name = "scala_2_12_play_2_6",
+  runtime_deps = ["@play_2_6_compilers//:com_lucidchart_play_routes_compiler_cli_2_12"],
+  main_class = "rulesplayroutes.routes.CommandLinePlayRoutesCompiler",
+  visibility = ["//visibility:public"]
+)
+
+java_binary(
+  name = "scala_2_12_play_2_7",
+  runtime_deps = ["@play_2_7_compilers//:com_lucidchart_play_routes_compiler_cli_2_12"],
+  main_class = "rulesplayroutes.routes.CommandLinePlayRoutesCompiler",
+  visibility = ["//visibility:public"]
+)

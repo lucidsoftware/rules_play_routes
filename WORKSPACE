@@ -12,10 +12,26 @@ http_archive(
     url = "https://github.com/bazelbuild/rules_jvm_external/archive/{}.zip".format(RULES_JVM_EXTERNAL_TAG),
 )
 
+# Load external dependencies
 load("//:workspace.bzl", "play_routes_repositories")
 play_routes_repositories()
 load("@play_routes//:defs.bzl", play_routes_pinned_maven_install = "pinned_maven_install")
 play_routes_pinned_maven_install()
+
+load("//:workspace.bzl", "play_2_5_routes_compiler_cli_repositories")
+play_2_5_routes_compiler_cli_repositories()
+load("@play_2_5_compilers//:defs.bzl", play_2_5_compilers_pinned_maven_install = "pinned_maven_install")
+play_2_5_compilers_pinned_maven_install()
+
+load("//:workspace.bzl", "play_2_6_routes_compiler_cli_repositories")
+play_2_6_routes_compiler_cli_repositories()
+load("@play_2_6_compilers//:defs.bzl", play_2_6_compilers_pinned_maven_install = "pinned_maven_install")
+play_2_6_compilers_pinned_maven_install()
+
+load("//:workspace.bzl", "play_2_7_routes_compiler_cli_repositories")
+play_2_7_routes_compiler_cli_repositories()
+load("@play_2_7_compilers//:defs.bzl", play_2_7_compilers_pinned_maven_install = "pinned_maven_install")
+play_2_7_compilers_pinned_maven_install()
 
 load("//:test_workspace.bzl", "play_routes_test_repositories")
 play_routes_test_repositories()
@@ -148,6 +164,6 @@ scala_register_toolchains()
 
 # for tests
 bind(
-  name = "play-routes-compiler-cli",
-  actual = "//compiler-cli"
+  name = "default-play-routes-compiler-cli",
+  actual = "//default-compiler-clis:scala_2_11_play_2_5"
 )
