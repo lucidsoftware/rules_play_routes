@@ -14,7 +14,7 @@ For more information about the Play Framework, see [the Play documentation](http
 ## Installation
 Create a file at the top of your repository named `WORKSPACE` and add the following snippet to it.
 
-```
+```python
 # update version as needed
 rules_play_routes_version = "0fd1c385541a2f537ecb8e44bb5d740d554370a4"
 http_archive(
@@ -59,16 +59,18 @@ We provide 5 default compilers:
 - For Scala 2.12 + Play 2.7: `@io_bazel_rules_play_routes//default-compiler-clis:scala_2_12_play_2_7`
 
 To bind one of the default compilers, simply specify the correct Play version in the call to `play_routes_repositories` and update the bind statement:
-```
+```python
 play_routes_repositories(<Play Version>)
 load("@play_routes//:defs.bzl", play_routes_pinned_maven_install = "pinned_maven_install")
 play_routes_pinned_maven_install()
 
 bind(
   name = "default-play-routes-compiler-cli",
-  actual = <default compiler Label>
+  actual = <Default Compiler Label>
 )
 ```
+
+Note: play_routes_respositories only needs to know the Play version; there's no special config for the Scala version (just make sure you bind the right compiler label)
 
 
 ## Usage
