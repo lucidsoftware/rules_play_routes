@@ -145,3 +145,9 @@ scala_repositories()
 load("@annex//:defs.bzl", annex_pinned_maven_install = "pinned_maven_install")
 annex_pinned_maven_install()
 scala_register_toolchains()
+
+# for tests
+bind(
+  name = "play-routes-compiler-cli",
+  actual = "//compiler-cli"
+)

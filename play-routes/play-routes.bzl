@@ -94,7 +94,7 @@ play_routes = rule(
       executable = True,
       cfg = "host",
       allow_files = True,
-      default = Label("//compiler-cli"),
+      default = Label("//external:play-routes-compiler-cli"),
     ),
     "_zipper": attr.label(cfg = "host", default = "@bazel_tools//tools/zip:zipper", executable = True),
   },
