@@ -5,6 +5,12 @@ Load 3rd party maven dependencies
 load("@rules_jvm_external//:defs.bzl", "maven_install")
 
 def play_routes_repositories(play_version):
+    """
+    Loads 3rd party dependencies and the required play routes compiler CLIs for the specified version of Play
+
+    Args:
+      play_version: (str) Must be either "2.5", "2.6", or "2.7"
+    """
 
     play_artifacts = {
         "2.5": [
