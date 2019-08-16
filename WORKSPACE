@@ -18,19 +18,11 @@ play_routes_repositories()
 load("@play_routes//:defs.bzl", play_routes_pinned_maven_install = "pinned_maven_install")
 play_routes_pinned_maven_install()
 
-load("//:workspace.bzl", "play_2_5_routes_compiler_cli_repositories")
-play_2_5_routes_compiler_cli_repositories()
-load("@play_2_5_compilers//:defs.bzl", play_2_5_compilers_pinned_maven_install = "pinned_maven_install")
+load("@play_2_5_routes_compiler_cli//:defs.bzl", play_2_5_compilers_pinned_maven_install = "pinned_maven_install")
 play_2_5_compilers_pinned_maven_install()
-
-load("//:workspace.bzl", "play_2_6_routes_compiler_cli_repositories")
-play_2_6_routes_compiler_cli_repositories()
-load("@play_2_6_compilers//:defs.bzl", play_2_6_compilers_pinned_maven_install = "pinned_maven_install")
+load("@play_2_6_routes_compiler_cli//:defs.bzl", play_2_6_compilers_pinned_maven_install = "pinned_maven_install")
 play_2_6_compilers_pinned_maven_install()
-
-load("//:workspace.bzl", "play_2_7_routes_compiler_cli_repositories")
-play_2_7_routes_compiler_cli_repositories()
-load("@play_2_7_compilers//:defs.bzl", play_2_7_compilers_pinned_maven_install = "pinned_maven_install")
+load("@play_2_7_routes_compiler_cli//:defs.bzl", play_2_7_compilers_pinned_maven_install = "pinned_maven_install")
 play_2_7_compilers_pinned_maven_install()
 
 load("//:test_workspace.bzl", "play_routes_test_repositories")
@@ -162,7 +154,8 @@ load("@annex//:defs.bzl", annex_pinned_maven_install = "pinned_maven_install")
 annex_pinned_maven_install()
 scala_register_toolchains()
 
-# for tests
+# TODO: Once the tests are in their own workspaces, we might want to add a basic test for each of the defaults
+# This would require a separate workspace for each compiler being tested
 bind(
   name = "default-play-routes-compiler-cli",
   actual = "//default-compiler-clis:scala_2_11_play_2_5"

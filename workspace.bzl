@@ -25,9 +25,8 @@ def play_routes_repositories():
         maven_install_json = "@io_bazel_rules_play_routes//:play_routes_install.json",
     )
 
-def play_2_5_routes_compiler_cli_repositories():
     maven_install(
-        name = "play_2_5_compilers",
+        name = "play_2_5_routes_compiler_cli",
         artifacts = [
             "com.lucidchart:play-routes-compiler-cli_2.11:2.5.19",
         ],
@@ -35,12 +34,11 @@ def play_2_5_routes_compiler_cli_repositories():
             "http://central.maven.org/maven2",
         ],
         fetch_sources = True,
-        maven_install_json = "//:play_2_5_compilers_install.json",
+        maven_install_json = "@io_bazel_rules_play_routes//:play_2_5_routes_compiler_cli_install.json",
     )
 
-def play_2_6_routes_compiler_cli_repositories():
     maven_install(
-        name = "play_2_6_compilers",
+        name = "play_2_6_routes_compiler_cli",
         artifacts = [
             "com.lucidchart:play-routes-compiler-cli_2.11:2.6.23",
             "com.lucidchart:play-routes-compiler-cli_2.12:2.6.23",
@@ -49,12 +47,11 @@ def play_2_6_routes_compiler_cli_repositories():
             "http://central.maven.org/maven2",
         ],
         fetch_sources = True,
-        maven_install_json = "//:play_2_6_compilers_install.json",
+        maven_install_json = "@io_bazel_rules_play_routes//:play_2_6_routes_compiler_cli_install.json",
     )
 
-def play_2_7_routes_compiler_cli_repositories():
     maven_install(
-        name = "play_2_7_compilers",
+        name = "play_2_7_routes_compiler_cli",
         artifacts = [
             "com.lucidchart:play-routes-compiler-cli_2.11:2.7.2",
             "com.lucidchart:play-routes-compiler-cli_2.12:2.7.3",
@@ -63,5 +60,5 @@ def play_2_7_routes_compiler_cli_repositories():
             "http://central.maven.org/maven2",
         ],
         fetch_sources = True,
-        maven_install_json = "//:play_2_7_compilers_install.json",
+        maven_install_json = "@io_bazel_rules_play_routes//:play_2_7_routes_compiler_cli_install.json",
     )
