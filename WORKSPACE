@@ -12,8 +12,9 @@ http_archive(
     url = "https://github.com/bazelbuild/rules_jvm_external/archive/{}.zip".format(RULES_JVM_EXTERNAL_TAG),
 )
 
+# Load dependencies
 load("//:workspace.bzl", "play_routes_repositories")
-play_routes_repositories()
+play_routes_repositories("2.5")
 load("@play_routes//:defs.bzl", play_routes_pinned_maven_install = "pinned_maven_install")
 play_routes_pinned_maven_install()
 
@@ -145,3 +146,10 @@ scala_repositories()
 load("@annex//:defs.bzl", annex_pinned_maven_install = "pinned_maven_install")
 annex_pinned_maven_install()
 scala_register_toolchains()
+
+# TODO: Once the tests are in their own workspaces, we might want to add a basic test for each of the defaults
+# This would require a separate workspace for each compiler being tested
+bind(
+  name = "default-play-routes-compiler-cli",
+  actual = "//default-compiler-clis:scala_2_11_play_2_5"
+)
