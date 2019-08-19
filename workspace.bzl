@@ -12,15 +12,17 @@ def play_routes_repositories(play_version):
       play_version: (str) Must be either "2.5", "2.6", or "2.7"
     """
 
+    play_version = play_version.replace(".", "_")
+
     play_artifacts = {
-        "2.5": [
+        "2_5": [
             "com.lucidchart:play-routes-compiler-cli_2.11:2.5.19",
         ],
-        "2.6": [
+        "2_6": [
             "com.lucidchart:play-routes-compiler-cli_2.11:2.6.23",
             "com.lucidchart:play-routes-compiler-cli_2.12:2.6.23",
         ],
-        "2.7": [
+        "2_7": [
             "com.lucidchart:play-routes-compiler-cli_2.11:2.7.2",
             "com.lucidchart:play-routes-compiler-cli_2.12:2.7.3",
         ]
@@ -45,35 +47,16 @@ def play_routes_repositories(play_version):
             "http://central.maven.org/maven2",
         ],
         fetch_sources = True,
-        maven_install_json = "@io_bazel_rules_play_routes//:play_{}_routes_compiler_cli_install.json".format(play_version.replace(".", "_"))
+        maven_install_json = "@io_bazel_rules_play_routes//:play_{}_routes_compiler_cli_install.json".format(play_version)
     )
 
-    maven_install(
-        name = "play_2_5_routes_compiler_cli",
-        artifacts = play_artifacts["2.5"] + common_artifacts,
-        repositories = [
-            "http://central.maven.org/maven2",
-        ],
-        fetch_sources = True,
-        maven_install_json = "@io_bazel_rules_play_routes//:play_2_5_routes_compiler_cli_install.json",
-    )
-
-    maven_install(
-        name = "play_2_6_routes_compiler_cli",
-        artifacts = play_artifacts["2.6"] + common_artifacts,
-        repositories = [
-            "http://central.maven.org/maven2",
-        ],
-        fetch_sources = True,
-        maven_install_json = "@io_bazel_rules_play_routes//:play_2_6_routes_compiler_cli_install.json",
-    )
-
-    maven_install(
-        name = "play_2_7_routes_compiler_cli",
-        artifacts = play_artifacts["2.7"] + common_artifacts,
-        repositories = [
-            "http://central.maven.org/maven2",
-        ],
-        fetch_sources = True,
-        maven_install_json = "@io_bazel_rules_play_routes//:play_2_7_routes_compiler_cli_install.json",
-    )
+    for version in play_artifacts.keys():
+      maven_install(
+          name = "play_{}_routes_compiler_cli".format(version),
+          artifacts = play_artifacts[version] + common_artifacts,
+          repositories = [
+              "http://central.maven.org/maven2",
+          ],
+          fetch_sources = True,
+          maven_install_json = "@io_bazel_rules_play_routes//:play_{}_routes_compiler_cli_install.json".format(version),
+      )
