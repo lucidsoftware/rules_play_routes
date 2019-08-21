@@ -16,10 +16,10 @@ Create a file at the top of your repository named `WORKSPACE` and add the follow
 
 ```python
 # update version as needed
-rules_play_routes_version = "0fd1c385541a2f537ecb8e44bb5d740d554370a4"
+rules_play_routes_version = "f1e5beb66ce14fa02baedb53fcd9132fb2786c01"
 http_archive(
   name = "io_bazel_rules_play_routes",
-  sha256 = "27f95b3c798612b5ab380611161ebe315426c550aadbe6037bf15e2edec8f012",
+  sha256 = "4be5194ba03d8a72881c4a5320d95b646467429527a33d8c0f0030d786fa2697",
   strip_prefix = "rules_play_routes-{}".format(rules_play_routes_version),
   type = "zip",
   url = "https://github.com/lucidsoftware/rules_play_routes/archive/{}.zip".format(rules_play_routes_version),
