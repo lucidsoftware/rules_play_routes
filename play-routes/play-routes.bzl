@@ -44,6 +44,9 @@ def _impl(ctx):
   if ctx.attr.routes_generator:
     args = args + ["--routesGenerator={}".format(ctx.attr.routes_generator)]
 
+  if ctx.attr.generate_forwards_router == False:
+    args = args + ["--generateForwardsRouter={}".format(ctx.attr.generate_forwards_router)]
+
   ctx.actions.run(
     inputs = ctx.files.srcs,
     outputs = [gendir],
@@ -85,6 +88,10 @@ play_routes = rule(
     "namespace_reverse_router": attr.bool(
       doc = "Whether the reverse router should be namespaced. Useful if you have many routers that use the same actions.",
       default = False
+    ),
+    "generate_forwards_router": attr.bool(
+        doc = "Whether the forward router should be generated. Setting to false may help generate only the reverse routes",
+        default = True
     ),
     "include_play_imports": attr.bool(
       doc = "If true, include the imports the Play project includes by default.",

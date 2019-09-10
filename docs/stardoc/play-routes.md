@@ -5,7 +5,7 @@
 ## play_routes
 
 <pre>
-play_routes(<a href="#play_routes-name">name</a>, <a href="#play_routes-generate_reverse_router">generate_reverse_router</a>, <a href="#play_routes-include_play_imports">include_play_imports</a>, <a href="#play_routes-namespace_reverse_router">namespace_reverse_router</a>, <a href="#play_routes-play_routes_compiler">play_routes_compiler</a>, <a href="#play_routes-routes_generator">routes_generator</a>, <a href="#play_routes-routes_imports">routes_imports</a>, <a href="#play_routes-srcs">srcs</a>)
+play_routes(<a href="#play_routes-name">name</a>, <a href="#play_routes-generate_forwards_router">generate_forwards_router</a>, <a href="#play_routes-generate_reverse_router">generate_reverse_router</a>, <a href="#play_routes-include_play_imports">include_play_imports</a>, <a href="#play_routes-namespace_reverse_router">namespace_reverse_router</a>, <a href="#play_routes-play_routes_compiler">play_routes_compiler</a>, <a href="#play_routes-routes_generator">routes_generator</a>, <a href="#play_routes-routes_imports">routes_imports</a>, <a href="#play_routes-srcs">srcs</a>)
 </pre>
 
 Compiles Play routes files templates to Scala sources files.
@@ -24,6 +24,15 @@ Compiles Play routes files templates to Scala sources files.
         <a href="https://bazel.build/docs/build-ref.html#name">Name</a>; required
         <p>
           A unique name for this target.
+        </p>
+      </td>
+    </tr>
+    <tr id="play_routes-generate_forwards_router">
+      <td><code>generate_forwards_router</code></td>
+      <td>
+        Boolean; optional
+        <p>
+          Whether the forward router should be generated. Setting to false may help generate only the reverse routes
         </p>
       </td>
     </tr>
