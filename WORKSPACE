@@ -3,10 +3,10 @@ workspace(name = "io_bazel_rules_play_routes")
 load("@bazel_tools//tools/build_defs/repo:http.bzl", "http_archive")
 
 # rules_jvm_external
-RULES_JVM_EXTERNAL_TAG = "2.5"
+RULES_JVM_EXTERNAL_TAG = "2.9"
 http_archive(
     name = "rules_jvm_external",
-    sha256 = "249e8129914be6d987ca57754516be35a14ea866c616041ff0cd32ea94d2f3a1",
+    sha256 = "e5b97a31a3e8feed91636f42e19b11c49487b85e5de2f387c999ea14d77c7f45",
     strip_prefix = "rules_jvm_external-{}".format(RULES_JVM_EXTERNAL_TAG),
     type = "zip",
     url = "https://github.com/bazelbuild/rules_jvm_external/archive/{}.zip".format(RULES_JVM_EXTERNAL_TAG),
