@@ -127,10 +127,10 @@ http_archive(
 
 # higherkindness/rules_scala (used for tests only)
 # TODO: Move tests into their own worskpace s.t. we don't need their dependenices here
-rules_scala_annex_version = "494606a6035f540639cb3e31b5b9f0338febb435" # update this as needed
+rules_scala_annex_version = "43bcd8eee8e07c74712f3c73c158ee2fe38ecb7c" # update this as needed
 http_archive(
     name = "rules_scala_annex",
-    sha256 = "8aa804d6fb6d259f11d1d441fe2b5d94f50bda4c9a1b774e060aa01ca226d89f",
+    sha256 = "0bdb4320a589b4ffe7e5f5b261222bae5a78bcce97d9c06e31f274a5fc125d82",
     strip_prefix = "rules_scala-{}".format(rules_scala_annex_version),
     type = "zip",
     url = "https://github.com/higherkindness/rules_scala/archive/{}.zip".format(rules_scala_annex_version),
