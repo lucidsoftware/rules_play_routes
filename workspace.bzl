@@ -44,7 +44,7 @@ def play_routes_repositories(play_version):
         name = "play_routes",
         artifacts = play_artifacts[play_version] + common_artifacts,
         repositories = [
-            "http://central.maven.org/maven2",
+            "https://repo.maven.apache.org/maven2",
         ],
         fetch_sources = True,
         maven_install_json = "@io_bazel_rules_play_routes//:play_{}_routes_compiler_cli_install.json".format(play_version)
@@ -55,7 +55,7 @@ def play_routes_repositories(play_version):
           name = "play_{}_routes_compiler_cli".format(version),
           artifacts = play_artifacts[version] + common_artifacts,
           repositories = [
-              "http://central.maven.org/maven2",
+              "https://repo.maven.apache.org/maven2",
           ],
           fetch_sources = True,
           maven_install_json = "@io_bazel_rules_play_routes//:play_{}_routes_compiler_cli_install.json".format(version),
