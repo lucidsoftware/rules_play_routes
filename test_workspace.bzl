@@ -17,7 +17,7 @@ def play_routes_test_repositories():
             "com.typesafe.play:play-specs2_2.11:2.5.19",
         ],
         repositories = [
-            "http://central.maven.org/maven2",
+            "https://repo.maven.apache.org/maven2",
         ],
         fetch_sources = True,
         maven_install_json = "@io_bazel_rules_play_routes//:play_routes_test_install.json",
