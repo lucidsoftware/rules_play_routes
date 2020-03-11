@@ -35,12 +35,13 @@ play_routes(
   ],
 )
 
-play_routes(
-  name = "play-routes-different-generator",
-  srcs = ["conf/generator.routes"],
-  include_play_imports = True,
-  routes_generator = "play.routes.compiler.StaticRoutesGenerator",
-)
+# TODO: StaticRoutesGenerator is removed in 2.7.X, figure out an alternative.
+# play_routes(
+#   name = "play-routes-different-generator",
+#   srcs = ["conf/generator.routes"],
+#   include_play_imports = True,
+#   routes_generator = "play.routes.compiler.StaticRoutesGenerator",
+# )
 
 play_routes(
   name = "play-routes-reverse-router",
@@ -67,17 +68,18 @@ scala_test(
     ":play-routes-basic1",
     ":play-routes-basic2",
     ":play-routes-additional-imports",
-    ":play-routes-different-generator",
+    # ":play-routes-different-generator",
     ":play-routes-reverse-router",
     # ":play-routes-namespace-router",
   ],
   deps = [
-    "@play_routes_test//:org_specs2_specs2_common_2_11",
-    "@play_routes_test//:org_specs2_specs2_core_2_11",
-    "@play_routes_test//:org_specs2_specs2_matcher_2_11",
-    "@play_routes_test//:com_typesafe_akka_akka_actor_2_11",
-    "@play_routes_test//:com_typesafe_play_play_2_11",
-    "@play_routes_test//:com_typesafe_play_play_specs2_2_11",
-    "@play_routes_test//:com_typesafe_play_play_test_2_11",
+    "@play_routes_test//:org_specs2_specs2_common_2_12",
+    "@play_routes_test//:org_specs2_specs2_core_2_12",
+    "@play_routes_test//:org_specs2_specs2_matcher_2_12",
+    "@play_routes_test//:com_typesafe_akka_akka_actor_2_12",
+    "@play_routes_test//:com_typesafe_play_play_2_12",
+    "@play_routes_test//:com_typesafe_play_play_specs2_2_12",
+    "@play_routes_test//:com_typesafe_play_play_test_2_12",
+    "@play_routes_test//:com_typesafe_play_play_guice_2_12",
   ]
 )

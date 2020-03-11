@@ -9,8 +9,8 @@ os:
   - linux
   - osx
 env:
-  - V=1.0.0
-  - V=1.1.0
+  - V=2.1.0
+  - V=2.2.0
 before_install:
   # Borrowed from rules_scala
   - |
