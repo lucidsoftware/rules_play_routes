@@ -3,10 +3,10 @@ workspace(name = "io_bazel_rules_play_routes")
 load("@bazel_tools//tools/build_defs/repo:http.bzl", "http_archive")
 
 # rules_jvm_external
-RULES_JVM_EXTERNAL_TAG = "2.9"
+RULES_JVM_EXTERNAL_TAG = "3.2"
 http_archive(
     name = "rules_jvm_external",
-    sha256 = "e5b97a31a3e8feed91636f42e19b11c49487b85e5de2f387c999ea14d77c7f45",
+    sha256 = "82262ff4223c5fda6fb7ff8bd63db8131b51b413d26eb49e3131037e79e324af",
     strip_prefix = "rules_jvm_external-{}".format(RULES_JVM_EXTERNAL_TAG),
     type = "zip",
     url = "https://github.com/bazelbuild/rules_jvm_external/archive/{}.zip".format(RULES_JVM_EXTERNAL_TAG),
@@ -14,7 +14,7 @@ http_archive(
 
 # Load dependencies
 load("//:workspace.bzl", "play_routes_repositories")
-play_routes_repositories("2.5")
+play_routes_repositories("2.7")
 load("@play_routes//:defs.bzl", play_routes_pinned_maven_install = "pinned_maven_install")
 play_routes_pinned_maven_install()
 
@@ -24,10 +24,10 @@ load("@play_routes_test//:defs.bzl", play_routes_test_pinned_maven_install = "pi
 play_routes_test_pinned_maven_install()
 
 # Skylib
-skylib_version = "0.9.0"  # update this as needed
+skylib_version = "1.0.2"  # update this as needed
 http_archive(
     name = "bazel_skylib",
-    sha256 = "a8677c64e2a58eb113f305784e6af9759cfa3f9a6eacb4d40531fe1bd6356aca",
+    sha256 = "64ad2728ccdd2044216e4cec7815918b7bb3bb28c95b7e9d951f9d4eccb07625",
     strip_prefix = "bazel-skylib-{}".format(skylib_version),
     type = "zip",
     url = "https://github.com/bazelbuild/bazel-skylib/archive/{}.zip".format(skylib_version),
@@ -35,23 +35,23 @@ http_archive(
 
 # rules_nodejs
 # To use the JavaScript version of Sass, we need to first install nodejs
-rules_nodejs_version = "0.34.0"
+rules_nodejs_version = "1.4.1"
 http_archive(
     name = "build_bazel_rules_nodejs",
-    sha256 = "5be393c5c7b83029c941238ea3f735ffac541538744d010fd1c3ed901386cec0",
+    sha256 = "6ea46cb994e349ceb255ec8340370883813cac825e6157770a15f11874d232d2",
     strip_prefix = "rules_nodejs-{}".format(rules_nodejs_version),
     type = "zip",
     url = "https://github.com/bazelbuild/rules_nodejs/archive/{}.zip".format(rules_nodejs_version),
 )
 
-load("@build_bazel_rules_nodejs//:defs.bzl", "node_repositories")
+load("@build_bazel_rules_nodejs//:index.bzl", "node_repositories")
 node_repositories(package_json = [])
 
 # rules_sass
-rules_sass_version = "1.22.7" # update this as needed
+rules_sass_version = "1.26.2" # update this as needed
 http_archive(
     name = "io_bazel_rules_sass",
-    sha256 = "a8b6d287a5d40d70662c4d6a1db282e9f3d34a0cf6acd091dfb4c85c9f7c6997",
+    sha256 = "a31026741e4af6f1e5bcc9cce23db0549ecdea6270c8919da09110886102eb8e",
     strip_prefix = "rules_sass-{}".format(rules_sass_version),
     type = "zip",
     url = "https://github.com/bazelbuild/rules_sass/archive/{}.zip".format(rules_sass_version),
@@ -77,18 +77,19 @@ skydoc_repositories()
 # For Skylint
 # Once https://github.com/bazelbuild/bazel/issues/4086 is done, this should be
 # much simpler
+bazel_version = "0.27.0"
 http_archive(
     name = "io_bazel",
     sha256 = "2d86797a5b96163b7f5e9cbb8f09cc919066e7ee0fe1a614b79680ae36a14ef3",
-    strip_prefix = "bazel-0.27.0",
-    urls = ["https://github.com/bazelbuild/bazel/archive/0.27.0.zip"],
+    strip_prefix = "bazel-{}".format(bazel_version),
+    urls = ["https://github.com/bazelbuild/bazel/archive/{}.zip".format(bazel_version)],
 )
 # Also for Skylint. Comes from
 # https://github.com/cgrushko/proto_library/blob/master/WORKSPACE
-protobuf_version = "3.9.0"
+protobuf_version = "3.11.4"
 http_archive(
     name = "com_google_protobuf",
-    sha256 = "8eb5ca331ab8ca0da2baea7fc0607d86c46c80845deca57109a5d637ccb93bb4",
+    sha256 = "9748c0d90e54ea09e5e75fb7fac16edce15d2028d4356f32211cfa3c0e956564",
     strip_prefix = "protobuf-{}".format(protobuf_version),
     type = "zip",
     url = "https://github.com/protocolbuffers/protobuf/archive/v{}.zip".format(protobuf_version),
@@ -127,10 +128,10 @@ http_archive(
 
 # higherkindness/rules_scala (used for tests only)
 # TODO: Move tests into their own worskpace s.t. we don't need their dependenices here
-rules_scala_annex_version = "43bcd8eee8e07c74712f3c73c158ee2fe38ecb7c" # update this as needed
+rules_scala_annex_version = "28ff055ad97c5a63fb0aee91eac66d2c7ae068df" # update this as needed
 http_archive(
     name = "rules_scala_annex",
-    sha256 = "0bdb4320a589b4ffe7e5f5b261222bae5a78bcce97d9c06e31f274a5fc125d82",
+    sha256 = "2858ab04996a4a042f71333599375d15cb943e59574b38ddce5122befa3467cb",
     strip_prefix = "rules_scala-{}".format(rules_scala_annex_version),
     type = "zip",
     url = "https://github.com/higherkindness/rules_scala/archive/{}.zip".format(rules_scala_annex_version),
@@ -138,7 +139,7 @@ http_archive(
 
 bind(
     name = "default_scala",
-    actual = "//scala:default_scala",
+    actual = "@rules_scala_annex//src/main/scala:zinc_2_12_10",
 )
 
 load("@rules_scala_annex//rules/scala:workspace.bzl", "scala_register_toolchains", "scala_repositories")
@@ -151,5 +152,5 @@ scala_register_toolchains()
 # This would require a separate workspace for each compiler being tested
 bind(
   name = "default-play-routes-compiler-cli",
-  actual = "//default-compiler-clis:scala_2_11_play_2_5"
+  actual = "//default-compiler-clis:scala_2_12_play_2_7"
 )

@@ -29,15 +29,7 @@ def play_routes_repositories(play_version):
     }
 
     common_artifacts = [
-        "com.github.scopt:scopt_2.11:3.7.0",
         "com.lucidchart:play-routes-compiler-cli:0.1",
-        "com.typesafe.play:routes-compiler_2.11:2.5.19",
-        "org.scala-sbt:zinc_2.11:1.2.1",
-        "org.scala-sbt:compiler-interface:1.2.1",
-        "org.scala-sbt:util-interface:1.2.0",
-        "org.scala-lang:scala-compiler:2.11.12",
-        "org.scala-lang:scala-library:2.11.12",
-        "org.scala-lang:scala-reflect:2.11.12",
     ]
 
     maven_install(
@@ -45,6 +37,8 @@ def play_routes_repositories(play_version):
         artifacts = play_artifacts[play_version] + common_artifacts,
         repositories = [
             "https://repo.maven.apache.org/maven2",
+            "https://maven-central.storage-download.googleapis.com/maven2",
+            "https://mirror.bazel.build/repo1.maven.org/maven2",
         ],
         fetch_sources = True,
         maven_install_json = "@io_bazel_rules_play_routes//:play_{}_routes_compiler_cli_install.json".format(play_version)
@@ -56,6 +50,8 @@ def play_routes_repositories(play_version):
           artifacts = play_artifacts[version] + common_artifacts,
           repositories = [
               "https://repo.maven.apache.org/maven2",
+              "https://maven-central.storage-download.googleapis.com/maven2",
+              "https://mirror.bazel.build/repo1.maven.org/maven2",
           ],
           fetch_sources = True,
           maven_install_json = "@io_bazel_rules_play_routes//:play_{}_routes_compiler_cli_install.json".format(version),
