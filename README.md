@@ -16,10 +16,10 @@ Create a file at the top of your repository named `WORKSPACE` and add the follow
 
 ```python
 # update version as needed
-rules_play_routes_version = "f1e5beb66ce14fa02baedb53fcd9132fb2786c01"
+rules_play_routes_version = "bfaca5f186f2c3b989c80fd00f37a53b84406b3d"
 http_archive(
   name = "io_bazel_rules_play_routes",
-  sha256 = "4be5194ba03d8a72881c4a5320d95b646467429527a33d8c0f0030d786fa2697",
+  sha256 = "b0ae17af402e88da31fa41b16a6cf1d8eea53d693dd6b4c0c219d421078a2af5",
   strip_prefix = "rules_play_routes-{}".format(rules_play_routes_version),
   type = "zip",
   url = "https://github.com/lucidsoftware/rules_play_routes/archive/{}.zip".format(rules_play_routes_version),
@@ -77,6 +77,8 @@ Note: play_routes_respositories only needs to know the Play version; there's no 
 The `play_routes` rule compiles Play routes files to a source jar that can be used with the `rules_scala` rules. For example,
 
 ```python
+load("@io_bazel_rules_play_routes//play-routes:play-routes.bzl", "play_routes")
+
 play_routes(
   name = "play-routes",
   srcs = ["conf/routes"] + glob(["conf/*.routes"]),
