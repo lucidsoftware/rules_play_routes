@@ -24,11 +24,9 @@ def _format_import_args(imports):
   return ["--routesImport={}".format(i) for i in imports]
 
 def _impl(ctx):
-  gendir = ctx.actions.declare_directory(
-    gendir_base_path + "/" + _sanitize_string_for_usage(ctx.attr.name)
-  )
+  prefix = ctx.label.package + "/" + gendir_base_path + "/" + _sanitize_string_for_usage(ctx.attr.name)
   paths = [f.path for f in ctx.files.srcs]
-  args = [gendir.path] + [",".join(paths)]
+  args = ["REPLACE_ME_OUTPUT_PATH"] + [",".join(paths)]
 
   if ctx.attr.include_play_imports:
     args = args + _format_import_args(play_imports)
@@ -49,20 +47,16 @@ def _impl(ctx):
 
   ctx.actions.run(
     inputs = ctx.files.srcs,
-    outputs = [gendir],
-    arguments = args,
-    progress_message = "Compiling play routes",
-    executable = ctx.executable.play_routes_compiler,
-  )
-
-  # TODO: something more portable
-  ctx.actions.run_shell(
-    inputs = [gendir],
     outputs = [ctx.outputs.srcjar],
-    arguments = [ctx.executable._zipper.path, gendir.path, gendir.short_path, ctx.outputs.srcjar.path],
-    command = """$1 c $4 META-INF/= $(find -L $2 -type f | while read v; do echo ${v#"${2%$3}"}=$v; done)""",
-    progress_message = "Bundling compiled play routes into srcjar",
-    tools = [ctx.executable._zipper],
+    arguments = [
+        prefix,
+        ctx.outputs.srcjar.path,
+        ctx.executable._zipper.path,
+        ctx.executable.play_routes_compiler.path,
+    ] + args,
+    progress_message = "Compiling play routes",
+    executable = ctx.executable._play_route_helper,
+    tools = [ctx.executable.play_routes_compiler, ctx.executable._zipper]
   )
 
 play_routes = rule(
@@ -102,6 +96,11 @@ play_routes = rule(
       cfg = "host",
       allow_files = True,
       default = Label("//external:default-play-routes-compiler-cli"),
+    ),
+    "_play_route_helper": attr.label(
+      executable = True,
+      cfg = "host",
+      default = Label("@io_bazel_rules_play_routes//play-routes:play-routes-helper"),
     ),
     "_zipper": attr.label(cfg = "host", default = "@bazel_tools//tools/zip:zipper", executable = True),
   },
