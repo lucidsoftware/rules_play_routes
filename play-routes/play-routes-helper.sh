@@ -5,11 +5,9 @@ set -e
 OUTPUT_DIR=$(mktemp -d)
 
 PREFIX=$1
-shift
-OUTPUT_SRCJAR=$1
-shift
-ZIPPER_PATH=$1
-shift
+OUTPUT_SRCJAR=$2
+ZIPPER_PATH=$3
+shift 3
 
 
 # substitute output path and execute the compiler command
