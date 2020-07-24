@@ -38,3 +38,9 @@ bzl_library(
     name = "jdk_toolchain_utils",
     srcs = ["@bazel_tools//tools/jdk:toolchain_utils.bzl"],
 )
+
+sh_binary(
+    name = "play-routes-helper",
+    srcs = ["play-routes-helper.sh"],
+    visibility = ["//visibility:public"]
+)
