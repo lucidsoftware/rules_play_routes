@@ -9,30 +9,10 @@ os:
   - linux
   - osx
 env:
-  - V=3.2.0
-  - V=3.3.0
+  - USE_BAZEL_VERSION=bazelbuild/3.2.0
+  - USE_BAZEL_VERSION=bazelbuild/3.3.0
 before_install:
-  # Borrowed from rules_scala
-  - |
-    if [[ "${TRAVIS_OS_NAME}" == "osx" ]]; then
-      OS=darwin
-    else
-      sysctl kernel.unprivileged_userns_clone=1
-      sudo apt-get update -q
-      sudo apt-get install libxml2-utils -y
-      OS=linux
-    fi
-    if [[ $V =~ .*rc[0-9]+.* ]]; then
-      PRE_RC=$(expr "$V" : '\([0-9.]*\)rc.*')
-      RC_PRC=$(expr "$V" : '[0-9.]*\(rc.*\)')
-      URL="https://storage.googleapis.com/bazel/${PRE_RC}/${RC_PRC}/bazel-${V}-installer-${OS}-x86_64.sh"
-    else
-      URL="https://github.com/bazelbuild/bazel/releases/download/${V}/bazel-${V}-installer-${OS}-x86_64.sh"
-    fi
-    wget -nv -O install.sh "${URL}"
-    chmod +x install.sh
-    ./install.sh --user
-    rm -f install.sh
+  - npm install -g @bazel/bazelisk
   - cat .bazelrc.travis >> .bazelrc
 script:
   - ./scripts/skylint.sh
