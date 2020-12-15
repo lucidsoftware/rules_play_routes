@@ -1,0 +1,20 @@
+name: ci
+on: [pull_request]
+jobs:
+  build-and-test:
+    runs-on: ${{ matrix.os }}
+    env:
+      USE_BAZEL_VERSION: ${{ matrix.bazel_version }}
+    strategy:
+      matrix:
+        os: [ubuntu-18.04, macos-10.15]
+        bazel_version: [bazelbuild/3.2.0, bazelbuild/3.3.0]
+    steps:
+      - uses: actions/checkout@v2
+      - uses: actions/setup-node@v1
+      - run: npm install -g @bazel/bazelisk
+      - run: cat .bazelrc.travis >> .bazelrc
+      - run: ./scripts/skylint.sh
+      - run: ./test/run_all_tests.sh ci
+      - run: ./scripts/gen-docs.sh && git diff --exit-code docs/
+      - run: bazel shutdown
