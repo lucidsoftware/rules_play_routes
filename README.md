@@ -1,8 +1,8 @@
 # Play Framework Routes File Rules for Bazel
 
-| Travis | Stardoc
+| Status | Stardoc
 | --- | --- |
-| [![Build Status](https://travis-ci.com/lucidsoftware/rules_play_routes.svg?branch=master)](https://travis-ci.com/lucidsoftware/rules_play_routes/branches) | [Stardoc](docs/stardoc/play-routes.md) |
+| [![Build Status](https://github.com/lucidsoftware/rules_play_routes/workflows/CI/badge.svg)](https://github.com/lucidsoftware/rules_play_routes/actions) | [Stardoc](docs/stardoc/play-routes.md) |
 
 ## Overview
 `rules_play_routes` compiles [Play Framework routes files](https://www.playframework.com/documentation/latest/ScalaRouting) templates to [Scala](http://www.scala-lang.org/), so they can be used with [`bazelbuild/rules_scala`](https://github.com/bazelbuild/rules_scala) and [`higherkindness/rules_scala`](https://github.com/higherkindness/rules_scala).
