@@ -127,7 +127,11 @@ scala_binary(
   srcs = glob(["app/**/*.scala"])  + [":twirl-templates", ":play-routes"],
   visibility = ["//visibility:public"],
   main_class = "play.core.server.ProdServerStart",
-  resources = ["conf/logback.xml"] + glob(["conf/resources/**/*"]),
+  resources = [
+    "conf/logback.xml",
+    # To make your static assets work:
+    "//public",
+  ] + glob(["conf/resources/**/*"]),
   resource_strip_prefix = native.package_name(),
   classpath_resources = ["conf/application.conf"],
   jvm_flags = [
@@ -137,6 +141,19 @@ scala_binary(
   deps = [...],
 )
 ```
+
+For static assets to work, put this into your `public/BUILD` file:
+
+```python
+filegroup(
+    name = "public",
+    srcs = glob(["**/*"]),
+    visibility = ["//visibility:public"],
+)
+```
+
+If you want to have webjars support (https://www.playframework.com/documentation/2.8.1/AssetsOverview#WebJars),
+then check out https://github.com/gergelyfabian/rules_play_utils.
 
 ## Development
 ### Command Line Play Routes Compiler
