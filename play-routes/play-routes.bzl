@@ -10,6 +10,8 @@ play_imports = [
   "controllers.Assets.Asset",
 ]
 
+PlayRoutesInfo = provider(fields = {"srcjar": "The source jar created by this target."})
+
 def _sanitize_string_for_usage(s):
   res_array = []
   for i in range(len(s)):
@@ -58,6 +60,12 @@ def _impl(ctx):
     executable = ctx.executable._play_route_helper,
     tools = [ctx.executable.play_routes_compiler, ctx.executable._zipper]
   )
+
+  return [
+    PlayRoutesInfo(
+      srcjar = ctx.outputs.srcjar,
+    )
+  ]
 
 play_routes = rule(
   implementation = _impl,
