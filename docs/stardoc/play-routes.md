@@ -100,3 +100,31 @@ Compiles Play routes files templates to Scala sources files.
 </table>
 
 
+<a name="#PlayRoutesInfo"></a>
+
+## PlayRoutesInfo
+
+<pre>
+PlayRoutesInfo(<a href="#PlayRoutesInfo-srcjar">srcjar</a>)
+</pre>
+
+
+
+### Fields
+
+<table class="params-table">
+  <colgroup>
+    <col class="col-param" />
+    <col class="col-description" />
+  </colgroup>
+  <tbody>
+    <tr id="PlayRoutesInfo-srcjar">
+      <td><code>srcjar</code></td>
+      <td>
+        <p>The source jar created by this target.</p>
+      </td>
+    </tr>
+  </tbody>
+</table>
+
+
