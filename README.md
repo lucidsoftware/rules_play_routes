@@ -57,6 +57,7 @@ We provide 6 default compilers:
 - For Scala 2.11 + Play 2.7: `@io_bazel_rules_play_routes//default-compiler-clis:scala_2_11_play_2_7`
 - For Scala 2.12 + Play 2.6: `@io_bazel_rules_play_routes//default-compiler-clis:scala_2_12_play_2_6`
 - For Scala 2.12 + Play 2.7: `@io_bazel_rules_play_routes//default-compiler-clis:scala_2_12_play_2_7`
+- For Scala 2.12 + Play 2.8: `@io_bazel_rules_play_routes//default-compiler-clis:scala_2_12_play_2_8`
 - For Scala 2.13 + Play 2.8: `@io_bazel_rules_play_routes//default-compiler-clis:scala_2_13_play_2_8`
 
 To bind one of the default compilers, simply specify the correct Play version in the call to `play_routes_repositories` and update the bind statement:

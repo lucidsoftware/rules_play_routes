@@ -27,6 +27,7 @@ def play_routes_repositories(play_version):
             "com.lucidchart:play-routes-compiler-cli_2.12:2.7.3",
         ],
         "2_8": [
+            "com.lucidchart:play-routes-compiler-cli_2.12:2.8.7",
             "com.lucidchart:play-routes-compiler-cli_2.13:2.8.7",
         ],
     }
