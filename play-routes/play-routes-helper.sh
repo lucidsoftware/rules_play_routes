@@ -2,7 +2,9 @@
 
 set -e
 
-OUTPUT_DIR=$(mktemp -d)
+mkdir output
+
+OUTPUT_DIR=output
 
 PREFIX=$1
 OUTPUT_SRCJAR=$2
