@@ -4,15 +4,21 @@ Load 3rd party maven dependencies
 
 load("@rules_jvm_external//:defs.bzl", "maven_install")
 
-def play_routes_repositories(play_version):
+def play_routes_repositories(play_version, scala_version=None):
     """
     Loads 3rd party dependencies and the required play routes compiler CLIs for the specified version of Play
 
     Args:
       play_version: (str) Must be either "2.5", "2.6", "2.7" or "2.8"
+      scala_version: (optional) For Play 2.8, default to Scala 2.13
     """
 
     play_version = play_version.replace(".", "_")
+
+    if play_version == "2_8":
+        if not scala_version:
+            scala_version = "2.13"
+        play_version = play_version + "__" + scala_version.replace(".", "_")
 
     play_artifacts = {
         "2_5": [
@@ -26,8 +32,10 @@ def play_routes_repositories(play_version):
             "com.lucidchart:play-routes-compiler-cli_2.11:2.7.2",
             "com.lucidchart:play-routes-compiler-cli_2.12:2.7.3",
         ],
-        "2_8": [
+        "2_8__2_12": [
             "com.lucidchart:play-routes-compiler-cli_2.12:2.8.7",
+        ],
+        "2_8__2_13": [
             "com.lucidchart:play-routes-compiler-cli_2.13:2.8.7",
         ],
     }
