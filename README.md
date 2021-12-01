@@ -62,7 +62,7 @@ We provide 6 default compilers:
 
 To bind one of the default compilers, simply specify the correct Play version in the call to `play_routes_repositories` and update the bind statement:
 ```python
-play_routes_repositories(<Play Version>)
+play_routes_repositories(<Play Version>, <Optional Scala Version, see below>)
 load("@play_routes//:defs.bzl", play_routes_pinned_maven_install = "pinned_maven_install")
 play_routes_pinned_maven_install()
 
@@ -72,8 +72,10 @@ bind(
 )
 ```
 
-Note: play_routes_respositories only needs to know the Play version; there's no special config for the Scala version (just make sure you bind the right compiler label)
+Note: play_routes_respositories by default only needs to know the Play version. By default, there's no special config
+for the Scala version (just make sure you bind the right compiler label).
 
+You can optionally include the Scala version, this might be needed for certain versions of Play.
 
 ## Usage
 The `play_routes` rule compiles Play routes files to a source jar that can be used with the `rules_scala` rules. For example,
