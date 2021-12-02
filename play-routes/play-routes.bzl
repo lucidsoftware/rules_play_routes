@@ -57,6 +57,7 @@ def _impl(ctx):
         ctx.executable.play_routes_compiler.path,
     ] + args,
     progress_message = "Compiling play routes",
+    use_default_shell_env = True,
     executable = ctx.executable._play_route_helper,
     tools = [ctx.executable.play_routes_compiler, ctx.executable._zipper]
   )
