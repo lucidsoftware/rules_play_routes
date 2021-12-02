@@ -34,6 +34,13 @@ java_binary(
 )
 
 java_binary(
+    name = "scala_2_12_play_2_8",
+    main_class = "rulesplayroutes.routes.CommandLinePlayRoutesCompiler",
+    visibility = ["//visibility:public"],
+    runtime_deps = ["@play_routes//:com_lucidchart_play_routes_compiler_cli_2_12"],
+)
+
+java_binary(
     name = "scala_2_13_play_2_8",
     main_class = "rulesplayroutes.routes.CommandLinePlayRoutesCompiler",
     visibility = ["//visibility:public"],
