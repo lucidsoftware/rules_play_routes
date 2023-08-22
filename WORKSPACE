@@ -35,13 +35,11 @@ http_archive(
 
 # rules_nodejs
 # To use the JavaScript version of Sass, we need to first install nodejs
-rules_nodejs_version = "1.4.1"
+rules_nodejs_version = "4.6.1"
 http_archive(
     name = "build_bazel_rules_nodejs",
-    sha256 = "6ea46cb994e349ceb255ec8340370883813cac825e6157770a15f11874d232d2",
-    strip_prefix = "rules_nodejs-{}".format(rules_nodejs_version),
-    type = "zip",
-    url = "https://github.com/bazelbuild/rules_nodejs/archive/{}.zip".format(rules_nodejs_version),
+    sha256 = "d63ecec7192394f5cc4ad95a115f8a6c9de55c60d56c1f08da79c306355e4654",
+    url = "https://github.com/bazelbuild/rules_nodejs/releases/download/{v}/rules_nodejs-{v}.tar.gz".format(v = rules_nodejs_version),
 )
 
 load("@build_bazel_rules_nodejs//:index.bzl", "node_repositories")
@@ -154,3 +152,16 @@ bind(
   name = "default-play-routes-compiler-cli",
   actual = "//default-compiler-clis:scala_2_12_play_2_7"
 )
+
+rules_pkg_version = "0.7.0"
+
+http_archive(
+    name = "rules_pkg",
+    sha256 = "8a298e832762eda1830597d64fe7db58178aa84cd5926d76d5b744d6558941c2",
+    urls = [
+        "https://mirror.bazel.build/github.com/bazelbuild/rules_pkg/releases/download/{v}/rules_pkg-{v}.tar.gz".format(v = rules_pkg_version),
+        "https://github.com/bazelbuild/rules_pkg/releases/download/{v}/rules_pkg-{v}.tar.gz".format(v =rules_pkg_version),
+    ],
+)
+load("@rules_pkg//:deps.bzl", "rules_pkg_dependencies")
+rules_pkg_dependencies()
