@@ -4,7 +4,7 @@ Load 3rd party maven dependencies
 
 load("@rules_jvm_external//:defs.bzl", "maven_install")
 
-def play_routes_repositories(play_version, scala_version=None):
+def play_routes_repositories(play_version, scala_version = None):
     """
     Loads 3rd party dependencies and the required play routes compiler CLIs for the specified version of Play
 

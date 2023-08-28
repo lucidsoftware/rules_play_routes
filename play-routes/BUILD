@@ -42,5 +42,5 @@ bzl_library(
 sh_binary(
     name = "play-routes-helper",
     srcs = ["play-routes-helper.sh"],
-    visibility = ["//visibility:public"]
+    visibility = ["//visibility:public"],
 )
