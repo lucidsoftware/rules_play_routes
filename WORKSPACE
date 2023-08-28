@@ -69,22 +69,53 @@ http_archive(
     type = "zip",
     url = "https://github.com/bazelbuild/skydoc/archive/{}.zip".format(skydoc_version),
 )
+
 load("@io_bazel_skydoc//skylark:skylark.bzl", "skydoc_repositories")
+
 skydoc_repositories()
 
-# For Skylint
-# Once https://github.com/bazelbuild/bazel/issues/4086 is done, this should be
-# much simpler
-bazel_version = "0.27.0"
+# com_github_bazelbuild_buildtools
+
+buildtools_tag = "0.29.0"
+
+buildtools_sha256 = "05eb52437fb250c7591dd6cbcfd1f9b5b61d85d6b20f04b041e0830dd1ab39b3"
+
 http_archive(
-    name = "io_bazel",
-    sha256 = "2d86797a5b96163b7f5e9cbb8f09cc919066e7ee0fe1a614b79680ae36a14ef3",
-    strip_prefix = "bazel-{}".format(bazel_version),
-    urls = ["https://github.com/bazelbuild/bazel/archive/{}.zip".format(bazel_version)],
+    name = "com_github_bazelbuild_buildtools",
+    sha256 = buildtools_sha256,
+    strip_prefix = "buildtools-{}".format(buildtools_tag),
+    url = "https://github.com/bazelbuild/buildtools/archive/{}.zip".format(buildtools_tag),
 )
-# Also for Skylint. Comes from
+
+load("@com_github_bazelbuild_buildtools//buildifier:deps.bzl", "buildifier_dependencies")
+
+buildifier_dependencies()
+
+# io_bazel_rules_go (for buildifier)
+
+rules_go_tag = "v0.28.0"
+
+rules_go_sha256 = "8e968b5fcea1d2d64071872b12737bbb5514524ee5f0a4f54f5920266c261acb"
+
+http_archive(
+    name = "io_bazel_rules_go",
+    sha256 = rules_go_sha256,
+    urls = [
+        "https://storage.googleapis.com/bazel-mirror/github.com/bazelbuild/rules_go/releases/download/{tag}/rules_go-{tag}.zip".format(tag = rules_go_tag),
+        "https://github.com/bazelbuild/rules_go/releases/download/{tag}/rules_go-{tag}.zip".format(tag = rules_go_tag),
+    ],
+)
+
+load("@io_bazel_rules_go//go:deps.bzl", "go_register_toolchains", "go_rules_dependencies")
+
+go_rules_dependencies()
+
+go_register_toolchains(version = "1.17")
+
+# Also for buildifier
 # https://github.com/cgrushko/proto_library/blob/master/WORKSPACE
 protobuf_version = "3.11.4"
+
 http_archive(
     name = "com_google_protobuf",
     sha256 = "9748c0d90e54ea09e5e75fb7fac16edce15d2028d4356f32211cfa3c0e956564",

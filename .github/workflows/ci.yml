@@ -18,7 +18,7 @@ jobs:
       - uses: actions/setup-node@v1
       - run: npm install -g @bazel/bazelisk
       - run: cat .bazelrc.ci >> .bazelrc
-      - run: ./scripts/skylint.sh
+      - run: ./scripts/format.sh check
       - run: ./test/run_all_tests.sh ci
       - run: ./scripts/gen-docs.sh && git diff --exit-code docs/
       - run: bazel shutdown
