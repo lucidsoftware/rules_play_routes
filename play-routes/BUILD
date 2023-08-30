@@ -2,7 +2,7 @@
 
 load("@bazel_skylib//:bzl_library.bzl", "bzl_library")
 load("@io_bazel_skydoc//stardoc:stardoc.bzl", "stardoc")
-load("@bazel_tools//tools/build_defs/pkg:pkg.bzl", "pkg_tar")
+load("@rules_pkg//:pkg.bzl", "pkg_tar")
 load("@bazel_skylib//lib:paths.bzl", "paths")
 
 [
@@ -42,5 +42,5 @@ bzl_library(
 sh_binary(
     name = "play-routes-helper",
     srcs = ["play-routes-helper.sh"],
-    visibility = ["//visibility:public"]
+    visibility = ["//visibility:public"],
 )

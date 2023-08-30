@@ -4,6 +4,7 @@ load("@bazel_tools//tools/build_defs/repo:http.bzl", "http_archive")
 
 # rules_jvm_external
 RULES_JVM_EXTERNAL_TAG = "4.2"
+
 http_archive(
     name = "rules_jvm_external",
     sha256 = "cd1a77b7b02e8e008439ca76fd34f5b07aecb8c752961f9640dea15e9e5ba1ca",
@@ -14,17 +15,24 @@ http_archive(
 
 # Load dependencies
 load("//:workspace.bzl", "play_routes_repositories")
+
 play_routes_repositories("2.7")
+
 load("@play_routes//:defs.bzl", play_routes_pinned_maven_install = "pinned_maven_install")
+
 play_routes_pinned_maven_install()
 
 load("//:test_workspace.bzl", "play_routes_test_repositories")
+
 play_routes_test_repositories()
+
 load("@play_routes_test//:defs.bzl", play_routes_test_pinned_maven_install = "pinned_maven_install")
+
 play_routes_test_pinned_maven_install()
 
 # Skylib
 skylib_version = "1.0.2"  # update this as needed
+
 http_archive(
     name = "bazel_skylib",
     sha256 = "64ad2728ccdd2044216e4cec7815918b7bb3bb28c95b7e9d951f9d4eccb07625",
@@ -35,20 +43,21 @@ http_archive(
 
 # rules_nodejs
 # To use the JavaScript version of Sass, we need to first install nodejs
-rules_nodejs_version = "1.4.1"
+rules_nodejs_version = "4.6.1"
+
 http_archive(
     name = "build_bazel_rules_nodejs",
-    sha256 = "6ea46cb994e349ceb255ec8340370883813cac825e6157770a15f11874d232d2",
-    strip_prefix = "rules_nodejs-{}".format(rules_nodejs_version),
-    type = "zip",
-    url = "https://github.com/bazelbuild/rules_nodejs/archive/{}.zip".format(rules_nodejs_version),
+    sha256 = "d63ecec7192394f5cc4ad95a115f8a6c9de55c60d56c1f08da79c306355e4654",
+    url = "https://github.com/bazelbuild/rules_nodejs/releases/download/{v}/rules_nodejs-{v}.tar.gz".format(v = rules_nodejs_version),
 )
 
 load("@build_bazel_rules_nodejs//:index.bzl", "node_repositories")
+
 node_repositories(package_json = [])
 
 # rules_sass
-rules_sass_version = "1.26.2" # update this as needed
+rules_sass_version = "1.26.2"  # update this as needed
+
 http_archive(
     name = "io_bazel_rules_sass",
     sha256 = "a31026741e4af6f1e5bcc9cce23db0549ecdea6270c8919da09110886102eb8e",
@@ -56,14 +65,18 @@ http_archive(
     type = "zip",
     url = "https://github.com/bazelbuild/rules_sass/archive/{}.zip".format(rules_sass_version),
 )
+
 load("@io_bazel_rules_sass//:package.bzl", "rules_sass_dependencies")
+
 rules_sass_dependencies()
 
 load("@io_bazel_rules_sass//sass:sass_repositories.bzl", "sass_repositories")
+
 sass_repositories()
 
 # Skydoc
-skydoc_version = "0.3.0" # update this as needed
+skydoc_version = "0.3.0"  # update this as needed
+
 http_archive(
     name = "io_bazel_skydoc",
     sha256 = "8762a212cff5f81505a1632630edcfe9adce381479a50a03c968bd2fc217972d",
@@ -71,22 +84,53 @@ http_archive(
     type = "zip",
     url = "https://github.com/bazelbuild/skydoc/archive/{}.zip".format(skydoc_version),
 )
+
 load("@io_bazel_skydoc//skylark:skylark.bzl", "skydoc_repositories")
+
 skydoc_repositories()
 
-# For Skylint
-# Once https://github.com/bazelbuild/bazel/issues/4086 is done, this should be
-# much simpler
-bazel_version = "0.27.0"
+# com_github_bazelbuild_buildtools
+
+buildtools_tag = "0.29.0"
+
+buildtools_sha256 = "05eb52437fb250c7591dd6cbcfd1f9b5b61d85d6b20f04b041e0830dd1ab39b3"
+
 http_archive(
-    name = "io_bazel",
-    sha256 = "2d86797a5b96163b7f5e9cbb8f09cc919066e7ee0fe1a614b79680ae36a14ef3",
-    strip_prefix = "bazel-{}".format(bazel_version),
-    urls = ["https://github.com/bazelbuild/bazel/archive/{}.zip".format(bazel_version)],
+    name = "com_github_bazelbuild_buildtools",
+    sha256 = buildtools_sha256,
+    strip_prefix = "buildtools-{}".format(buildtools_tag),
+    url = "https://github.com/bazelbuild/buildtools/archive/{}.zip".format(buildtools_tag),
 )
-# Also for Skylint. Comes from
+
+load("@com_github_bazelbuild_buildtools//buildifier:deps.bzl", "buildifier_dependencies")
+
+buildifier_dependencies()
+
+# io_bazel_rules_go (for buildifier)
+
+rules_go_tag = "v0.28.0"
+
+rules_go_sha256 = "8e968b5fcea1d2d64071872b12737bbb5514524ee5f0a4f54f5920266c261acb"
+
+http_archive(
+    name = "io_bazel_rules_go",
+    sha256 = rules_go_sha256,
+    urls = [
+        "https://storage.googleapis.com/bazel-mirror/github.com/bazelbuild/rules_go/releases/download/{tag}/rules_go-{tag}.zip".format(tag = rules_go_tag),
+        "https://github.com/bazelbuild/rules_go/releases/download/{tag}/rules_go-{tag}.zip".format(tag = rules_go_tag),
+    ],
+)
+
+load("@io_bazel_rules_go//go:deps.bzl", "go_register_toolchains", "go_rules_dependencies")
+
+go_rules_dependencies()
+
+go_register_toolchains(version = "1.17")
+
+# Also for buildifier
 # https://github.com/cgrushko/proto_library/blob/master/WORKSPACE
 protobuf_version = "3.11.4"
+
 http_archive(
     name = "com_google_protobuf",
     sha256 = "9748c0d90e54ea09e5e75fb7fac16edce15d2028d4356f32211cfa3c0e956564",
@@ -94,7 +138,9 @@ http_archive(
     type = "zip",
     url = "https://github.com/protocolbuffers/protobuf/archive/v{}.zip".format(protobuf_version),
 )
+
 load("@com_google_protobuf//:protobuf_deps.bzl", "protobuf_deps")
+
 protobuf_deps()
 
 jdk_build_file_content = """
@@ -128,7 +174,8 @@ http_archive(
 
 # higherkindness/rules_scala (used for tests only)
 # TODO: Move tests into their own worskpace s.t. we don't need their dependenices here
-rules_scala_annex_version = "ff423d8bdd0e5383f8f2c048ffd7704bb51a91bf" # update this as needed
+rules_scala_annex_version = "ff423d8bdd0e5383f8f2c048ffd7704bb51a91bf"  # update this as needed
+
 http_archive(
     name = "rules_scala_annex",
     sha256 = "ae53e9ed5fecadc7baf4637b88109471602be73dda4e5ff6b4bf1767932703c0",
@@ -143,14 +190,33 @@ bind(
 )
 
 load("@rules_scala_annex//rules/scala:workspace.bzl", "scala_register_toolchains", "scala_repositories")
+
 scala_repositories()
+
 load("@annex//:defs.bzl", annex_pinned_maven_install = "pinned_maven_install")
+
 annex_pinned_maven_install()
+
 scala_register_toolchains()
 
 # TODO: Once the tests are in their own workspaces, we might want to add a basic test for each of the defaults
 # This would require a separate workspace for each compiler being tested
 bind(
-  name = "default-play-routes-compiler-cli",
-  actual = "//default-compiler-clis:scala_2_12_play_2_7"
+    name = "default-play-routes-compiler-cli",
+    actual = "//default-compiler-clis:scala_2_12_play_2_7",
 )
+
+rules_pkg_version = "0.7.0"
+
+http_archive(
+    name = "rules_pkg",
+    sha256 = "8a298e832762eda1830597d64fe7db58178aa84cd5926d76d5b744d6558941c2",
+    urls = [
+        "https://mirror.bazel.build/github.com/bazelbuild/rules_pkg/releases/download/{v}/rules_pkg-{v}.tar.gz".format(v = rules_pkg_version),
+        "https://github.com/bazelbuild/rules_pkg/releases/download/{v}/rules_pkg-{v}.tar.gz".format(v = rules_pkg_version),
+    ],
+)
+
+load("@rules_pkg//:deps.bzl", "rules_pkg_dependencies")
+
+rules_pkg_dependencies()

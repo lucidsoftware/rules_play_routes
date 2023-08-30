@@ -4,6 +4,7 @@ build --javabase="//:jdk"
 build --java_toolchain="@bazel_tools//tools/jdk:toolchain_hostjdk8"
 build --host_javabase="//:jdk"
 build --host_java_toolchain="@bazel_tools//tools/jdk:toolchain_hostjdk8"
+build --incompatible_java_common_parameters=false
 
 common:ci --color=yes
 
