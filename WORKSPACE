@@ -3,11 +3,11 @@ workspace(name = "io_bazel_rules_play_routes")
 load("@bazel_tools//tools/build_defs/repo:http.bzl", "http_archive")
 
 # rules_jvm_external
-RULES_JVM_EXTERNAL_TAG = "4.2"
+RULES_JVM_EXTERNAL_TAG = "5.3"
 
 http_archive(
     name = "rules_jvm_external",
-    sha256 = "cd1a77b7b02e8e008439ca76fd34f5b07aecb8c752961f9640dea15e9e5ba1ca",
+    sha256 = "6cc8444b20307113a62b676846c29ff018402fd4c7097fcd6d0a0fd5f2e86429",
     strip_prefix = "rules_jvm_external-{}".format(RULES_JVM_EXTERNAL_TAG),
     type = "zip",
     url = "https://github.com/bazelbuild/rules_jvm_external/archive/{}.zip".format(RULES_JVM_EXTERNAL_TAG),
@@ -31,63 +31,15 @@ load("@play_routes_test//:defs.bzl", play_routes_test_pinned_maven_install = "pi
 play_routes_test_pinned_maven_install()
 
 # Skylib
-skylib_version = "1.0.2"  # update this as needed
+skylib_version = "1.4.2"  # update this as needed
 
 http_archive(
     name = "bazel_skylib",
-    sha256 = "64ad2728ccdd2044216e4cec7815918b7bb3bb28c95b7e9d951f9d4eccb07625",
+    # sha256 = "64ad2728ccdd2044216e4cec7815918b7bb3bb28c95b7e9d951f9d4eccb07625",
     strip_prefix = "bazel-skylib-{}".format(skylib_version),
     type = "zip",
     url = "https://github.com/bazelbuild/bazel-skylib/archive/{}.zip".format(skylib_version),
 )
-
-# rules_nodejs
-# To use the JavaScript version of Sass, we need to first install nodejs
-rules_nodejs_version = "4.6.1"
-
-http_archive(
-    name = "build_bazel_rules_nodejs",
-    sha256 = "d63ecec7192394f5cc4ad95a115f8a6c9de55c60d56c1f08da79c306355e4654",
-    url = "https://github.com/bazelbuild/rules_nodejs/releases/download/{v}/rules_nodejs-{v}.tar.gz".format(v = rules_nodejs_version),
-)
-
-load("@build_bazel_rules_nodejs//:index.bzl", "node_repositories")
-
-node_repositories(package_json = [])
-
-# rules_sass
-rules_sass_version = "1.26.2"  # update this as needed
-
-http_archive(
-    name = "io_bazel_rules_sass",
-    sha256 = "a31026741e4af6f1e5bcc9cce23db0549ecdea6270c8919da09110886102eb8e",
-    strip_prefix = "rules_sass-{}".format(rules_sass_version),
-    type = "zip",
-    url = "https://github.com/bazelbuild/rules_sass/archive/{}.zip".format(rules_sass_version),
-)
-
-load("@io_bazel_rules_sass//:package.bzl", "rules_sass_dependencies")
-
-rules_sass_dependencies()
-
-load("@io_bazel_rules_sass//sass:sass_repositories.bzl", "sass_repositories")
-
-sass_repositories()
-
-# Skydoc
-skydoc_version = "0.3.0"  # update this as needed
-
-http_archive(
-    name = "io_bazel_skydoc",
-    sha256 = "8762a212cff5f81505a1632630edcfe9adce381479a50a03c968bd2fc217972d",
-    strip_prefix = "skydoc-{}".format(skydoc_version),
-    type = "zip",
-    url = "https://github.com/bazelbuild/skydoc/archive/{}.zip".format(skydoc_version),
-)
-
-load("@io_bazel_skydoc//skylark:skylark.bzl", "skydoc_repositories")
-
-skydoc_repositories()
 
 # com_github_bazelbuild_buildtools
 
