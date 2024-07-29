@@ -1,5 +1,6 @@
 #!/usr/bin/env bash
 
-set -e
+set -euxo pipefail
 
 bazel test //test:play-routes-compiler-test
+bazel test //test:split-forward-reverse-routes-test

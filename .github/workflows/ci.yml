@@ -11,12 +11,14 @@ jobs:
       USE_BAZEL_VERSION: ${{ matrix.bazel_version }}
     strategy:
       matrix:
-        os: [ubuntu-20.04]
-        bazel_version: [bazelbuild/4.2.4]
+        os: [ubuntu-24.04]
+        bazel_version: [bazelbuild/6.5.0, bazelbuild/7.2.1]
     steps:
-      - uses: actions/checkout@v2
-      - uses: actions/setup-node@v1
-      - run: npm install -g @bazel/bazelisk
+      - uses: actions/checkout@v4.1.1
+      - uses: actions/setup-node@v4.0.2
+      - uses: bazel-contrib/setup-bazel@0.8.5
+        with:
+          bazelisk-version: 1.20.0
       - run: cat .bazelrc.ci >> .bazelrc
       - run: ./scripts/format.sh check
       - run: ./test/run_all_tests.sh ci

@@ -1,10 +1,11 @@
 package rulesplayroutes.test
 
+import javax.inject.Inject
 import play.api.mvc._
 
-class UserController() extends Controller {
+class UserController @Inject() (cc: ControllerComponents) extends AbstractController(cc)  {
 
-  def ok(user: User) = Action { request =>
+  def ok(user: User): Action[AnyContent] = Action { request =>
     Ok
   }
 

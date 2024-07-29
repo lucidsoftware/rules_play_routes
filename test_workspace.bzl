@@ -4,17 +4,19 @@ Load test 3rd party maven dependencies
 
 load("@rules_jvm_external//:defs.bzl", "maven_install")
 
+play_version = "3.0.4"
+specs2_version = "4.20.8"
+
 def play_routes_test_repositories():
     maven_install(
         name = "play_routes_test",
         artifacts = [
-            "org.specs2:specs2-common_2.12:4.7.0",
-            "org.specs2:specs2-core_2.12:4.7.0",
-            "org.specs2:specs2-matcher_2.12:4.7.0",
-            "com.typesafe.akka:akka-actor_2.12:2.5.24",
-            "com.typesafe.play:play_2.12:2.7.4",
-            "com.typesafe.play:play-test_2.12:2.7.4",
-            "com.typesafe.play:play-specs2_2.12:2.7.4",
+            "org.specs2:specs2-common_3:{}".format(specs2_version),
+            "org.specs2:specs2-core_3:{}".format(specs2_version),
+            "org.specs2:specs2-matcher_3:{}".format(specs2_version),
+            "org.playframework:play_3:{}".format(play_version),
+            "org.playframework:play-test_3:{}".format(play_version),
+            "org.playframework:play-specs2_3:{}".format(play_version),
         ],
         repositories = [
             "https://repo.maven.apache.org/maven2",
@@ -22,5 +24,5 @@ def play_routes_test_repositories():
             "https://mirror.bazel.build/repo1.maven.org/maven2",
         ],
         fetch_sources = True,
-        maven_install_json = "@io_bazel_rules_play_routes//:play_routes_test_install.json",
+        maven_install_json = "@rules_play_routes//:play_routes_test_install.json",
     )

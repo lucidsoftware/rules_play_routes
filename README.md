@@ -16,32 +16,40 @@ Create a file at the top of your repository named `WORKSPACE` and add the follow
 
 ```python
 # update version as needed
-rules_play_routes_version = "bfaca5f186f2c3b989c80fd00f37a53b84406b3d"
+rules_play_routes_version = "TODO"
 http_archive(
-  name = "io_bazel_rules_play_routes",
-  sha256 = "b0ae17af402e88da31fa41b16a6cf1d8eea53d693dd6b4c0c219d421078a2af5",
+  name = "rules_play_routes",
+  sha256 = "TODO",
   strip_prefix = "rules_play_routes-{}".format(rules_play_routes_version),
   type = "zip",
   url = "https://github.com/lucidsoftware/rules_play_routes/archive/{}.zip".format(rules_play_routes_version),
 )
 
-RULES_JVM_EXTERNAL_TAG = "2.9"
+# rules_jvm_external
+rules_jvm_external_version = "6.2"
+
 http_archive(
     name = "rules_jvm_external",
-    sha256 = "e5b97a31a3e8feed91636f42e19b11c49487b85e5de2f387c999ea14d77c7f45",
-    strip_prefix = "rules_jvm_external-{}".format(RULES_JVM_EXTERNAL_TAG),
+    sha256 = "aa39ecd47e16d5870eba817fe71476802bc371fe2724a2ddee565992df55f4af",
+    strip_prefix = "rules_jvm_external-{}".format(rules_jvm_external_version),
     type = "zip",
-    url = "https://github.com/bazelbuild/rules_jvm_external/archive/{}.zip".format(RULES_JVM_EXTERNAL_TAG),
+    url = "https://github.com/bazelbuild/rules_jvm_external/archive/{}.zip".format(rules_jvm_external_version),
 )
 
-load("@io_bazel_rules_play_routes//:workspace.bzl", "play_routes_repositories")
-play_routes_repositories("2.7")
+load("@rules_jvm_external//:repositories.bzl", "rules_jvm_external_deps")
+rules_jvm_external_deps()
+
+load("@rules_jvm_external//:setup.bzl", "rules_jvm_external_setup")
+rules_jvm_external_setup()
+
+load("@rules_play_routes//:workspace.bzl", "play_routes_repositories")
+play_routes_repositories("3.0")
 load("@play_routes//:defs.bzl", play_routes_pinned_maven_install = "pinned_maven_install")
 play_routes_pinned_maven_install()
 
 bind(
   name = "default-play-routes-compiler-cli",
-  actual = "@io_bazel_rules_play_routes//default-compiler-clis:scala_2_12_play_2_7"
+  actual = "@rules_play_routes//default-compiler-clis:scala_2_13_play_3_0"
 )
 
 ```
@@ -50,15 +58,17 @@ This installs `rules_play_routes` to your `WORKSPACE` and binds the default play
 
 In the above example, the play routes compiler cli for Scala 2.12 and Play 2.7 is used. However, you can specify a different compiler.
 
-We provide 6 default compilers:
+We provide several default compilers:
 
-- For Scala 2.11 + Play 2.5: `@io_bazel_rules_play_routes//default-compiler-clis:scala_2_11_play_2_5`
-- For Scala 2.11 + Play 2.6: `@io_bazel_rules_play_routes//default-compiler-clis:scala_2_11_play_2_6`
-- For Scala 2.11 + Play 2.7: `@io_bazel_rules_play_routes//default-compiler-clis:scala_2_11_play_2_7`
-- For Scala 2.12 + Play 2.6: `@io_bazel_rules_play_routes//default-compiler-clis:scala_2_12_play_2_6`
-- For Scala 2.12 + Play 2.7: `@io_bazel_rules_play_routes//default-compiler-clis:scala_2_12_play_2_7`
-- For Scala 2.12 + Play 2.8: `@io_bazel_rules_play_routes//default-compiler-clis:scala_2_12_play_2_8`
-- For Scala 2.13 + Play 2.8: `@io_bazel_rules_play_routes//default-compiler-clis:scala_2_13_play_2_8`
+- For Scala 2.11 + Play 2.5: `@rules_play_routes//default-compiler-clis:scala_2_11_play_2_5`
+- For Scala 2.11 + Play 2.6: `@rules_play_routes//default-compiler-clis:scala_2_11_play_2_6`
+- For Scala 2.11 + Play 2.7: `@rules_play_routes//default-compiler-clis:scala_2_11_play_2_7`
+- For Scala 2.12 + Play 2.6: `@rules_play_routes//default-compiler-clis:scala_2_12_play_2_6`
+- For Scala 2.12 + Play 2.7: `@rules_play_routes//default-compiler-clis:scala_2_12_play_2_7`
+- For Scala 2.12 + Play 2.8: `@rules_play_routes//default-compiler-clis:scala_2_12_play_2_8`
+- For Scala 2.13 + Play 2.8: `@rules_play_routes//default-compiler-clis:scala_2_13_play_2_8`
+- For Scala 2.13 + Play 2.9: `@rules_play_routes//default-compiler-clis:scala_2_13_play_2_9`
+- For Scala 2.13 + Play 3.0: `@rules_play_routes//default-compiler-clis:scala_2_13_play_3_0`
 
 To bind one of the default compilers, simply specify the correct Play version in the call to `play_routes_repositories` and update the bind statement:
 ```python
@@ -81,7 +91,7 @@ You can optionally include the Scala version, this might be needed for certain v
 The `play_routes` rule compiles Play routes files to a source jar that can be used with the `rules_scala` rules. For example,
 
 ```python
-load("@io_bazel_rules_play_routes//play-routes:play-routes.bzl", "play_routes")
+load("@rules_play_routes//play-routes:play-routes.bzl", "play_routes")
 
 play_routes(
   name = "play-routes",

@@ -4,8 +4,6 @@ Bazel rules for running the
 [Play routes file compiler](https://github.com/playframework/playframework/tree/master/framework/src/routes-compiler/src/main/scala/play/routes/compiler)
 on Play routes files
 """
-gendir_base_path = "play/routes"
-
 play_imports = [
     "controllers.Assets.Asset",
 ]
@@ -22,44 +20,51 @@ def _sanitize_string_for_usage(s):
             res_array.append("_")
     return "".join(res_array)
 
-def _format_import_args(imports):
-    return ["--routesImport={}".format(i) for i in imports]
+def _format_import_arg(import_arg):
+    return "--routesImport={}".format(import_arg)
 
 def _impl(ctx):
-    prefix = ctx.label.package + "/" + gendir_base_path + "/" + _sanitize_string_for_usage(ctx.attr.name)
+    output_dir = ctx.actions.declare_directory("play_routes_{}".format(_sanitize_string_for_usage(ctx.attr.name)))
     paths = [f.path for f in ctx.files.srcs]
-    args = ["REPLACE_ME_OUTPUT_PATH"] + [",".join(paths)]
+    args = ctx.actions.args()
+    args.add(output_dir.path)
+    args.add(ctx.outputs.srcjar)
+    args.add_all([",".join(paths)])
 
     if ctx.attr.include_play_imports:
-        args = args + _format_import_args(play_imports)
+        args.add_all(play_imports, map_each = _format_import_arg)
 
-    args = args + _format_import_args(ctx.attr.routes_imports)
+    args.add_all(ctx.attr.routes_imports, map_each = _format_import_arg)
 
     if ctx.attr.generate_reverse_router:
-        args = args + ["--generateReverseRouter"]
+        args.add("--generateReverseRouter")
 
     if ctx.attr.namespace_reverse_router:
-        args = args + ["--namespaceReverserRouter"]
+        args.add("--namespaceReverserRouter")
 
     if ctx.attr.routes_generator:
-        args = args + ["--routesGenerator={}".format(ctx.attr.routes_generator)]
+        args.add(ctx.attr.routes_generator, format = "--routesGenerator=%s")
 
     if ctx.attr.generate_forwards_router == False:
-        args = args + ["--generateForwardsRouter={}".format(ctx.attr.generate_forwards_router)]
+        args.add(ctx.attr.generate_forwards_router, format = "--generateForwardsRouter=%s")
+
+    args.set_param_file_format("multiline")
+    args.use_param_file("@%s", use_always = True)
 
     ctx.actions.run(
         inputs = ctx.files.srcs,
-        outputs = [ctx.outputs.srcjar],
-        arguments = [
-            prefix,
-            ctx.outputs.srcjar.path,
-            ctx.executable._zipper.path,
-            ctx.executable.play_routes_compiler.path,
-        ] + args,
-        progress_message = "Compiling play routes",
+        outputs = [output_dir, ctx.outputs.srcjar],
+        arguments = [args],
+        mnemonic = "PlayRoutesCompile",
+        execution_requirements = {
+            "supports-workers": "1",
+            "supports-multiplex-workers": "1",
+            "supports-multiplex-sandboxing": "1",
+            "supports-worker-cancellation": "1",
+        },
+        progress_message = "Compiling play routes %{label}",
         use_default_shell_env = True,
-        executable = ctx.executable._play_route_helper,
-        tools = [ctx.executable.play_routes_compiler, ctx.executable._zipper],
+        executable = ctx.executable.play_routes_compiler,
     )
 
     return [
@@ -106,12 +111,6 @@ play_routes = rule(
             allow_files = True,
             default = Label("//external:default-play-routes-compiler-cli"),
         ),
-        "_play_route_helper": attr.label(
-            executable = True,
-            cfg = "host",
-            default = Label("@io_bazel_rules_play_routes//play-routes:play-routes-helper"),
-        ),
-        "_zipper": attr.label(cfg = "host", default = "@bazel_tools//tools/zip:zipper", executable = True),
     },
     outputs = {
         "srcjar": "play_routes_%{name}.srcjar",

@@ -7,7 +7,7 @@ package object binders {
     new PathBindable[User] {
       override def bind(key: String, value: String): Either[String, User] = {
         for {
-          id <- intBinder.bind(key, value).right
+          id <- intBinder.bind(key, value)
         } yield User(id)
       }
       override def unbind(key: String, user: User): String = {

@@ -1,4 +1,4 @@
-load("@rules_scala_annex//rules:scala.bzl", "scala_test")
+load("@rules_scala_annex//rules:scala.bzl", "scala_library", "scala_test")
 load("//play-routes:play-routes.bzl", "play_routes")
 
 play_routes(
@@ -35,13 +35,12 @@ play_routes(
     ],
 )
 
-# TODO: StaticRoutesGenerator is removed in 2.7.X, figure out an alternative.
-# play_routes(
-#   name = "play-routes-different-generator",
-#   srcs = ["conf/generator.routes"],
-#   include_play_imports = True,
-#   routes_generator = "play.routes.compiler.StaticRoutesGenerator",
-# )
+play_routes(
+    name = "play-routes-specified-generator",
+    srcs = ["conf/generator.routes"],
+    include_play_imports = True,
+    routes_generator = "play.routes.compiler.InjectedRoutesGenerator",
+)
 
 play_routes(
     name = "play-routes-reverse-router",
@@ -68,18 +67,67 @@ scala_test(
         ":play-routes-basic1",
         ":play-routes-basic2",
         ":play-routes-additional-imports",
-        # ":play-routes-different-generator",
+        ":play-routes-specified-generator",
         ":play-routes-reverse-router",
         # ":play-routes-namespace-router",
     ],
     deps = [
-        "@play_routes_test//:com_typesafe_akka_akka_actor_2_12",
-        "@play_routes_test//:com_typesafe_play_play_2_12",
-        "@play_routes_test//:com_typesafe_play_play_guice_2_12",
-        "@play_routes_test//:com_typesafe_play_play_specs2_2_12",
-        "@play_routes_test//:com_typesafe_play_play_test_2_12",
-        "@play_routes_test//:org_specs2_specs2_common_2_12",
-        "@play_routes_test//:org_specs2_specs2_core_2_12",
-        "@play_routes_test//:org_specs2_specs2_matcher_2_12",
+        "@play_routes_test//:javax_inject_javax_inject",
+        "@play_routes_test//:org_apache_pekko_pekko_actor_3",
+        "@play_routes_test//:org_playframework_play_3",
+        "@play_routes_test//:org_playframework_play_configuration_3",
+        "@play_routes_test//:org_playframework_play_guice_3",
+        "@play_routes_test//:org_playframework_play_specs2_3",
+        "@play_routes_test//:org_playframework_play_test_3",
+        "@play_routes_test//:org_specs2_specs2_common_3",
+        "@play_routes_test//:org_specs2_specs2_core_3",
+        "@play_routes_test//:org_specs2_specs2_matcher_3",
+    ],
+)
+
+play_routes(
+    name = "play-routes-reverse-router-only",
+    srcs = ["conf2/routes"],
+    generate_forwards_router = False,
+    generate_reverse_router = True,
+)
+
+play_routes(
+    name = "play-routes-forward-only",
+    srcs = ["conf2/routes"],
+    generate_forwards_router = True,
+    generate_reverse_router = False,
+)
+
+scala_test(
+    name = "split-forward-reverse-routes-test",
+    srcs = glob(["app/**/*.scala"]) + [
+        "PlayReverseRoutesOnlyTest.scala",
+        "PlayForwardRoutesOnlyTest.scala",
+        ":play-routes-forward-only",
+    ],
+    deps = [
+        ":common",
+        "@play_routes_test//:javax_inject_javax_inject",
+        "@play_routes_test//:org_apache_pekko_pekko_actor_3",
+        "@play_routes_test//:org_playframework_play_3",
+        "@play_routes_test//:org_playframework_play_configuration_3",
+        "@play_routes_test//:org_playframework_play_guice_3",
+        "@play_routes_test//:org_playframework_play_specs2_3",
+        "@play_routes_test//:org_playframework_play_test_3",
+        "@play_routes_test//:org_specs2_specs2_common_3",
+        "@play_routes_test//:org_specs2_specs2_core_3",
+        "@play_routes_test//:org_specs2_specs2_matcher_3",
+    ],
+)
+
+scala_library(
+    name = "common",
+    srcs = [
+        "common/TestReverseRoutesOnly.scala",
+        ":play-routes-reverse-router-only",
+    ],
+    deps = [
+        "@play_routes_test//:org_playframework_play_3",
     ],
 )
