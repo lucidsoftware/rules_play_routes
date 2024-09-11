@@ -39,10 +39,7 @@ rules_jvm_external_setup()
 # Set up 3rd party jvm dependencies
 load("//:workspace.bzl", "play_routes_repositories")
 
-play_routes_repositories(
-    play_version = "3.0",
-    scala_version = "2.13",
-)
+play_routes_repositories()
 
 load("@play_routes//:defs.bzl", play_routes_pinned_maven_install = "pinned_maven_install")
 
@@ -55,6 +52,9 @@ play_routes_test_repositories()
 load("@play_routes_test//:defs.bzl", play_routes_test_pinned_maven_install = "pinned_maven_install")
 
 play_routes_test_pinned_maven_install()
+
+# Play routes compiler
+register_toolchains("//play-routes:cross_platform_play_routes_toolchain")
 
 # Skylib
 skylib_version = "1.5.0"  # update this as needed
@@ -209,13 +209,6 @@ load_env_vars(
     env_vars = ["COMPILER_CLI_ARTIFACT_ID"],
 )
 
-# TODO: Once the tests are in their own workspaces, we might want to add a basic test for each of the defaults
-# This would require a separate workspace for each compiler being tested
-bind(
-    name = "default-play-routes-compiler-cli",
-    actual = "@play_routes_compiler_cli//play-routes-compiler",
-)
-
 # rules_pkg
 rules_pkg_version = "0.10.1"
 
@@ -230,3 +223,18 @@ http_archive(
 load("@rules_pkg//:deps.bzl", "rules_pkg_dependencies")
 
 rules_pkg_dependencies()
+
+# delete below
+
+local_repository(
+    name = "play_routes_compiler_cli",
+    path = "/home/james/lucid/play_routes_compiler_cli",
+)
+
+load("@play_routes_compiler_cli//:workspace.bzl", "play_routes_compiler_cli_repositories")
+
+play_routes_compiler_cli_repositories()
+
+load("@play_routes_compiler_cli_maven//:defs.bzl", play_routes_compiler_cli_pinned_maven_install = "pinned_maven_install")
+
+play_routes_compiler_cli_pinned_maven_install()

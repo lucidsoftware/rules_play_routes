@@ -1,3 +1,5 @@
+load("@rules_java//java/common:java_info.bzl", "JavaInfo")
+
 """Play Routes rules
 
 Bazel rules for running the
@@ -64,7 +66,7 @@ def _impl(ctx):
         },
         progress_message = "Compiling play routes %{label}",
         use_default_shell_env = True,
-        executable = ctx.executable.play_routes_compiler,
+        executable = ctx.toolchains["//play-routes:toolchain_type"].play_routes_compiler.files_to_run,
     )
 
     return [
@@ -105,14 +107,9 @@ play_routes = rule(
             doc = "If true, include the imports the Play project includes by default.",
             default = False,
         ),
-        "play_routes_compiler": attr.label(
-            executable = True,
-            cfg = "host",
-            allow_files = True,
-            default = Label("//external:default-play-routes-compiler-cli"),
-        ),
     },
     outputs = {
         "srcjar": "play_routes_%{name}.srcjar",
     },
+    toolchains = ["//play-routes:toolchain_type"],
 )
