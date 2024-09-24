@@ -12,7 +12,7 @@ jobs:
     strategy:
       matrix:
         os: [ubuntu-24.04]
-        bazel_version: [bazelbuild/6.5.0, bazelbuild/7.2.1]
+        bazel_version: [bazelbuild/7.3.1]
     steps:
       - uses: actions/checkout@v4.1.1
       - uses: actions/setup-node@v4.0.2
