@@ -1,4 +1,5 @@
 load("@rules_java//java/common:java_info.bzl", "JavaInfo")
+load("//play-routes-toolchain:transitions.bzl", "play_routes_toolchain_transition", "reset_play_routes_toolchain_transition")
 
 """Play Routes rules
 
@@ -66,7 +67,7 @@ def _impl(ctx):
         },
         progress_message = "Compiling play routes %{label}",
         use_default_shell_env = True,
-        executable = ctx.toolchains["//play-routes:toolchain_type"].play_routes_compiler.files_to_run,
+        executable = ctx.toolchains["//play-routes-toolchain:toolchain_type"].play_routes_compiler.files_to_run,
     )
 
     return [
@@ -75,14 +76,20 @@ def _impl(ctx):
         ),
     ]
 
+# If you add any labels or label_lists, you will need to add the
+# reset_play_routes_toolchain_transition outgoing transition to it. Otherwise
+# you'll end up needlessly changing build config and causing an explosion in
+# size for the build graph.
 play_routes = rule(
     implementation = _impl,
     doc = "Compiles Play routes files templates to Scala sources files.",
+    cfg = play_routes_toolchain_transition,
     attrs = {
         "srcs": attr.label_list(
             doc = "Play routes files",
             allow_files = True,
             mandatory = True,
+            cfg = reset_play_routes_toolchain_transition,
         ),
         "routes_imports": attr.string_list(
             doc = "Additional imports to import to the Play routes",
@@ -107,9 +114,12 @@ play_routes = rule(
             doc = "If true, include the imports the Play project includes by default.",
             default = False,
         ),
+        "play_routes_toolchain_name": attr.string(
+            doc = "The name of the Play Routes toolchain to use for this target",
+        ),
     },
     outputs = {
         "srcjar": "play_routes_%{name}.srcjar",
     },
-    toolchains = ["//play-routes:toolchain_type"],
+    toolchains = ["//play-routes-toolchain:toolchain_type"],
 )

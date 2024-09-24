@@ -2,12 +2,11 @@ workspace(name = "rules_play_routes")
 
 load("@bazel_tools//tools/build_defs/repo:http.bzl", "http_archive")
 
-# rules_java
 http_archive(
     name = "rules_java",
-    sha256 = "41131de4417de70b9597e6ebd515168ed0ba843a325dc54a81b92d7af9a7b3ea",
+    sha256 = "6f3ce0e9fba979a844faba2d60467843fbf5191d8ca61fa3d2ea17655b56bb8c",
     urls = [
-        "https://github.com/bazelbuild/rules_java/releases/download/7.9.0/rules_java-7.9.0.tar.gz",
+        "https://github.com/bazelbuild/rules_java/releases/download/7.11.1/rules_java-7.11.1.tar.gz",
     ],
 )
 
@@ -37,27 +36,45 @@ load("@rules_jvm_external//:setup.bzl", "rules_jvm_external_setup")
 rules_jvm_external_setup()
 
 # Set up 3rd party jvm dependencies
-load("//:workspace.bzl", "play_routes_repositories")
+load(
+    "//:workspace.bzl",
+    "play_routes_compiler_cli_2_13_repositories",
+    "play_routes_compiler_cli_3_repositories",
+)
 
-play_routes_repositories()
+play_routes_compiler_cli_3_repositories()
 
-load("@play_routes//:defs.bzl", play_routes_pinned_maven_install = "pinned_maven_install")
+load("@play_routes_compiler_cli_3//:defs.bzl", play_routes_compiler_cli_3_pinned_maven_install = "pinned_maven_install")
 
-play_routes_pinned_maven_install()
+play_routes_compiler_cli_3_pinned_maven_install()
 
-load("//:test_workspace.bzl", "play_routes_test_repositories")
+play_routes_compiler_cli_2_13_repositories()
 
-play_routes_test_repositories()
+load("@play_routes_compiler_cli_2_13//:defs.bzl", play_routes_compiler_cli_2_13_pinned_maven_install = "pinned_maven_install")
 
-load("@play_routes_test//:defs.bzl", play_routes_test_pinned_maven_install = "pinned_maven_install")
+play_routes_compiler_cli_2_13_pinned_maven_install()
 
-play_routes_test_pinned_maven_install()
+load("//:test_workspace.bzl", "play_routes_test_2_13_repositories", "play_routes_test_3_repositories")
+
+play_routes_test_3_repositories()
+
+load("@play_routes_test_3//:defs.bzl", play_routes_test_3_pinned_maven_install = "pinned_maven_install")
+
+play_routes_test_3_pinned_maven_install()
+
+play_routes_test_2_13_repositories()
+
+load("@play_routes_test_2_13//:defs.bzl", play_routes_test_2_13_pinned_maven_install = "pinned_maven_install")
+
+play_routes_test_2_13_pinned_maven_install()
 
 # Play routes compiler
-register_toolchains("//play-routes:cross_platform_play_routes_toolchain")
+load("//play-routes-toolchain:register-toolchains.bzl", "play_routes_register_toolchains")
+
+play_routes_register_toolchains(default_toolchain_name = "play-routes-3")
 
 # Skylib
-skylib_version = "1.5.0"  # update this as needed
+skylib_version = "1.7.1"  # update this as needed
 
 http_archive(
     name = "bazel_skylib",
@@ -74,10 +91,10 @@ bazel_skylib_workspace()
 # Stardoc
 http_archive(
     name = "io_bazel_stardoc",
-    sha256 = "62bd2e60216b7a6fec3ac79341aa201e0956477e7c8f6ccc286f279ad1d96432",
+    sha256 = "fabb280f6c92a3b55eed89a918ca91e39fb733373c81e87a18ae9e33e75023ec",
     urls = [
-        "https://mirror.bazel.build/github.com/bazelbuild/stardoc/releases/download/0.6.2/stardoc-0.6.2.tar.gz",
-        "https://github.com/bazelbuild/stardoc/releases/download/0.6.2/stardoc-0.6.2.tar.gz",
+        "https://mirror.bazel.build/github.com/bazelbuild/stardoc/releases/download/0.7.1/stardoc-0.7.1.tar.gz",
+        "https://github.com/bazelbuild/stardoc/releases/download/0.7.1/stardoc-0.7.1.tar.gz",
     ],
 )
 
@@ -93,36 +110,32 @@ load("@stardoc_maven//:defs.bzl", stardoc_pinned_maven_install = "pinned_maven_i
 
 stardoc_pinned_maven_install()
 
-# com_github_bazelbuild_buildtools
-
 # buildifier
-buildtools_version = "4.2.2"
+buildtools_version = "7.3.1"
 
 http_archive(
     name = "com_github_bazelbuild_buildtools",
-    sha256 = "ae34c344514e08c23e90da0e2d6cb700fcd28e80c02e23e4d5715dddcb42f7b3",
+    sha256 = "051951c10ff8addeb4f10be3b0cf474b304b2ccd675f2cc7683cdd9010320ca9",
     strip_prefix = "buildtools-{}".format(buildtools_version),
-    url = "https://github.com/bazelbuild/buildtools/archive/refs/tags/{}.tar.gz".format(buildtools_version),
+    url = "https://github.com/bazelbuild/buildtools/archive/refs/tags/v{}.tar.gz".format(buildtools_version),
 )
 
 # buildifier is written in Go and hence needs rules_go to be built.
 # See https://github.com/bazelbuild/rules_go for the up to date setup instructions.
 http_archive(
     name = "io_bazel_rules_go",
-    sha256 = "6dc2da7ab4cf5d7bfc7c949776b1b7c733f05e56edc4bcd9022bb249d2e2a996",
+    sha256 = "f4a9314518ca6acfa16cc4ab43b0b8ce1e4ea64b81c38d8a3772883f153346b8",
     urls = [
-        "https://mirror.bazel.build/github.com/bazelbuild/rules_go/releases/download/v0.39.1/rules_go-v0.39.1.zip",
-        "https://github.com/bazelbuild/rules_go/releases/download/v0.39.1/rules_go-v0.39.1.zip",
+        "https://mirror.bazel.build/github.com/bazelbuild/rules_go/releases/download/v0.50.1/rules_go-v0.50.1.zip",
+        "https://github.com/bazelbuild/rules_go/releases/download/v0.50.1/rules_go-v0.50.1.zip",
     ],
 )
 
-load("@io_bazel_rules_go//go:deps.bzl", "go_rules_dependencies")
+load("@io_bazel_rules_go//go:deps.bzl", "go_register_toolchains", "go_rules_dependencies")
 
 go_rules_dependencies()
 
-load("@io_bazel_rules_go//go:deps.bzl", "go_register_toolchains")
-
-go_register_toolchains(version = "1.20.3")
+go_register_toolchains(version = "1.23.0")
 
 # Also for buildifier. Comes from
 # https://github.com/bazelbuild/buildtools/blob/master/buildifier/README.md
@@ -139,8 +152,7 @@ load("@com_google_protobuf//:protobuf_deps.bzl", "protobuf_deps")
 
 protobuf_deps()
 
-# higherkindness/rules_scala (used for tests only)
-# TODO: Move tests into their own worskpace s.t. we don't need their dependenices here
+# higherkindness/rules_scala
 rules_scala_annex_version = "f23c16037db66efb541dbbf5e17e6604886c85ff"
 
 http_archive(
@@ -153,7 +165,7 @@ http_archive(
 
 bind(
     name = "default_scala",
-    actual = "@rules_scala_annex//src/main/scala:zinc_3",
+    actual = "//scala:default_scala",
 )
 
 load(
@@ -170,51 +182,12 @@ annex_pinned_maven_install()
 
 scala_register_toolchains()
 
-## delete all this when cli changes are published upstream
-
-skylib_version = "1.4.1"
-
-http_archive(
-    name = "bazel_skylib",
-    sha256 = "b8a1527901774180afc798aeb28c4634bdccf19c4d98e7bdd1ce79d1fe9aaad7",
-    type = "tar.gz",
-    url = "https://mirror.bazel.build/github.com/bazelbuild/bazel-skylib/releases/download/{}/bazel-skylib-{}.tar.gz".format(skylib_version, skylib_version),
-)
-
-graknlabs_bazel_distribution_version = "ebb4660cff37574876d37bf7c498bd735155554f"
-
-http_archive(
-    name = "graknlabs_bazel_distribution",
-    sha256 = "c3181786d2544a7df54bcf326d5e40e6ec0b86dbc6c42e58d40f8c2c2225859f",
-    strip_prefix = "bazel-distribution-{}".format(graknlabs_bazel_distribution_version),
-    type = "zip",
-    url = "https://github.com/graknlabs/bazel-distribution/archive/{}.zip".format(graknlabs_bazel_distribution_version),
-)
-
-# Make COMPILER_CLI_ARTIFACT_ID available in BUILD files
-env_vars_to_bzl_vars_version = "d67a600bb0917cd0e1c7a17ee78a3e2110fdbde2"
-
-http_archive(
-    name = "env_vars_to_bzl_vars",
-    sha256 = "f0f7077a83590ff566c8ef17b74ca02728592f6f400eecb6d3ccef8997a9f41d",
-    strip_prefix = "env_vars_to_bzl_vars-{}".format(env_vars_to_bzl_vars_version),
-    type = "zip",
-    url = "https://github.com/SrodriguezO/env_vars_to_bzl_vars/archive/{}.zip".format(env_vars_to_bzl_vars_version),
-)
-
-load("@env_vars_to_bzl_vars//:env_vars_loader.bzl", "load_env_vars")
-
-load_env_vars(
-    name = "env_vars",
-    env_vars = ["COMPILER_CLI_ARTIFACT_ID"],
-)
-
 # rules_pkg
-rules_pkg_version = "0.10.1"
+rules_pkg_version = "1.0.1"
 
 http_archive(
     name = "rules_pkg",
-    sha256 = "d250924a2ecc5176808fc4c25d5cf5e9e79e6346d79d5ab1c493e289e722d1d0",
+    sha256 = "d20c951960ed77cb7b341c2a59488534e494d5ad1d30c4818c736d57772a9fef",
     urls = [
         "https://github.com/bazelbuild/rules_pkg/releases/download/{0}/rules_pkg-{0}.tar.gz".format(rules_pkg_version),
     ],
@@ -223,18 +196,3 @@ http_archive(
 load("@rules_pkg//:deps.bzl", "rules_pkg_dependencies")
 
 rules_pkg_dependencies()
-
-# delete below
-
-local_repository(
-    name = "play_routes_compiler_cli",
-    path = "/home/james/lucid/play_routes_compiler_cli",
-)
-
-load("@play_routes_compiler_cli//:workspace.bzl", "play_routes_compiler_cli_repositories")
-
-play_routes_compiler_cli_repositories()
-
-load("@play_routes_compiler_cli_maven//:defs.bzl", play_routes_compiler_cli_pinned_maven_install = "pinned_maven_install")
-
-play_routes_compiler_cli_pinned_maven_install()

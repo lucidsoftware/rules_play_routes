@@ -1,6 +1,8 @@
 #!/usr/bin/env bash
 
-if [ "$1" != check ]; then
+set -euo pipefail
+
+if [ "$#" -eq 0 ] || [ "$1" != check ]; then
     bazel run buildifier
 else
     bazel run buildifier_check
