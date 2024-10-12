@@ -2,6 +2,7 @@ workspace(name = "rules_play_routes")
 
 load("@bazel_tools//tools/build_defs/repo:http.bzl", "http_archive")
 
+# rules_java
 http_archive(
     name = "rules_java",
     sha256 = "6f3ce0e9fba979a844faba2d60467843fbf5191d8ca61fa3d2ea17655b56bb8c",
@@ -17,11 +18,11 @@ rules_java_dependencies()
 register_toolchains("//:repository_default_toolchain_21_definition")
 
 # rules_jvm_external
-rules_jvm_external_version = "6.2"
+rules_jvm_external_version = "6.4"
 
 http_archive(
     name = "rules_jvm_external",
-    sha256 = "aa39ecd47e16d5870eba817fe71476802bc371fe2724a2ddee565992df55f4af",
+    sha256 = "8c92f7c7a57273c692da459f70bd72464c87442e86b9e0b495950a7c554c254f",
     strip_prefix = "rules_jvm_external-{}".format(rules_jvm_external_version),
     type = "zip",
     url = "https://github.com/bazelbuild/rules_jvm_external/archive/{}.zip".format(rules_jvm_external_version),

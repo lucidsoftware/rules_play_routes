@@ -1,4 +1,3 @@
-load("@rules_java//java/common:java_info.bzl", "JavaInfo")
 load("//play-routes-toolchain:transitions.bzl", "play_routes_toolchain_transition", "reset_play_routes_toolchain_transition")
 
 """Play Routes rules
@@ -28,11 +27,10 @@ def _format_import_arg(import_arg):
 
 def _impl(ctx):
     output_dir = ctx.actions.declare_directory("play_routes_{}".format(_sanitize_string_for_usage(ctx.attr.name)))
-    paths = [f.path for f in ctx.files.srcs]
     args = ctx.actions.args()
-    args.add(output_dir.path)
+    args.add_all([output_dir], expand_directories = False)
     args.add(ctx.outputs.srcjar)
-    args.add_all([",".join(paths)])
+    args.add_joined(ctx.files.srcs, join_with = ",")
 
     if ctx.attr.include_play_imports:
         args.add_all(play_imports, map_each = _format_import_arg)
@@ -64,6 +62,7 @@ def _impl(ctx):
             "supports-multiplex-workers": "1",
             "supports-multiplex-sandboxing": "1",
             "supports-worker-cancellation": "1",
+            "supports-path-mapping": "1",
         },
         progress_message = "Compiling play routes %{label}",
         use_default_shell_env = True,

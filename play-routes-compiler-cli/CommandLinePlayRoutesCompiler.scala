@@ -2,6 +2,7 @@ package rulesplayroutes.routes
 
 import com.google.devtools.build.buildjar.jarhelper.JarCreator
 import higherkindness.rules_scala.common.error.AnnexWorkerError
+import higherkindness.rules_scala.common.interrupt.InterruptUtil
 import higherkindness.rules_scala.common.worker.WorkerMain
 import higherkindness.rules_scala.common.sandbox.SandboxUtil
 import java.io.{File, PrintStream}
@@ -121,6 +122,7 @@ object CommandLinePlayRoutesCompiler extends WorkerMain[Unit] {
         config.outputDirectory.toFile(),
       ) match {
         case Right(generatedFiles) =>
+          InterruptUtil.throwIfInterrupted()
           generatedFiles.foreach { f =>
             stripHeader(f.getPath)
           }
@@ -159,9 +161,12 @@ object CommandLinePlayRoutesCompiler extends WorkerMain[Unit] {
     val config = parser(workDir).parse(
       readArgsFromArgFiles(args), Config()
     ).getOrElse(throw new AnnexWorkerError(1))
+    InterruptUtil.throwIfInterrupted()
 
     compilePlayRoutes(config, out) match {
-      case Success(_) => generateJar(config)
+      case Success(_) =>
+        InterruptUtil.throwIfInterrupted()
+        generateJar(config)
       case Failure(e) => throw new AnnexWorkerError(1, "Failed to compile play routes", e)
     }
   }

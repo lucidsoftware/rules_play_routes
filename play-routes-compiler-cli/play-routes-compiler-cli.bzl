@@ -30,6 +30,7 @@ def generate_play_routes_compiler_targets(scala_version):
             "@play_routes_compiler_cli_{}//:com_google_protobuf_protobuf_java".format(scala_version_underscore),
             "@play_routes_compiler_cli_{}//:org_playframework_play_routes_compiler_{}".format(scala_version_underscore, scala_version_underscore),
             "@rules_scala_annex//src/main/scala/higherkindness/rules_scala/common/error",
+            "@rules_scala_annex//src/main/scala/higherkindness/rules_scala/common/interrupt",
             "@rules_scala_annex//src/main/scala/higherkindness/rules_scala/common/sandbox",
             "@rules_scala_annex//src/main/scala/higherkindness/rules_scala/common/worker",
         ],
