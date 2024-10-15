@@ -1,0 +1,6 @@
+load(":play-routes-compiler-cli.bzl", "generate_play_routes_compiler_targets")
+
+# Check play-routes-compiler-cli.bzl for the actual build definitions
+generate_play_routes_compiler_targets(scala_version = "3")
+
+generate_play_routes_compiler_targets(scala_version = "2.13")

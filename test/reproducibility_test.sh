@@ -1,16 +1,16 @@
 #!/usr/bin/env bash
 
-set -e
+set -euxo pipefail
 
 function clean_build_output_hash {
   bazel clean
-  bazel build test:play-routes
+  bazel build test:play-routes-3
   # Take the hash of all files in the directory; this needs to work in both Linux and OSX
   for file in $(find bazel-bin/ -type f | sort); do shasum $file; done | shasum
 }
 
 hash0=$(clean_build_output_hash)
-sleep 1  # Play header timestamps have second granularity; wait a second before re-running
+sleep 2  # Play header timestamps have second granularity; wait a second before re-running
 hash1=$(clean_build_output_hash)
 
 if [[ $hash0 != $hash1 ]]; then

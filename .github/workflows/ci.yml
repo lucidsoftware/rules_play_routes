@@ -11,14 +11,37 @@ jobs:
       USE_BAZEL_VERSION: ${{ matrix.bazel_version }}
     strategy:
       matrix:
-        os: [ubuntu-20.04]
-        bazel_version: [bazelbuild/4.2.4]
+        os: [ubuntu-24.04]
+        bazel_version: [bazelbuild/7.3.1]
     steps:
-      - uses: actions/checkout@v2
-      - uses: actions/setup-node@v1
-      - run: npm install -g @bazel/bazelisk
+      - uses: actions/checkout@v4.1.1
+      - uses: actions/setup-node@v4.0.2
+      - uses: bazel-contrib/setup-bazel@0.8.5
+        with:
+          bazelisk-version: 1.20.0
       - run: cat .bazelrc.ci >> .bazelrc
       - run: ./scripts/format.sh check
       - run: ./test/run_all_tests.sh ci
       - run: ./scripts/gen-docs.sh && git diff --exit-code docs/
       - run: bazel shutdown
+
+  publish:
+    if: github.event_name == 'push' && contains(github.ref, 'refs/tags/')
+    needs: build-and-test
+    runs-on: ubuntu-24.04
+    steps:
+      - uses: actions/checkout@v4.1.1
+      - uses: actions/setup-node@v4.0.2
+      - uses: bazel-contrib/setup-bazel@0.8.5
+        with:
+          bazelisk-version: 1.20.0
+      - run: cat .bazelrc.ci >> .bazelrc
+      - name: Import gpg keys
+        run: echo "$PGP_SECRET" | base64 --decode | gpg --import
+        env:
+          PGP_SECRET: ${{ secrets.PGP_SECRET }}
+      - name: Publish to Maven
+        run: ./scripts/publish.sh
+        env:
+          MAVEN_USER: ${{ secrets.SONATYPE_USERNAME }}
+          MAVEN_PASSWORD: ${{ secrets.SONATYPE_PASSWORD }}

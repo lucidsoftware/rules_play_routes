@@ -2,6 +2,6 @@
 -> / basic2.Routes
 -> / large.Routes
 -> / additional_imports.Routes
-#-> / generator.Routes
+-> / generator.Routes
 -> / reverse_router.Routes
 #-> / namespace_router.Routes

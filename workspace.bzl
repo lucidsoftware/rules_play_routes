@@ -3,68 +3,57 @@ Load 3rd party maven dependencies
 """
 
 load("@rules_jvm_external//:defs.bzl", "maven_install")
+load("@rules_jvm_external//:specs.bzl", "maven")
+load("//scala:version.bzl", "scala_2_13_version", "scala_3_version")
 
-def play_routes_repositories(play_version, scala_version = None):
-    """
-    Loads 3rd party dependencies and the required play routes compiler CLIs for the specified version of Play
+play_version = "3.0.4"
+zinc_version = "1.10.1"
+protobuf_version = "3.19.4"
+scopt_version = "4.1.0"
 
-    Args:
-      play_version: (str) Must be either "2.5", "2.6", "2.7" or "2.8"
-      scala_version: (optional) For Play 2.8, default to Scala 2.13
-    """
-
-    play_version = play_version.replace(".", "_")
-
-    if play_version == "2_8":
-        if not scala_version:
-            scala_version = "2.13"
-        play_version = play_version + "__" + scala_version.replace(".", "_")
-
-    play_artifacts = {
-        "2_5": [
-            "com.lucidchart:play-routes-compiler-cli_2.11:2.5.19",
-        ],
-        "2_6": [
-            "com.lucidchart:play-routes-compiler-cli_2.11:2.6.23",
-            "com.lucidchart:play-routes-compiler-cli_2.12:2.6.23",
-        ],
-        "2_7": [
-            "com.lucidchart:play-routes-compiler-cli_2.11:2.7.2",
-            "com.lucidchart:play-routes-compiler-cli_2.12:2.7.3",
-        ],
-        "2_8__2_12": [
-            "com.lucidchart:play-routes-compiler-cli_2.12:2.8.7",
-        ],
-        "2_8__2_13": [
-            "com.lucidchart:play-routes-compiler-cli_2.13:2.8.7",
-        ],
-    }
-
-    common_artifacts = [
-        "com.lucidchart:play-routes-compiler-cli:0.1",
-    ]
-
+def play_routes_compiler_cli_3_repositories():
     maven_install(
-        name = "play_routes",
-        artifacts = play_artifacts[play_version] + common_artifacts,
+        name = "play_routes_compiler_cli_3",
+        artifacts = [
+            "com.github.scopt:scopt_3:{}".format(scopt_version),
+            "com.google.protobuf:protobuf-java:{}".format(protobuf_version),
+            "org.playframework:play-routes-compiler_3:{}".format(play_version),
+            "org.scala-lang:scala3-compiler_3:{}".format(scala_3_version),
+            "org.scala-lang:scala3-library_3:{}".format(scala_3_version),
+            # Set neverlink = True to avoid Scala 2 library being pulled on to the compiler classpath
+            maven.artifact("org.scala-lang", "scala3-sbt-bridge", scala_3_version, neverlink = True),
+            "org.scala-sbt:compiler-interface:{}".format(zinc_version),
+            "org.scala-sbt:zinc_2.13:{}".format(zinc_version),
+            "org.scala-sbt:util-interface:{}".format(zinc_version),
+        ],
         repositories = [
             "https://repo.maven.apache.org/maven2",
-            "https://maven-central.storage-download.googleapis.com/maven2",
-            "https://mirror.bazel.build/repo1.maven.org/maven2",
         ],
         fetch_sources = True,
-        maven_install_json = "@io_bazel_rules_play_routes//:play_{}_routes_compiler_cli_install.json".format(play_version),
+        fail_if_repin_required = True,
+        maven_install_json = "@rules_play_routes//:play_routes_compiler_cli_3_install.json",
     )
 
-    for version in play_artifacts.keys():
-        maven_install(
-            name = "play_{}_routes_compiler_cli".format(version),
-            artifacts = play_artifacts[version] + common_artifacts,
-            repositories = [
-                "https://repo.maven.apache.org/maven2",
-                "https://maven-central.storage-download.googleapis.com/maven2",
-                "https://mirror.bazel.build/repo1.maven.org/maven2",
-            ],
-            fetch_sources = True,
-            maven_install_json = "@io_bazel_rules_play_routes//:play_{}_routes_compiler_cli_install.json".format(version),
-        )
+def play_routes_compiler_cli_2_13_repositories():
+    maven_install(
+        name = "play_routes_compiler_cli_2_13",
+        artifacts = [
+            "com.github.scopt:scopt_2.13:{}".format(scopt_version),
+            "com.google.protobuf:protobuf-java:{}".format(protobuf_version),
+            "org.playframework:play-routes-compiler_2.13:{}".format(play_version),
+            "org.scala-lang:scala-compiler:{}".format(scala_2_13_version),
+            "org.scala-lang:scala-library:{}".format(scala_2_13_version),
+            "org.scala-lang:scala-reflect:{}".format(scala_2_13_version),
+            # Set neverlink = True to avoid Scala 2 library being pulled on to the wrong compiler classpath
+            maven.artifact("org.scala-sbt", "compiler-bridge_2.13", zinc_version, neverlink = True),
+            "org.scala-sbt:compiler-interface:{}".format(zinc_version),
+            "org.scala-sbt:zinc_2.13:{}".format(zinc_version),
+            "org.scala-sbt:util-interface:{}".format(zinc_version),
+        ],
+        repositories = [
+            "https://repo.maven.apache.org/maven2",
+        ],
+        fetch_sources = True,
+        fail_if_repin_required = True,
+        maven_install_json = "@rules_play_routes//:play_routes_compiler_cli_2_13_install.json",
+    )

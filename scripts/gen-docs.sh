@@ -6,7 +6,7 @@
 #
 
 cd "$(dirname "$0")/.."
-set -x
+set -euxo pipefail
 
 rm -fr docs/stardoc
 mkdir -p docs/stardoc

@@ -1,11 +1,11 @@
+load("//play-routes-toolchain:transitions.bzl", "play_routes_toolchain_transition", "reset_play_routes_toolchain_transition")
+
 """Play Routes rules
 
 Bazel rules for running the
 [Play routes file compiler](https://github.com/playframework/playframework/tree/master/framework/src/routes-compiler/src/main/scala/play/routes/compiler)
 on Play routes files
 """
-gendir_base_path = "play/routes"
-
 play_imports = [
     "controllers.Assets.Asset",
 ]
@@ -22,44 +22,51 @@ def _sanitize_string_for_usage(s):
             res_array.append("_")
     return "".join(res_array)
 
-def _format_import_args(imports):
-    return ["--routesImport={}".format(i) for i in imports]
+def _format_import_arg(import_arg):
+    return "--routesImport={}".format(import_arg)
 
 def _impl(ctx):
-    prefix = ctx.label.package + "/" + gendir_base_path + "/" + _sanitize_string_for_usage(ctx.attr.name)
-    paths = [f.path for f in ctx.files.srcs]
-    args = ["REPLACE_ME_OUTPUT_PATH"] + [",".join(paths)]
+    output_dir = ctx.actions.declare_directory("play_routes_{}".format(_sanitize_string_for_usage(ctx.attr.name)))
+    args = ctx.actions.args()
+    args.add_all([output_dir], expand_directories = False)
+    args.add(ctx.outputs.srcjar)
+    args.add_joined(ctx.files.srcs, join_with = ",")
 
     if ctx.attr.include_play_imports:
-        args = args + _format_import_args(play_imports)
+        args.add_all(play_imports, map_each = _format_import_arg)
 
-    args = args + _format_import_args(ctx.attr.routes_imports)
+    args.add_all(ctx.attr.routes_imports, map_each = _format_import_arg)
 
     if ctx.attr.generate_reverse_router:
-        args = args + ["--generateReverseRouter"]
+        args.add("--generateReverseRouter")
 
     if ctx.attr.namespace_reverse_router:
-        args = args + ["--namespaceReverserRouter"]
+        args.add("--namespaceReverserRouter")
 
     if ctx.attr.routes_generator:
-        args = args + ["--routesGenerator={}".format(ctx.attr.routes_generator)]
+        args.add(ctx.attr.routes_generator, format = "--routesGenerator=%s")
 
     if ctx.attr.generate_forwards_router == False:
-        args = args + ["--generateForwardsRouter={}".format(ctx.attr.generate_forwards_router)]
+        args.add(ctx.attr.generate_forwards_router, format = "--generateForwardsRouter=%s")
+
+    args.set_param_file_format("multiline")
+    args.use_param_file("@%s", use_always = True)
 
     ctx.actions.run(
         inputs = ctx.files.srcs,
-        outputs = [ctx.outputs.srcjar],
-        arguments = [
-            prefix,
-            ctx.outputs.srcjar.path,
-            ctx.executable._zipper.path,
-            ctx.executable.play_routes_compiler.path,
-        ] + args,
-        progress_message = "Compiling play routes",
+        outputs = [output_dir, ctx.outputs.srcjar],
+        arguments = [args],
+        mnemonic = "PlayRoutesCompile",
+        execution_requirements = {
+            "supports-workers": "1",
+            "supports-multiplex-workers": "1",
+            "supports-multiplex-sandboxing": "1",
+            "supports-worker-cancellation": "1",
+            "supports-path-mapping": "1",
+        },
+        progress_message = "Compiling play routes %{label}",
         use_default_shell_env = True,
-        executable = ctx.executable._play_route_helper,
-        tools = [ctx.executable.play_routes_compiler, ctx.executable._zipper],
+        executable = ctx.toolchains["//play-routes-toolchain:toolchain_type"].play_routes_compiler.files_to_run,
     )
 
     return [
@@ -68,14 +75,20 @@ def _impl(ctx):
         ),
     ]
 
+# If you add any labels or label_lists, you will need to add the
+# reset_play_routes_toolchain_transition outgoing transition to it. Otherwise
+# you'll end up needlessly changing build config and causing an explosion in
+# size for the build graph.
 play_routes = rule(
     implementation = _impl,
     doc = "Compiles Play routes files templates to Scala sources files.",
+    cfg = play_routes_toolchain_transition,
     attrs = {
         "srcs": attr.label_list(
             doc = "Play routes files",
             allow_files = True,
             mandatory = True,
+            cfg = reset_play_routes_toolchain_transition,
         ),
         "routes_imports": attr.string_list(
             doc = "Additional imports to import to the Play routes",
@@ -100,20 +113,12 @@ play_routes = rule(
             doc = "If true, include the imports the Play project includes by default.",
             default = False,
         ),
-        "play_routes_compiler": attr.label(
-            executable = True,
-            cfg = "host",
-            allow_files = True,
-            default = Label("//external:default-play-routes-compiler-cli"),
+        "play_routes_toolchain_name": attr.string(
+            doc = "The name of the Play Routes toolchain to use for this target",
         ),
-        "_play_route_helper": attr.label(
-            executable = True,
-            cfg = "host",
-            default = Label("@io_bazel_rules_play_routes//play-routes:play-routes-helper"),
-        ),
-        "_zipper": attr.label(cfg = "host", default = "@bazel_tools//tools/zip:zipper", executable = True),
     },
     outputs = {
         "srcjar": "play_routes_%{name}.srcjar",
     },
+    toolchains = ["//play-routes-toolchain:toolchain_type"],
 )

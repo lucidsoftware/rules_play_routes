@@ -1,18 +1,19 @@
 package rulesplayroutes.test
 
+import javax.inject.Inject
 import play.api.mvc._
 
-class Controller1() extends Controller {
+class Controller1 @Inject() (cc: ControllerComponents) extends AbstractController(cc)  {
 
-  def ok() = Action { request =>
+  def ok(): Action[AnyContent] = Action { request =>
     Ok
   }
 
-  def badRequest() = Action { request =>
+  def badRequest(): Action[AnyContent] = Action { request =>
     BadRequest
   }
 
-  def fiveHundred() = Action { request =>
+  def fiveHundred(): Action[AnyContent] = Action { request =>
     InternalServerError
   }
 }

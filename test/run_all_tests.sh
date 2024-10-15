@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 
-set -e
+set -euxo pipefail
 
 # TODO: Once the Bazel integration testing library is further along, we should
 # migrate to it

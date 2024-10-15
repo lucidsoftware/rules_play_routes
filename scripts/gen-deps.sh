@@ -1,10 +1,9 @@
-#!/bin/sh -e
+#!/bin/bash
+set -euxo pipefail
+
 cd "$(dirname "$0")"
 
-bazel run @unpinned_play_routes_test//:pin
-
-bazel run @unpinned_play_2_5_routes_compiler_cli//:pin
-bazel run @unpinned_play_2_6_routes_compiler_cli//:pin
-bazel run @unpinned_play_2_7_routes_compiler_cli//:pin
-bazel run @unpinned_play_2_8__2_12_routes_compiler_cli//:pin
-bazel run @unpinned_play_2_8__2_13_routes_compiler_cli//:pin
+bazel run @unpinned_play_routes_compiler_cli_3//:pin
+bazel run @unpinned_play_routes_compiler_cli_2_13//:pin
+bazel run @unpinned_play_routes_test_3//:pin
+bazel run @unpinned_play_routes_test_2_13//:pin
