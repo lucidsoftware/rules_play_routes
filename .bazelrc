@@ -6,7 +6,10 @@ build --strategy=worker,sandboxed,local
 build --verbose_failures
 
 build --incompatible_strict_action_env
-build --experimental_worker_multiplex_sandboxing
+# Disable multiplex sandboxing because there is a bug that causes files which
+# should be in the sandbox to not be. Not sure if this is a Bazel bug or a rule
+# set bug. Something we need to deal with either way.
+#build --experimental_worker_multiplex_sandboxing
 build --experimental_worker_cancellation
 build --worker_sandboxing
 
