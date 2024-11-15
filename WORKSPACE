@@ -138,15 +138,18 @@ go_rules_dependencies()
 
 go_register_toolchains(version = "1.23.0")
 
-# Also for buildifier. Comes from
-# https://github.com/bazelbuild/buildtools/blob/master/buildifier/README.md
-protobuf_version = "3.19.4"
+# protobuf
+
+protobuf_tag = "28.3"
+
+protobuf_sha256 = "5b2ff0f72e85dc1350b7bb1b4ea94d7e92e297f7a58b630e46fa6b430b5b253b"
 
 http_archive(
     name = "com_google_protobuf",
-    sha256 = "3bd7828aa5af4b13b99c191e8b1e884ebfa9ad371b0ce264605d347f135d2568",
-    strip_prefix = "protobuf-{}".format(protobuf_version),
-    url = "https://github.com/protocolbuffers/protobuf/archive/v{}.tar.gz".format(protobuf_version),
+    sha256 = protobuf_sha256,
+    strip_prefix = "protobuf-{}".format(protobuf_tag),
+    type = "zip",
+    url = "https://github.com/protocolbuffers/protobuf/archive/v{}.zip".format(protobuf_tag),
 )
 
 load("@com_google_protobuf//:protobuf_deps.bzl", "protobuf_deps")

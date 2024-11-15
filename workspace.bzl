@@ -8,7 +8,7 @@ load("//scala:version.bzl", "scala_2_13_version", "scala_3_version")
 
 play_version = "3.0.4"
 zinc_version = "1.10.1"
-protobuf_version = "3.19.4"
+protobuf_version = "4.28.3"
 scopt_version = "4.1.0"
 
 def play_routes_compiler_cli_3_repositories():
