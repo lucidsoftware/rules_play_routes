@@ -34,7 +34,7 @@ def generate_play_routes_compiler_targets(scala_version):
             "@rules_scala_annex//src/main/scala/higherkindness/rules_scala/common/sandbox",
             "@rules_scala_annex//src/main/scala/higherkindness/rules_scala/common/worker",
         ],
-        scala = "//scala:zinc_{}".format(scala_version_underscore),
+        scala_toolchain_name = "zinc_{}".format(scala_version_underscore),
     )
 
     java_binary(

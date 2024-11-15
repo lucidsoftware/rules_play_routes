@@ -154,19 +154,14 @@ load("@com_google_protobuf//:protobuf_deps.bzl", "protobuf_deps")
 protobuf_deps()
 
 # higherkindness/rules_scala
-rules_scala_annex_version = "f23c16037db66efb541dbbf5e17e6604886c85ff"
+rules_scala_annex_version = "lucid_2024-11-17"
 
 http_archive(
     name = "rules_scala_annex",
-    integrity = "sha256-b/cPeh6J1Mq63u6fSWdEHAKL/kWfPhZcNL7m9If7PWM=",
+    integrity = "sha256-+hiIcio0oFrcBvl43W19GzOytd7zSo7oZkU314w/Xf4=",
     strip_prefix = "rules_scala-{}".format(rules_scala_annex_version),
     type = "zip",
     url = "https://github.com/lucidsoftware/rules_scala/archive/{}.zip".format(rules_scala_annex_version),
-)
-
-bind(
-    name = "default_scala",
-    actual = "//scala:default_scala",
 )
 
 load(
@@ -181,7 +176,13 @@ load("@annex//:defs.bzl", annex_pinned_maven_install = "pinned_maven_install")
 
 annex_pinned_maven_install()
 
-scala_register_toolchains()
+scala_register_toolchains(
+    default_scala_toolchain_name = "zinc_3",
+    toolchains = [
+        "@rules_play_routes//scala:zinc_2_13",
+        "@rules_play_routes//scala:zinc_3",
+    ],
+)
 
 # rules_pkg
 rules_pkg_version = "1.0.1"
