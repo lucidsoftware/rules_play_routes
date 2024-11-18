@@ -138,15 +138,18 @@ go_rules_dependencies()
 
 go_register_toolchains(version = "1.23.0")
 
-# Also for buildifier. Comes from
-# https://github.com/bazelbuild/buildtools/blob/master/buildifier/README.md
-protobuf_version = "3.19.4"
+# protobuf
+
+protobuf_tag = "28.3"
+
+protobuf_sha256 = "5b2ff0f72e85dc1350b7bb1b4ea94d7e92e297f7a58b630e46fa6b430b5b253b"
 
 http_archive(
     name = "com_google_protobuf",
-    sha256 = "3bd7828aa5af4b13b99c191e8b1e884ebfa9ad371b0ce264605d347f135d2568",
-    strip_prefix = "protobuf-{}".format(protobuf_version),
-    url = "https://github.com/protocolbuffers/protobuf/archive/v{}.tar.gz".format(protobuf_version),
+    sha256 = protobuf_sha256,
+    strip_prefix = "protobuf-{}".format(protobuf_tag),
+    type = "zip",
+    url = "https://github.com/protocolbuffers/protobuf/archive/v{}.zip".format(protobuf_tag),
 )
 
 load("@com_google_protobuf//:protobuf_deps.bzl", "protobuf_deps")
@@ -154,19 +157,14 @@ load("@com_google_protobuf//:protobuf_deps.bzl", "protobuf_deps")
 protobuf_deps()
 
 # higherkindness/rules_scala
-rules_scala_annex_version = "f23c16037db66efb541dbbf5e17e6604886c85ff"
+rules_scala_annex_version = "lucid_2024-11-17"
 
 http_archive(
     name = "rules_scala_annex",
-    integrity = "sha256-b/cPeh6J1Mq63u6fSWdEHAKL/kWfPhZcNL7m9If7PWM=",
+    integrity = "sha256-+hiIcio0oFrcBvl43W19GzOytd7zSo7oZkU314w/Xf4=",
     strip_prefix = "rules_scala-{}".format(rules_scala_annex_version),
     type = "zip",
     url = "https://github.com/lucidsoftware/rules_scala/archive/{}.zip".format(rules_scala_annex_version),
-)
-
-bind(
-    name = "default_scala",
-    actual = "//scala:default_scala",
 )
 
 load(
@@ -181,7 +179,13 @@ load("@annex//:defs.bzl", annex_pinned_maven_install = "pinned_maven_install")
 
 annex_pinned_maven_install()
 
-scala_register_toolchains()
+scala_register_toolchains(
+    default_scala_toolchain_name = "zinc_3",
+    toolchains = [
+        "@rules_play_routes//scala:zinc_2_13",
+        "@rules_play_routes//scala:zinc_3",
+    ],
+)
 
 # rules_pkg
 rules_pkg_version = "1.0.1"

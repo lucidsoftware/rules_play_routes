@@ -5,7 +5,7 @@ def generate_play_routes_test_targets(scala_version):
     # For example 2.13 -> 2-13 or 2_13
     scala_version_dash = scala_version.replace(".", "-")
     scala_version_underscore = scala_version.replace(".", "_")
-    scala = "//scala:zinc_{}".format(scala_version_underscore)
+    scala = "zinc_{}".format(scala_version_underscore)
 
     if scala_version == "3":
         play_routes_toolchain_name = "play-routes-3"
@@ -104,7 +104,7 @@ def generate_play_routes_test_targets(scala_version):
             "@play_routes_test_{}//:org_specs2_specs2_core_{}".format(scala_version_underscore, scala_version_underscore),
             "@play_routes_test_{}//:org_specs2_specs2_matcher_{}".format(scala_version_underscore, scala_version_underscore),
         ],
-        scala = scala,
+        scala_toolchain_name = scala,
     )
 
     play_routes(
@@ -143,7 +143,7 @@ def generate_play_routes_test_targets(scala_version):
             "@play_routes_test_{}//:org_specs2_specs2_core_{}".format(scala_version_underscore, scala_version_underscore),
             "@play_routes_test_{}//:org_specs2_specs2_matcher_{}".format(scala_version_underscore, scala_version_underscore),
         ],
-        scala = scala,
+        scala_toolchain_name = scala,
     )
 
     scala_library(
@@ -155,5 +155,5 @@ def generate_play_routes_test_targets(scala_version):
         deps = [
             "@play_routes_test_{}//:org_playframework_play_{}".format(scala_version_underscore, scala_version_underscore),
         ],
-        scala = scala,
+        scala_toolchain_name = scala,
     )
