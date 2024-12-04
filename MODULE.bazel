@@ -20,6 +20,8 @@ bazel_dep(name = "stardoc", version = "0.7.1")
 
 register_toolchains(
     "//:repository_default_toolchain_21_definition",
+    "//play-routes-toolchain:play-routes-3",
+    "//play-routes-toolchain:play-routes-2-13",
     "//scala:zinc_2_13",
     "//scala:zinc_3",
 )

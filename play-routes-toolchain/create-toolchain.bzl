@@ -12,7 +12,7 @@ def create_play_routes_toolchain(name, play_routes_compiler):
     native.config_setting(
         name = config_setting_name,
         flag_values = {
-            "@rules_play_routes_toolchain//:play-routes-toolchain": name,
+            "//play-routes-toolchain": name,
         },
     )
 
