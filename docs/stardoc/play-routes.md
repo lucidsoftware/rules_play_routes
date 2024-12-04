@@ -7,7 +7,7 @@
 ## play_routes
 
 <pre>
-load("@//play-routes:play-routes.bzl", "play_routes")
+load("@rules_play_routes//play-routes:play-routes.bzl", "play_routes")
 
 play_routes(<a href="#play_routes-name">name</a>, <a href="#play_routes-srcs">srcs</a>, <a href="#play_routes-generate_forwards_router">generate_forwards_router</a>, <a href="#play_routes-generate_reverse_router">generate_reverse_router</a>, <a href="#play_routes-include_play_imports">include_play_imports</a>,
             <a href="#play_routes-namespace_reverse_router">namespace_reverse_router</a>, <a href="#play_routes-play_routes_toolchain_name">play_routes_toolchain_name</a>, <a href="#play_routes-routes_generator">routes_generator</a>, <a href="#play_routes-routes_imports">routes_imports</a>)
