@@ -42,7 +42,7 @@ scopt_version = "4.1.0"
 
 specs2_version = "4.20.8"
 
-zinc_version = "1.10.1"
+zinc_version = "1.10.4"
 
 play_routes_compiler_cli_2_13 = use_extension("@rules_jvm_external//:extensions.bzl", "maven")
 play_routes_compiler_cli_2_13.install(
