@@ -1,8 +1,8 @@
 # This approach of incoming transition, store original values, outgoing
 # transition, reset to original values is inspired by what the rules_go
 # folks are doing.
-toolchain_setting_key = "@rules_play_routes_toolchain//:play-routes-toolchain"
-original_toolchain_setting_key = "@rules_play_routes_toolchain//:original-play-routes-toolchain"
+toolchain_setting_key = "//play-routes-toolchain"
+original_toolchain_setting_key = "//play-routes-toolchain:original-play-routes-toolchain"
 
 def _play_routes_toolchain_transition_impl(settings, attr):
     """Update the rules_play_routes toolchain to the overridden value. Store

@@ -5,65 +5,48 @@
 | [![Build Status](https://github.com/lucidsoftware/rules_play_routes/workflows/CI/badge.svg)](https://github.com/lucidsoftware/rules_play_routes/actions) | [Stardoc](docs/stardoc/play-routes.md) |
 
 ## Overview
-`rules_play_routes` compiles [Play Framework routes files](https://www.playframework.com/documentation/latest/ScalaRouting) templates to [Scala](http://www.scala-lang.org/), so they can be used with [`bazelbuild/rules_scala`](https://github.com/bazelbuild/rules_scala) and [`higherkindness/rules_scala`](https://github.com/higherkindness/rules_scala).
+`rules_play_routes` compiles
+[Play Framework routes files](https://www.playframework.com/documentation/latest/ScalaRouting)
+templates to [Scala](http://www.scala-lang.org/), so they can be used with
+[`bazelbuild/rules_scala`](https://github.com/bazelbuild/rules_scala) and
+[`lucidsoftware/rules_scala`](https://github.com/lucidsoftware/rules_scala).
 
 Simple Core API: [play_routes](docs/stardoc/play-routes.md)
 
-For more information about the Play Framework, see [the Play documentation](https://www.playframework.com/documentation/latest).
+For more information about the Play Framework, see
+[the Play documentation](https://www.playframework.com/documentation/latest).
 
 ## Installation
-Add the following to your `WORKSPACE` file:
 
-```python
-# update version as needed
-rules_play_routes_version = "TODO"
-http_archive(
-    name = "rules_play_routes",
-    sha256 = "TODO",
+`rules_play_routes` isn't yet on the [Bazel Central Registry](https://registry.bazel.build/), so
+you'll need to pull it in via `archive_override`. Be sure to replace `<COMMIT>` with the
+latest commit on `master` and `<INTEGRITY>` with the hash suggested by Bazel after the dependency is
+first loaded.
+
+*/MODULE.bazel*
+
+```starlark
+bazel_dep(name = "rules_play_routes")
+
+rules_play_routes_version = "<COMMIT>"
+
+archive_override(
+    module_name = "rules_play_routes",
+    integrity = "<INTEGRITY>",
     strip_prefix = "rules_play_routes-{}".format(rules_play_routes_version),
-    type = "zip",
-    url = "https://github.com/lucidsoftware/rules_play_routes/archive/{}.zip".format(rules_play_routes_version),
+    urls = ["https://github.com/lucidsoftware/rules_play_routes/archive/refs/heads/{}.zip".format(rules_play_routes_version)],
 )
-
-# rules_jvm_external
-rules_jvm_external_version = "6.2"
-
-http_archive(
-    name = "rules_jvm_external",
-    sha256 = "aa39ecd47e16d5870eba817fe71476802bc371fe2724a2ddee565992df55f4af",
-    strip_prefix = "rules_jvm_external-{}".format(rules_jvm_external_version),
-    type = "zip",
-    url = "https://github.com/bazelbuild/rules_jvm_external/archive/{}.zip".format(rules_jvm_external_version),
-)
-
-load("@rules_jvm_external//:repositories.bzl", "rules_jvm_external_deps")
-rules_jvm_external_deps()
-
-load("@rules_jvm_external//:setup.bzl", "rules_jvm_external_setup")
-rules_jvm_external_setup()
-
-load(
-    "@rules_play_routes//:workspace.bzl",
-    "play_routes_compiler_cli_2_13_repositories",
-    "play_routes_compiler_cli_3_repositories",
-)
-play_routes_compiler_cli_3_repositories()
-load("@play_routes_compiler_cli_3//:defs.bzl", play_routes_compiler_cli_3_pinned_maven_install = "pinned_maven_install")
-play_routes_compiler_cli_3_pinned_maven_install()
-
-play_routes_compiler_cli_2_13_repositories()
-load("@play_routes_compiler_cli_2_13//:defs.bzl", play_routes_compiler_cli_2_13_pinned_maven_install = "pinned_maven_install")
-play_routes_compiler_cli_2_13_pinned_maven_install()
-
-# Play routes compiler
-load("@rules_play_routes//play-routes-toolchain:register-toolchains.bzl", "play_routes_register_toolchains")
-play_routes_register_toolchains(default_toolchain_name = "play-routes-3")
 ```
 
-This installs `rules_play_routes` to your `WORKSPACE` and sets up toolchains for a Scala 2.13 and Scala 3 version of the Play routes compiler with Scala 3 being the default. To change the default to Scala 2.13, set `default_toolchain_name = "play-routes-2-13"`
+By default, the Scala 3 version of the Play routes compiler will be used. To change the default to
+Scala 2.13, add the `--@rules_play_routes//play-routes-toolchain=play-routes-2-13` flag to your
+`.bazelrc` file.
 
-If you want to use a custom Play routes compiler, you can set up a custom toolchain in a BUILD.bazel file as follows:
-```python
+If you want to use a custom Play routes compiler, you can set up a custom toolchain like so:
+
+*/BUILD.bazel*
+
+```starlark
 load("@rules_play_routes//play-routes-toolchain:create-toolchain.bzl", "create_play_routes_toolchain")
 
 create_play_routes_toolchain(
@@ -72,20 +55,29 @@ create_play_routes_toolchain(
 )
 ```
 
-Then change the `play_routes_register_toolchains` in the `WORKSPACE` file to use your custom toolchain:
-```python
-play_routes_register_toolchains(
-    default_toolchain_name = "play-routes-custom",
-    toolchains = ["<label of your custom Play routes compiler>"]
-)
+Then, register your toolchain with Bazel and set it as the default in your `.bazelrc` file:
+
+*/MODULE.bazel*
+
+```starlark
+register_toolchains("//:play-routes-custom")
 ```
 
-You can find the available versions of the Twirl Compiler CLI on maven: https://mvnrepository.com/artifact/com.lucidchart/play-routes-compiler-cli.
+*/.bazelrc*
+
+```
+common --@rules_play_routes//play-routes-toolchain=play-routes-custom
+```
+
+You can find the available versions of the Twirl Compiler CLI on maven:
+https://mvnrepository.com/artifact/com.lucidchart/play-routes-compiler-cli.
 
 ## Usage
-The `play_routes` rule compiles Play routes files to a source jar that can be used with the `rules_scala` rules. For example,
 
-```python
+The `play_routes` rule compiles Play routes files to a source jar that can be used with the
+`rules_scala` rules. For example,
+
+```starkark
 load("@rules_play_routes//play-routes:play-routes.bzl", "play_routes")
 
 play_routes(
@@ -105,10 +97,15 @@ scala_binary(
 ```
 
 ### Overriding the default Play routes compiler
-To override the default Play routes compiler for a single target, you can change the `play_routes_toolchain_name` attribute on the `play_routes` target. That attribute can be set to the name of any `play_routes_toolchain` registered with `play_routes_register_toolchains` (and created using `create_play_routes_toolchain`). By default `play-routes-3` and `play-routes-2-13` are valid values.
+
+To override the default Play routes compiler for a single target, you can change the
+`play_routes_toolchain_name` attribute on the `play_routes` target. That attribute can be set to
+the name of any `play_routes_toolchain` registered with `play_routes_register_toolchains` (and
+created using `create_play_routes_toolchain`). By default `play-routes-3` and `play-routes-2-13` are
+valid values.
 
 For example:
-```python
+```starlark
 play_routes(
     name = "play-routes",
     srcs = ["conf/routes"] + glob(["conf/*.routes"]),
@@ -119,12 +116,15 @@ play_routes(
 )
 ```
 
-See the [Stardoc documentation](docs/stardoc/play-routes.md) for the full list of options for `play_routes`.
+See the [Stardoc documentation](docs/stardoc/play-routes.md) for the full list of options for
+`play_routes`.
 
 ### Use with the Play Framework
-`play_routes` can be used with [`rules_twirl`](https://github.com/lucidsoftware/rules_twirl) to run a Play Framework Service. For example
 
-```python
+`play_routes` can be used with [`rules_twirl`](https://github.com/lucidsoftware/rules_twirl) to run
+a Play Framework Service. For example
+
+```starlark
 twirl_templates(
   name = "twirl-templates",
   source_directory = "app",
@@ -166,7 +166,7 @@ scala_binary(
 
 For static assets to work, put this into your `public/BUILD` file:
 
-```python
+```starlark
 filegroup(
     name = "public",
     srcs = glob(["**/*"]),
@@ -174,12 +174,16 @@ filegroup(
 )
 ```
 
-If you want to have webjars support (https://www.playframework.com/documentation/3.0.x/AssetsOverview#WebJars),
-then check out https://github.com/gergelyfabian/rules_play_utils.
+If you want to have webjars support
+(https://www.playframework.com/documentation/3.0.x/AssetsOverview#WebJars), then check out
+https://github.com/gergelyfabian/rules_play_utils.
 
 ## Development
+
 ### Command Line Play Routes Compiler
-This project consists of the Play routes Bazel rules and a command line Play routes compiler. The command line compiler can be built with
+
+This project consists of the Play routes Bazel rules and a command line Play routes compiler. The
+command line compiler can be built with
 ```bash
 bazel build //play-routes-compiler-cli:play-routes-compiler-cli-3
 ```
@@ -204,25 +208,38 @@ bazel test //test/...
 ```
 
 ### Updating Third Party Dependencies
-We use [rules_jvm_external](https://github.com/bazelbuild/rules_jvm_external) to import third party dependencies.
 
-To make changes to the dependencies, simply update `maven_install` in the appropriate `workspace.bzl` file (`workspace.bzl` for the main `rules_play_routes` implementation or `test_workspace.bzl` for the tests), and then update the dependencies json file used by `rules_jvm_external` by running the following script:
+We use [rules_jvm_external](https://github.com/bazelbuild/rules_jvm_external) to import
+third party dependencies.
+
+To make changes to the dependencies, simply update the appropriate `maven.install` call in
+`MODULE.bazel`, and then update the dependencies json file used by `rules_jvm_external` by running
+the following script:
+
 ```bash
 scripts/gen-deps.sh
 ```
 Never modify the dependencies json file directly.
 
 ### Updating Stardoc
+
 Before pushing your changes, make sure you update the documentation by running the following script:
+
 ```bash
 scripts/gen-docs.sh
 ```
+
 Failure to do so will result in CI failing.
 
 ## Releasing
+
 To release a new version to Maven Central:
  1. Push a tag with this syntax: `P1.P2.P3` where `P1.P2.P3` is the Play version, e.g., `3.0.4`
- 2. Once the build completes (including the publish step), find the [staging repo in Sonatype](https://oss.sonatype.org/#stagingRepositories) (assuming you're signed in and have access to the project)
+ 2. Once the build completes (including the publish step), find the
+    [staging repo in Sonatype](https://oss.sonatype.org/#stagingRepositories) (assuming you're
+    signed in and have access to the project)
  3. Verify all the artifacts are on the staging Repository, and then close it through the Sonatype GUI
  4. Once Sonatype's pre-release checks on the repository complete, release it through the Sonatype GUI
- 5. Verify the artifact's present in [Maven Central](https://search.maven.org/search?q=com.lucidchart) (it can take multiple hours for everything to sync)
+ 5. Verify the artifact's present in
+    [Maven Central](https://search.maven.org/search?q=com.lucidchart) (it can take multiple hours
+    for everything to sync)
