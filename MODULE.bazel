@@ -1,10 +1,14 @@
 module(name = "rules_play_routes")
 
 bazel_dep(name = "bazel_skylib", version = "1.7.1")
-bazel_dep(name = "buildifier_prebuilt", version = "7.3.1")
+
+bazel_dep(name = "buildifier_prebuilt", version = "7.3.1", dev_dependency = True)
+
 bazel_dep(name = "rules_java", version = "7.11.1")
 bazel_dep(name = "rules_jvm_external", version = "6.4")
-bazel_dep(name = "rules_pkg", version = "1.0.1")
+
+bazel_dep(name = "rules_pkg", version = "1.0.1", dev_dependency = True)
+
 bazel_dep(name = "rules_scala_annex")
 
 rules_scala_annex_version = "lucid_2024-12-06"
@@ -16,7 +20,7 @@ archive_override(
     urls = ["https://github.com/lucidsoftware/rules_scala/archive/refs/tags/{}.zip".format(rules_scala_annex_version)],
 )
 
-bazel_dep(name = "stardoc", version = "0.7.1")
+bazel_dep(name = "stardoc", version = "0.7.1", dev_dependency = True)
 
 register_toolchains(
     "//:repository_default_toolchain_21_definition",

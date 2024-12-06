@@ -1,26 +1,6 @@
 load("@bazel_skylib//:bzl_library.bzl", "bzl_library")
-load("@bazel_skylib//lib:paths.bzl", "paths")
-load("@rules_pkg//:pkg.bzl", "pkg_tar")
-load("@stardoc//stardoc:stardoc.bzl", "stardoc")
 
-[
-    stardoc(
-        name = paths.replace_extension(file, "_doc").replace("/", "_"),
-        out = paths.replace_extension(file, ".md").replace("/", "_"),
-        input = file,
-        symbol_names = ["play_routes"],
-        deps = [
-            "//play-routes:bzl_internal",
-        ],
-    )
-    for file in glob(["**/*.bzl"])
-]
-
-pkg_tar(
-    name = "docs",
-    srcs = [paths.replace_extension(file, ".md").replace("/", "_") for file in glob(["**/*.bzl"])],
-    mode = "0644",
-)
+exports_files(["play-routes.bzl"])
 
 bzl_library(
     name = "bzl_internal",

@@ -1,0 +1,30 @@
+load("@bazel_skylib//lib:paths.bzl", "paths")
+load("@rules_pkg//:pkg.bzl", "pkg_tar")
+load("@stardoc//stardoc:stardoc.bzl", "stardoc")
+
+bzl_files = ["//play-routes:play-routes.bzl"]
+
+[
+    stardoc(
+        name = paths
+            .replace_extension(file, "_doc")
+            .removeprefix("//play-routes:")
+            .replace("/", "_"),
+        out = paths.replace_extension(file, ".md").removeprefix("//play-routes:").replace("/", "_"),
+        input = file,
+        symbol_names = ["play_routes"],
+        deps = [
+            "//play-routes:bzl_internal",
+        ],
+    )
+    for file in bzl_files
+]
+
+pkg_tar(
+    name = "docs",
+    srcs = [
+        paths.replace_extension(file, ".md").removeprefix("//play-routes:").replace("/", "_")
+        for file in bzl_files
+    ],
+    mode = "0644",
+)

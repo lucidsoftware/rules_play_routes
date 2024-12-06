@@ -1,4 +1,3 @@
-load("@buildifier_prebuilt//:rules.bzl", "buildifier")
 load(
     "@rules_java//toolchains:default_java_toolchain.bzl",
     "DEFAULT_JAVACOPTS",
@@ -15,13 +14,4 @@ default_java_toolchain(
     misc = [opt for opt in DEFAULT_JAVACOPTS if not opt.startswith("-Xep")],
     source_version = "21",
     target_version = "21",
-)
-
-buildifier(
-    name = "buildifier",
-)
-
-buildifier(
-    name = "buildifier_check",
-    mode = "check",
 )
