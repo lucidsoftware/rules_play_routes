@@ -36,7 +36,7 @@ scala_2_13_version = "2.13.14"
 
 scala_3_version = "3.5.1"
 
-protobuf_version = "4.28.3"
+protobuf_version = "4.29.3"
 
 scopt_version = "4.1.0"
 
