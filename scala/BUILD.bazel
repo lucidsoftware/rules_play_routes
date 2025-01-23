@@ -46,6 +46,7 @@ register_zinc_toolchain(
     name = "zinc_2_13",
     compiler_bridge = "@play_routes_compiler_cli_2_13//:org_scala_sbt_compiler_bridge_2_13",
     compiler_classpath = compiler_classpath_2_13,
+    global_scalacopts = ["-Ytasty-reader"],
     runtime_classpath = runtime_classpath_2_13,
     version = scala_2_13_version,
     visibility = ["//visibility:public"],
