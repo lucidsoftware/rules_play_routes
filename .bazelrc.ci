@@ -1,4 +1,3 @@
 common --config=ci
 
 startup --host_jvm_args=-Xmx2500m
-startup --host_jvm_args=-Xms2500m

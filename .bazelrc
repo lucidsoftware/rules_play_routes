@@ -1,27 +1,31 @@
-common --@rules_scala_annex//rules/scala:scala-toolchain=zinc_3
-common:ci --color=yes
-
-build --strategy=worker,sandboxed,local
-build --verbose_failures
-
-build --incompatible_strict_action_env
-# Disable multiplex sandboxing because there is a bug that causes files which
-# should be in the sandbox to not be. Not sure if this is a Bazel bug or a rule
-# set bug. Something we need to deal with either way.
-#build --experimental_worker_multiplex_sandboxing
-build --experimental_worker_cancellation
-build --worker_sandboxing
-
+# Java options
 build --java_language_version="21"
 build --java_runtime_version="remotejdk_21"
 build --tool_java_language_version="21"
 build --tool_java_runtime_version="remotejdk_21"
 
+# Other options
+build --experimental_worker_cancellation
+build --incompatible_strict_action_env
+build --strategy=worker,sandboxed,local
+build --verbose_failures
+build --worker_sandboxing
+
+# Disable multiplex sandboxing because there is a bug that causes files which
+# should be in the sandbox to not be. Not sure if this is a Bazel bug or a rule
+# set bug. Something we need to deal with either way.
+#build --experimental_worker_multiplex_sandboxing
+
+common --@rules_scala_annex//rules/scala:scala-toolchain=zinc_3
+
+# CI Options
 build:ci --sandbox_debug
 build:ci --spawn_strategy=standalone
 build:ci --genrule_strategy=standalone
 
-test:ci --test_strategy=standalone
-test:ci --test_output=errors
-test:ci --local_ram_resources=2048
+common:ci --color=yes
+
 test:ci --local_cpu_resources=HOST_CPUS*.5
+test:ci --local_ram_resources=2048
+test:ci --test_output=errors
+test:ci --test_strategy=standalone
