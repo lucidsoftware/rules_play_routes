@@ -53,10 +53,8 @@ def _impl(ctx):
     args.use_param_file("@%s", use_always = True)
 
     ctx.actions.run(
-        inputs = ctx.files.srcs,
-        outputs = [output_dir, ctx.outputs.srcjar],
         arguments = [args],
-        mnemonic = "PlayRoutesCompile",
+        executable = ctx.toolchains["//play-routes-toolchain:toolchain_type"].play_routes_compiler.files_to_run,
         execution_requirements = {
             "supports-workers": "1",
             "supports-multiplex-workers": "1",
@@ -64,9 +62,12 @@ def _impl(ctx):
             "supports-worker-cancellation": "1",
             "supports-path-mapping": "1",
         },
+        inputs = ctx.files.srcs,
+        mnemonic = "PlayRoutesCompile",
+        outputs = [output_dir, ctx.outputs.srcjar],
         progress_message = "Compiling play routes %{label}",
         use_default_shell_env = True,
-        executable = ctx.toolchains["//play-routes-toolchain:toolchain_type"].play_routes_compiler.files_to_run,
+        toolchain = "//play-routes-toolchain:toolchain_type",
     )
 
     return [

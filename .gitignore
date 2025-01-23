@@ -1,3 +1,4 @@
+/.bazel_cache/
 /bazel-*
 /external-tools/
 /lemur_rsa
