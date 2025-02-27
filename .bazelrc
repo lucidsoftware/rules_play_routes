@@ -52,8 +52,8 @@ test --test_output=all
 
 # CI Options
 build:ci --sandbox_debug
-build:ci --spawn_strategy=standalone
-build:ci --genrule_strategy=standalone
+build:ci --spawn_strategy=sandboxed
+build:ci --genrule_strategy=sandboxed
 
 # This is necessary because Bazel doesn't allow the use of configurations that don't change any
 # options:
