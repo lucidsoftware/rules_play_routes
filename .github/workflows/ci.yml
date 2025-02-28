@@ -6,13 +6,7 @@ on:
       - master
 jobs:
   build-and-test:
-    runs-on: ${{ matrix.os }}
-    env:
-      USE_BAZEL_VERSION: ${{ matrix.bazel_version }}
-    strategy:
-      matrix:
-        os: [ubuntu-24.04]
-        bazel_version: [bazelbuild/7.3.1]
+    runs-on: ubuntu-24.04
     steps:
       - uses: actions/checkout@v4.1.1
       - uses: actions/setup-node@v4.0.2

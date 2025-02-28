@@ -1,26 +1,22 @@
 module(name = "rules_play_routes")
 
 bazel_dep(name = "bazel_skylib", version = "1.7.1")
-
-bazel_dep(name = "buildifier_prebuilt", version = "7.3.1", dev_dependency = True)
-
-bazel_dep(name = "rules_java", version = "7.11.1")
-bazel_dep(name = "rules_jvm_external", version = "6.4")
-
-bazel_dep(name = "rules_pkg", version = "1.0.1", dev_dependency = True)
-
+bazel_dep(name = "rules_java", version = "8.9.0")
+bazel_dep(name = "rules_jvm_external", version = "6.5")
 bazel_dep(name = "rules_scala_annex")
 
-rules_scala_annex_version = "lucid_2024-12-06"
+rules_scala_annex_version = "lucid_2025-02-27"
 
 archive_override(
     module_name = "rules_scala_annex",
-    integrity = "sha256-lSbyWlYtgP0ENngg4gKU1EBJ8d1sgMQKJlmOHwmCw3k=",
+    integrity = "sha256-V+btm8QF+VLhPzn906SskVY798DdzA9ofJcl2FCimOw=",
     strip_prefix = "rules_scala-{}".format(rules_scala_annex_version),
     urls = ["https://github.com/lucidsoftware/rules_scala/archive/refs/tags/{}.zip".format(rules_scala_annex_version)],
 )
 
-bazel_dep(name = "stardoc", version = "0.7.1", dev_dependency = True)
+bazel_dep(name = "buildifier_prebuilt", version = "8.0.1", dev_dependency = True)
+bazel_dep(name = "rules_pkg", version = "1.0.1", dev_dependency = True)
+bazel_dep(name = "stardoc", version = "0.7.2", dev_dependency = True)
 
 register_toolchains(
     "//:repository_default_toolchain_21_definition",
@@ -40,7 +36,7 @@ scala_2_13_version = "2.13.14"
 
 scala_3_version = "3.5.1"
 
-protobuf_version = "4.28.3"
+protobuf_version = "4.29.3"
 
 scopt_version = "4.1.0"
 
