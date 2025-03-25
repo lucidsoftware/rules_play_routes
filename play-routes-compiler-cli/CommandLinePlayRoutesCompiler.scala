@@ -34,8 +34,16 @@ object CommandLinePlayRoutesCompiler extends WorkerMain[Unit] {
     var generateForwardsRouter: Boolean = true
   )
 
-  def parser(workDir: Path) = new OptionParser[Config]("scopt") {
+  def parser(workDir: Path, out: PrintStream) = new OptionParser[Config]("play-routes-compiler") {
     head("Command Line Play Routes Compiler", "0.1")
+
+    override def displayToOut(msg: String): Unit = out.println(msg)
+    override def displayToErr(msg: String): Unit = out.println(msg)
+    override def reportError(msg: String): Unit = displayToErr("Error: " + msg)
+    override def reportWarning(msg: String): Unit = displayToErr("Warning: " + msg)
+
+    // Do not exit as it causes problems for Bazel workers
+    override def terminate(exitState: Either[String, Unit]): Unit = ()
 
     arg[Path]("<outputDirectory>").required().action { (outputDirectory, config) =>
       config.outputDirectory = SandboxUtil.getSandboxPath(workDir, outputDirectory)
@@ -158,7 +166,7 @@ object CommandLinePlayRoutesCompiler extends WorkerMain[Unit] {
   override def init(args: Option[Array[String]]): Unit = ()
 
   protected def work(ctx: Unit, args: Array[String], out: PrintStream, workDir: Path, verbosity: Int): Unit = {
-    val config = parser(workDir).parse(
+    val config = parser(workDir, out).parse(
       readArgsFromArgFiles(args), Config()
     ).getOrElse(throw new AnnexWorkerError(1))
     InterruptUtil.throwIfInterrupted()
