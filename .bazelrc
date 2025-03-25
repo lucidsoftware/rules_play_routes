@@ -27,6 +27,7 @@ common --@rules_scala_annex//rules/scala:scala-toolchain=zinc_3
 
 # These are backwards incompatible options; we should check to see if their values have been flipped
 # when upgrading to new major Bazel version.
+common --incompatible_modify_execution_info_additive
 common --incompatible_auto_exec_groups
 common --incompatible_autoload_externally=sh_binary # sh_binary is used by rules_jvm_external
 common --incompatible_config_setting_private_default_visibility
