@@ -5,11 +5,11 @@ bazel_dep(name = "rules_java", version = "8.9.0")
 bazel_dep(name = "rules_jvm_external", version = "6.5")
 bazel_dep(name = "rules_scala_annex")
 
-rules_scala_annex_version = "lucid_2025-02-27"
+rules_scala_annex_version = "lucid_2025-03-25"
 
 archive_override(
     module_name = "rules_scala_annex",
-    integrity = "sha256-V+btm8QF+VLhPzn906SskVY798DdzA9ofJcl2FCimOw=",
+    integrity = "sha256-wfcMHs+hpGtxxCvdBEcjLxkxLDSUCNYw0a8D3mpsxIE=",
     strip_prefix = "rules_scala-{}".format(rules_scala_annex_version),
     urls = ["https://github.com/lucidsoftware/rules_scala/archive/refs/tags/{}.zip".format(rules_scala_annex_version)],
 )
