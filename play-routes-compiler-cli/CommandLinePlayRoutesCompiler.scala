@@ -3,7 +3,7 @@ package rulesplayroutes.routes
 import com.google.devtools.build.buildjar.jarhelper.JarCreator
 import higherkindness.rules_scala.common.error.AnnexWorkerError
 import higherkindness.rules_scala.common.interrupt.InterruptUtil
-import higherkindness.rules_scala.common.worker.WorkerMain
+import higherkindness.rules_scala.common.worker.{WorkerMain, WorkTask}
 import higherkindness.rules_scala.common.sandbox.SandboxUtil
 import java.io.{File, PrintStream}
 import java.lang.Class
@@ -115,7 +115,11 @@ object CommandLinePlayRoutesCompiler extends WorkerMain[Unit] {
   /**
    * Do Play Routes compilation and return true if things succeeded, otherwise return false.
    */
-  private def compilePlayRoutes(config: Config, out: PrintStream): Try[Unit] =  Try {
+  private def compilePlayRoutes(
+    config: Config,
+    out: PrintStream,
+    isCancelled: Function0[Boolean]
+  ): Try[Unit] =  Try {
     config.sources.foreach { path =>
       RoutesCompiler.compile(
         RoutesCompilerTask(
@@ -130,7 +134,7 @@ object CommandLinePlayRoutesCompiler extends WorkerMain[Unit] {
         config.outputDirectory.toFile(),
       ) match {
         case Right(generatedFiles) =>
-          InterruptUtil.throwIfInterrupted()
+          InterruptUtil.throwIfInterrupted(isCancelled)
           generatedFiles.foreach { f =>
             stripHeader(f.getPath)
           }
@@ -165,15 +169,15 @@ object CommandLinePlayRoutesCompiler extends WorkerMain[Unit] {
 
   override def init(args: Option[Array[String]]): Unit = ()
 
-  protected def work(ctx: Unit, args: Array[String], out: PrintStream, workDir: Path, verbosity: Int): Unit = {
-    val config = parser(workDir, out).parse(
-      readArgsFromArgFiles(args), Config()
+  protected def work(task: WorkTask[Unit]): Unit = {
+    val config = parser(task.workDir, task.output).parse(
+      readArgsFromArgFiles(task.args), Config()
     ).getOrElse(throw new AnnexWorkerError(1))
-    InterruptUtil.throwIfInterrupted()
+    InterruptUtil.throwIfInterrupted(task.isCancelled)
 
-    compilePlayRoutes(config, out) match {
+    compilePlayRoutes(config, task.output, task.isCancelled) match {
       case Success(_) =>
-        InterruptUtil.throwIfInterrupted()
+        InterruptUtil.throwIfInterrupted(task.isCancelled)
         generateJar(config)
       case Failure(e) => throw new AnnexWorkerError(1, "Failed to compile play routes", e)
     }
