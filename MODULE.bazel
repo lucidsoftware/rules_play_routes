@@ -1,17 +1,17 @@
 module(name = "rules_play_routes")
 
 bazel_dep(name = "bazel_skylib", version = "1.7.1")
-bazel_dep(name = "rules_java", version = "8.9.0")
+bazel_dep(name = "rules_java", version = "8.11.0")
 bazel_dep(name = "rules_jvm_external", version = "6.5")
 bazel_dep(name = "rules_scala_annex")
 
-rules_scala_annex_version = "lucid_2025-03-25"
+rules_scala_annex_version = "lucid_2025-04-18"
 
 archive_override(
     module_name = "rules_scala_annex",
-    integrity = "sha256-wfcMHs+hpGtxxCvdBEcjLxkxLDSUCNYw0a8D3mpsxIE=",
+    integrity = "sha256-OFQhwIByKsJOMNAeLBi0KV1t+Fa6sTRu3xwPn3faK0o=",
     strip_prefix = "rules_scala-{}".format(rules_scala_annex_version),
-    urls = ["https://github.com/lucidsoftware/rules_scala/archive/refs/tags/{}.zip".format(rules_scala_annex_version)],
+    urls = ["https://github.com/lucidsoftware/rules_scala/archive/{}.zip".format(rules_scala_annex_version)],
 )
 
 bazel_dep(name = "buildifier_prebuilt", version = "8.0.1", dev_dependency = True)
