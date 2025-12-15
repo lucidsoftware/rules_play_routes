@@ -1,22 +1,22 @@
 module(name = "rules_play_routes")
 
-bazel_dep(name = "bazel_skylib", version = "1.7.1")
-bazel_dep(name = "rules_java", version = "8.11.0")
-bazel_dep(name = "rules_jvm_external", version = "6.5")
+bazel_dep(name = "bazel_skylib", version = "1.8.1")
+bazel_dep(name = "rules_java", version = "8.16.1")
+bazel_dep(name = "rules_jvm_external", version = "6.9")
 bazel_dep(name = "rules_scala_annex")
 
-rules_scala_annex_version = "lucid_2025-04-18"
+rules_scala_annex_version = "lucid_2025-10-03"
 
 archive_override(
     module_name = "rules_scala_annex",
-    integrity = "sha256-OFQhwIByKsJOMNAeLBi0KV1t+Fa6sTRu3xwPn3faK0o=",
+    integrity = "sha256-801JLX227kZgVc2QCzd1JZuQ3huVAOKOdYtCFiXQ/TI=",
     strip_prefix = "rules_scala-{}".format(rules_scala_annex_version),
     urls = ["https://github.com/lucidsoftware/rules_scala/archive/{}.zip".format(rules_scala_annex_version)],
 )
 
-bazel_dep(name = "buildifier_prebuilt", version = "8.0.1", dev_dependency = True)
-bazel_dep(name = "rules_pkg", version = "1.0.1", dev_dependency = True)
-bazel_dep(name = "stardoc", version = "0.7.2", dev_dependency = True)
+bazel_dep(name = "buildifier_prebuilt", version = "8.2.1.1", dev_dependency = True)
+bazel_dep(name = "rules_pkg", version = "1.1.0", dev_dependency = True)
+bazel_dep(name = "stardoc", version = "0.8.0", dev_dependency = True)
 
 register_toolchains(
     "//:repository_default_toolchain_21_definition",
@@ -28,21 +28,21 @@ register_toolchains(
 
 # Please ensure these stay up-to-date with the versions in `versions.bzl`. Unfortunately,
 # `MODULE.bazel` files can't call `load`, so we have to copy them here.
-play_version = "3.0.4"
+play_version = "3.0.9"
 
 # Please ensure these stay up-to-date with the versions in `scala/version.bzl`. Unfortunately,
 # `MODULE.bazel` files can't call `load`, so we have to copy them here.
-scala_2_13_version = "2.13.14"
+scala_2_13_version = "2.13.18"
 
-scala_3_version = "3.5.1"
+scala_3_version = "3.3.7"
 
-protobuf_version = "4.29.3"
+protobuf_version = "4.33.2"
 
 scopt_version = "4.1.0"
 
-specs2_version = "4.20.8"
+specs2_version = "4.23.0"
 
-zinc_version = "1.10.4"
+zinc_version = "1.11.0"
 
 play_routes_compiler_cli_2_13 = use_extension("@rules_jvm_external//:extensions.bzl", "maven")
 play_routes_compiler_cli_2_13.install(
