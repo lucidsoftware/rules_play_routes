@@ -5,41 +5,33 @@ def generate_play_routes_test_targets(scala_version):
     # For example 2.13 -> 2-13 or 2_13
     scala_version_dash = scala_version.replace(".", "-")
     scala_version_underscore = scala_version.replace(".", "_")
-    scala = "zinc_{}".format(scala_version_underscore)
-
-    if scala_version == "3":
-        play_routes_toolchain_name = "play-routes-3"
-    elif scala_version == "2.13":
-        play_routes_toolchain_name = "play-routes-2-13"
-    else:
-        fail("Unsupported Scala version when generating test targets")
 
     play_routes(
         name = "play-routes-{}".format(scala_version_dash),
         srcs = ["conf/routes"],
         include_play_imports = True,
-        play_routes_toolchain_name = play_routes_toolchain_name,
+        scala_version = scala_version,
     )
 
     play_routes(
         name = "play-routes-basic1-{}".format(scala_version_dash),
         srcs = ["conf/basic1.routes"],
         include_play_imports = True,
-        play_routes_toolchain_name = play_routes_toolchain_name,
+        scala_version = scala_version,
     )
 
     play_routes(
         name = "play-routes-basic2-{}".format(scala_version_dash),
         srcs = ["conf/basic2.routes"],
         include_play_imports = True,
-        play_routes_toolchain_name = play_routes_toolchain_name,
+        scala_version = scala_version,
     )
 
     play_routes(
         name = "play-routes-large-{}".format(scala_version_dash),
         srcs = ["conf/large.routes"],
         include_play_imports = True,
-        play_routes_toolchain_name = play_routes_toolchain_name,
+        scala_version = scala_version,
     )
 
     play_routes(
@@ -50,7 +42,7 @@ def generate_play_routes_test_targets(scala_version):
             "rulesplayroutes.test.User",
             "rulesplayroutes.test.binders._",
         ],
-        play_routes_toolchain_name = play_routes_toolchain_name,
+        scala_version = scala_version,
     )
 
     play_routes(
@@ -58,7 +50,7 @@ def generate_play_routes_test_targets(scala_version):
         srcs = ["conf/generator.routes"],
         include_play_imports = True,
         routes_generator = "play.routes.compiler.InjectedRoutesGenerator",
-        play_routes_toolchain_name = play_routes_toolchain_name,
+        scala_version = scala_version,
     )
 
     play_routes(
@@ -66,7 +58,7 @@ def generate_play_routes_test_targets(scala_version):
         srcs = ["conf/reverse_router.routes"],
         generate_reverse_router = True,
         include_play_imports = True,
-        play_routes_toolchain_name = play_routes_toolchain_name,
+        scala_version = scala_version,
     )
 
     # TOOD: Figure out what this does and add the test for it
@@ -76,7 +68,7 @@ def generate_play_routes_test_targets(scala_version):
     #   include_play_imports = True,
     #   generate_reverse_router = True,
     #   namespace_reverse_router = True,
-    #   play_routes_toolchain_name = play_routes_toolchain_name,
+    #   scala_version = scala_version,
     # )
 
     scala_test(
@@ -104,7 +96,7 @@ def generate_play_routes_test_targets(scala_version):
             "@play_routes_test_{}//:org_specs2_specs2_core_{}".format(scala_version_underscore, scala_version_underscore),
             "@play_routes_test_{}//:org_specs2_specs2_matcher_{}".format(scala_version_underscore, scala_version_underscore),
         ],
-        scala_toolchain_name = scala,
+        scala_version = scala_version,
     )
 
     play_routes(
@@ -112,7 +104,7 @@ def generate_play_routes_test_targets(scala_version):
         srcs = ["conf2/routes"],
         generate_forwards_router = False,
         generate_reverse_router = True,
-        play_routes_toolchain_name = play_routes_toolchain_name,
+        scala_version = scala_version,
     )
 
     play_routes(
@@ -120,7 +112,7 @@ def generate_play_routes_test_targets(scala_version):
         srcs = ["conf2/routes"],
         generate_forwards_router = True,
         generate_reverse_router = False,
-        play_routes_toolchain_name = play_routes_toolchain_name,
+        scala_version = scala_version,
     )
 
     scala_test(
@@ -143,7 +135,7 @@ def generate_play_routes_test_targets(scala_version):
             "@play_routes_test_{}//:org_specs2_specs2_core_{}".format(scala_version_underscore, scala_version_underscore),
             "@play_routes_test_{}//:org_specs2_specs2_matcher_{}".format(scala_version_underscore, scala_version_underscore),
         ],
-        scala_toolchain_name = scala,
+        scala_version = scala_version,
     )
 
     scala_library(
@@ -155,5 +147,5 @@ def generate_play_routes_test_targets(scala_version):
         deps = [
             "@play_routes_test_{}//:org_playframework_play_{}".format(scala_version_underscore, scala_version_underscore),
         ],
-        scala_toolchain_name = scala,
+        scala_version = scala_version,
     )

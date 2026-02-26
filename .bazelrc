@@ -1,7 +1,6 @@
 # Java options
 build --java_language_version="21"
 build --java_runtime_version="remotejdk_21"
-build --javacopt="-source 21 -target 21"
 build --tool_java_language_version="21"
 build --tool_java_runtime_version="remotejdk_21"
 
@@ -23,12 +22,16 @@ common --modify_execution_info=CppModuleMap=+supports-path-mapping
 common --announce_rc
 common --color=yes
 common --disk_cache=.bazel_cache
-common --@rules_scala_annex//rules/scala:scala-toolchain=zinc_3
+
+# Use the prebuilt protobuf toolchain.
+common --incompatible_enable_proto_toolchain_resolution
+common --@protobuf//bazel/flags:prefer_prebuilt_protoc
 
 # These are backwards incompatible options; we should check to see if their values have been flipped
 # when upgrading to new major Bazel version.
 common --incompatible_modify_execution_info_additive
-common --incompatible_auto_exec_groups
+# This is incompatible with the protobuf prebuilt toolchain. Turn it back on when that is fixed.
+#common --incompatible_auto_exec_groups
 common --incompatible_autoload_externally=sh_binary # sh_binary is used by rules_jvm_external
 common --incompatible_config_setting_private_default_visibility
 common --incompatible_disable_native_repo_rules

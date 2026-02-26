@@ -38,9 +38,11 @@ archive_override(
 )
 ```
 
-By default, the Scala 3 version of the Play routes compiler will be used. To change the default to
-Scala 2.13, add the `--@rules_play_routes//play-routes-toolchain=play-routes-2-13` flag to your
-`.bazelrc` file.
+The Play routes toolchain is selected automatically based on the `scala_version` attribute on
+`play_routes` targets (see [Selecting the Scala version](#selecting-the-scala-version) below).
+When `scala_version` is unset, the default Scala version for the project is used:
+`scala.defaults(scala_version = …)` from the `rules_scala_annex` module extension, which this repo
+sets to Scala 3.
 
 If you want to use a custom Play routes compiler, you can set up a custom toolchain like so:
 
@@ -51,22 +53,21 @@ load("@rules_play_routes//play-routes-toolchain:create-toolchain.bzl", "create_p
 
 create_play_routes_toolchain(
     name = "play-routes-custom",
+    scala_version = "3",
     play_routes_compiler = "<label of your custom Play routes compiler>",
 )
 ```
 
-Then, register your toolchain with Bazel and set it as the default in your `.bazelrc` file:
+If you register more than one custom toolchain for the same `scala_version`, set the `prefix`
+attribute to disambiguate them, e.g., `prefix = "custom"` on the Play routes toolchain and
+`scala_version = "custom_3"` on the `play_routes` target.
+
+Then, register your toolchain with Bazel:
 
 */MODULE.bazel*
 
 ```starlark
 register_toolchains("//:play-routes-custom")
-```
-
-*/.bazelrc*
-
-```
-common --@rules_play_routes//play-routes-toolchain=play-routes-custom
 ```
 
 You can find the available versions of the Twirl Compiler CLI on maven:
@@ -98,11 +99,8 @@ scala_binary(
 
 ### Overriding the default Play routes compiler
 
-To override the default Play routes compiler for a single target, you can change the
-`play_routes_toolchain_name` attribute on the `play_routes` target. That attribute can be set to
-the name of any `play_routes_toolchain` registered with `play_routes_register_toolchains` (and
-created using `create_play_routes_toolchain`). By default `play-routes-3` and `play-routes-2-13` are
-valid values.
+To select which Play routes compiler to use, set the `scala_version` attribute on the `play_routes`
+target. By default, `"3"` and `"2.13"` are valid values.
 
 For example:
 ```starlark
@@ -112,7 +110,7 @@ play_routes(
     include_play_imports = True,
     generate_reverse_router = True,
     routes_imports = [...],
-    play_routes_toolchain_name = "play-routes-2-13",
+    scala_version = "2.13",
 )
 ```
 

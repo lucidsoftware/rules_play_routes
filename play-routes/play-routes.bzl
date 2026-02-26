@@ -1,11 +1,16 @@
-load("//play-routes-toolchain:transitions.bzl", "play_routes_toolchain_transition", "reset_play_routes_toolchain_transition")
-
 """Play Routes rules
 
 Bazel rules for running the
 [Play routes file compiler](https://github.com/playframework/playframework/tree/master/framework/src/routes-compiler/src/main/scala/play/routes/compiler)
 on Play routes files
 """
+
+load(
+    "@rules_scala_annex//rules:register_toolchain.bzl",
+    _scala_incoming_transition = "scala_incoming_transition",
+    _scala_outgoing_transition = "scala_outgoing_transition",
+)
+
 play_imports = [
     "controllers.Assets.Asset",
 ]
@@ -26,6 +31,7 @@ def _format_import_arg(import_arg):
     return "--routesImport={}".format(import_arg)
 
 def _impl(ctx):
+    play_routes_toolchain = ctx.toolchains["//play-routes-toolchain:toolchain_type"]
     output_dir = ctx.actions.declare_directory("play_routes_{}".format(_sanitize_string_for_usage(ctx.attr.name)))
     args = ctx.actions.args()
     args.add_all([output_dir], expand_directories = False)
@@ -52,9 +58,17 @@ def _impl(ctx):
     args.set_param_file_format("multiline")
     args.use_param_file("@%s", use_always = True)
 
+    # These args are read by the worker launcher script rather than the param file, which is why
+    # they're kept in a separate args object from the param-file args.
+    jvm_flag_args = ctx.actions.args()
+    jvm_flag_args.add_all(
+        play_routes_toolchain.jvm_flags,
+        format_each = "--jvm_flag=%s",
+    )
+
     ctx.actions.run(
-        arguments = [args],
-        executable = ctx.toolchains["//play-routes-toolchain:toolchain_type"].play_routes_compiler.files_to_run,
+        arguments = [jvm_flag_args, args],
+        executable = play_routes_toolchain.play_routes_compiler.files_to_run,
         execution_requirements = {
             "supports-workers": "1",
             "supports-multiplex-workers": "1",
@@ -76,20 +90,19 @@ def _impl(ctx):
         ),
     ]
 
-# If you add any labels or label_lists, you will need to add the
-# reset_play_routes_toolchain_transition outgoing transition to it. Otherwise
-# you'll end up needlessly changing build config and causing an explosion in
-# size for the build graph.
+# If you add any labels or label_lists, you will need to add the Scala outgoing transition to it.
+# Otherwise you'll end up needlessly changing build config and causing an explosion in size for the
+# build graph.
 play_routes = rule(
     implementation = _impl,
     doc = "Compiles Play routes files templates to Scala sources files.",
-    cfg = play_routes_toolchain_transition,
+    cfg = _scala_incoming_transition,
     attrs = {
         "srcs": attr.label_list(
             doc = "Play routes files",
             allow_files = True,
             mandatory = True,
-            cfg = reset_play_routes_toolchain_transition,
+            cfg = _scala_outgoing_transition,
         ),
         "routes_imports": attr.string_list(
             doc = "Additional imports to import to the Play routes",
@@ -114,8 +127,8 @@ play_routes = rule(
             doc = "If true, include the imports the Play project includes by default.",
             default = False,
         ),
-        "play_routes_toolchain_name": attr.string(
-            doc = "The name of the Play Routes toolchain to use for this target",
+        "scala_version": attr.string(
+            doc = "The Scala version to use for this target, e.g., '3', '2.13'.",
         ),
     },
     outputs = {
