@@ -4,7 +4,7 @@ import com.google.devtools.build.buildjar.jarhelper.JarCreator
 import higherkindness.rules_scala.common.error.AnnexWorkerError
 import higherkindness.rules_scala.common.interrupt.InterruptUtil
 import higherkindness.rules_scala.common.worker.{WorkerMain, WorkTask}
-import higherkindness.rules_scala.common.sandbox.SandboxUtil
+import higherkindness.rules_scala.common.sandbox.PathResolver
 import java.io.{File, PrintStream}
 import java.lang.Class
 import java.nio.file.{Files, Path, Paths}
@@ -34,7 +34,7 @@ object CommandLinePlayRoutesCompiler extends WorkerMain[Unit] {
     var generateForwardsRouter: Boolean = true
   )
 
-  def parser(workDir: Path, out: PrintStream) = new OptionParser[Config]("play-routes-compiler") {
+  def parser(pathResolver: PathResolver, out: PrintStream) = new OptionParser[Config]("play-routes-compiler") {
     head("Command Line Play Routes Compiler", "0.1")
 
     override def displayToOut(msg: String): Unit = out.println(msg)
@@ -46,17 +46,17 @@ object CommandLinePlayRoutesCompiler extends WorkerMain[Unit] {
     override def terminate(exitState: Either[String, Unit]): Unit = ()
 
     arg[Path]("<outputDirectory>").required().action { (outputDirectory, config) =>
-      config.outputDirectory = SandboxUtil.getSandboxPath(workDir, outputDirectory)
+      config.outputDirectory = pathResolver.resolve(outputDirectory)
       config
     }.text("directory to output compiled routes to before packaging them in a JAR")
 
     arg[Path]("<outputSrcJar>").required().action { (outputSrcJar, config) =>
-      config.outputSrcJar = SandboxUtil.getSandboxPath(workDir, outputSrcJar)
+      config.outputSrcJar = pathResolver.resolve(outputSrcJar)
       config
     }.text("file to output srcjar containing compiled routes to")
 
     arg[List[Path]]("<source1>,<source2>...").unbounded().required().action { (sources, config) =>
-      config.sources = sources.map(SandboxUtil.getSandboxPath(workDir, _))
+      config.sources = sources.map(pathResolver.resolve)
       config
     }.text("routes to compile")
 
@@ -170,7 +170,7 @@ object CommandLinePlayRoutesCompiler extends WorkerMain[Unit] {
   override def init(args: Option[Array[String]]): Unit = ()
 
   protected def work(task: WorkTask[Unit]): Unit = {
-    val config = parser(task.workDir, task.output).parse(
+    val config = parser(PathResolver.forPersistentWorker(task.workDir), task.output).parse(
       readArgsFromArgFiles(task.args), Config()
     ).getOrElse(throw new AnnexWorkerError(1))
     InterruptUtil.throwIfInterrupted(task.isCancelled)
