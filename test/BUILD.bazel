@@ -1,6 +1,19 @@
+load("//play-routes-toolchain:create-toolchain.bzl", "create_play_routes_toolchain")
 load(":play-routes-compiler-test.bzl", "generate_play_routes_test_targets")
+load(":play-routes-jvm-flags-test.bzl", "play_routes_jvm_flags_test_suite")
 
 # Check play-routes-compiler-test.bzl for the actual test definitions
 generate_play_routes_test_targets(scala_version = "3")
 
 generate_play_routes_test_targets(scala_version = "2.13")
+
+# Test-only toolchain for testing jvm_flags propagation.
+create_play_routes_toolchain(
+    name = "play-routes-jvm-flags",
+    jvm_flags = ["-Drules_play_routes.test=1"],
+    play_routes_compiler = "//play-routes-compiler-cli:play-routes-compiler-cli-3",
+    prefix = "jvmflagtest",
+    scala_version = "3",
+)
+
+play_routes_jvm_flags_test_suite(name = "play-routes-jvm-flags-test")

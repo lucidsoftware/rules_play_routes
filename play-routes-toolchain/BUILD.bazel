@@ -1,33 +1,27 @@
 load("@bazel_skylib//:bzl_library.bzl", "bzl_library")
-load("@bazel_skylib//rules:common_settings.bzl", "string_flag", "string_setting")
+load("//scala:version.bzl", "scala_2_13_version", "scala_3_version")
 load(":create-toolchain.bzl", "create_play_routes_toolchain")
 
-toolchain_type(name = "toolchain_type")
-
-string_setting(
-    name = "original-play-routes-toolchain",
-    build_setting_default = "",
-    visibility = ["//visibility:public"],
-)
-
-string_flag(
-    name = "play-routes-toolchain",
-    build_setting_default = "play-routes-3",
+toolchain_type(
+    name = "toolchain_type",
     visibility = ["//visibility:public"],
 )
 
 create_play_routes_toolchain(
     name = "play-routes-3",
     play_routes_compiler = "//play-routes-compiler-cli:play-routes-compiler-cli-3",
+    scala_version = scala_3_version,
 )
 
 create_play_routes_toolchain(
     name = "play-routes-2-13",
     play_routes_compiler = "//play-routes-compiler-cli:play-routes-compiler-cli-2-13",
+    scala_version = scala_2_13_version,
 )
 
 bzl_library(
     name = "bzl",
     srcs = glob(["*.bzl"]),
     visibility = ["//visibility:public"],
+    deps = ["@rules_scala_annex//rules:scala-rules"],
 )
