@@ -1,8 +1,8 @@
 module(name = "rules_play_routes")
 
-bazel_dep(name = "bazel_skylib", version = "1.9.0")
-bazel_dep(name = "rules_java", version = "9.6.1")
-bazel_dep(name = "rules_jvm_external", version = "6.9")
+bazel_dep(name = "bazel_skylib", version = "1.9.2")
+bazel_dep(name = "rules_java", version = "9.8.0")
+bazel_dep(name = "rules_jvm_external", version = "7.1")
 bazel_dep(name = "protobuf", version = "35.0")
 bazel_dep(name = "rules_scala_annex")
 
@@ -19,9 +19,9 @@ scala = use_extension("@rules_scala_annex//:extensions.bzl", "scala")
 scala.defaults(scala_version = "3")
 use_repo(scala, "rules_scala_annex_config")
 
-bazel_dep(name = "buildifier_prebuilt", version = "8.2.1.1", dev_dependency = True)
-bazel_dep(name = "rules_pkg", version = "1.1.0", dev_dependency = True)
-bazel_dep(name = "stardoc", version = "0.8.0", dev_dependency = True)
+bazel_dep(name = "buildifier_prebuilt", version = "8.5.1.3", dev_dependency = True)
+bazel_dep(name = "rules_pkg", version = "1.3.0", dev_dependency = True)
+bazel_dep(name = "stardoc", version = "0.8.1", dev_dependency = True)
 
 register_toolchains(
     "//:repository_default_toolchain_21_definition",
@@ -33,13 +33,13 @@ register_toolchains(
 
 # Please ensure these stay up-to-date with the versions in `versions.bzl`. Unfortunately,
 # `MODULE.bazel` files can't call `load`, so we have to copy them here.
-play_version = "3.0.10"
+play_version = "3.0.11"
 
 # Please ensure these stay up-to-date with the versions in `scala/version.bzl`. Unfortunately,
 # `MODULE.bazel` files can't call `load`, so we have to copy them here.
 scala_2_13_version = "2.13.18"
 
-scala_3_version = "3.3.7"
+scala_3_version = "3.3.8"
 
 protobuf_version = "4.35.0"
 
@@ -47,7 +47,7 @@ scopt_version = "4.1.0"
 
 specs2_version = "4.23.0"
 
-zinc_version = "1.11.0"
+zinc_version = "1.12.1"
 
 play_routes_compiler_cli_2_13 = use_extension("@rules_jvm_external//:extensions.bzl", "maven")
 play_routes_compiler_cli_2_13.install(
