@@ -64,7 +64,7 @@ build:ci --genrule_strategy=sandboxed
 # https://github.com/bazelbuild/bazel/issues/7116
 common:ci --logging=3
 
-test:ci --local_cpu_resources=HOST_CPUS*.5
-test:ci --local_ram_resources=2048
+test:ci --local_resources=cpu=HOST_CPUS*.5
+test:ci --local_resources=memory=2048
 test:ci --test_output=errors
 test:ci --test_strategy=standalone
