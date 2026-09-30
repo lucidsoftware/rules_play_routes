@@ -33,7 +33,7 @@ register_toolchains(
 
 # Please ensure these stay up-to-date with the versions in `versions.bzl`. Unfortunately,
 # `MODULE.bazel` files can't call `load`, so we have to copy them here.
-play_version = "3.0.11"
+play_version = "3.0.12"
 
 # Please ensure these stay up-to-date with the versions in `scala/version.bzl`. Unfortunately,
 # `MODULE.bazel` files can't call `load`, so we have to copy them here.
