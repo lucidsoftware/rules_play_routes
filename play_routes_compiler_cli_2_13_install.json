@@ -3,7 +3,7 @@
   "__INPUT_ARTIFACTS_HASH": {
     "com.github.scopt:scopt_2.13": -1045082748,
     "com.google.protobuf:protobuf-java": 1247529435,
-    "org.playframework:play-routes-compiler_2.13": -1369196103,
+    "org.playframework:play-routes-compiler_2.13": 1118316730,
     "org.scala-lang:scala-compiler": -1090598736,
     "org.scala-lang:scala-library": -326864392,
     "org.scala-lang:scala-reflect": 545594166,
@@ -50,8 +50,8 @@
     "org.jline:jline:jar:sources": -118525341,
     "org.playframework.twirl:twirl-api_2.13": 724810244,
     "org.playframework.twirl:twirl-api_2.13:jar:sources": 1273147245,
-    "org.playframework:play-routes-compiler_2.13": -1338077919,
-    "org.playframework:play-routes-compiler_2.13:jar:sources": 1460627871,
+    "org.playframework:play-routes-compiler_2.13": 960977037,
+    "org.playframework:play-routes-compiler_2.13:jar:sources": -1599332111,
     "org.scala-lang.modules:scala-parallel-collections_2.13": -149723394,
     "org.scala-lang.modules:scala-parallel-collections_2.13:jar:sources": 1580905768,
     "org.scala-lang.modules:scala-parser-combinators_2.13": 1900424306,
@@ -239,10 +239,10 @@
     },
     "org.playframework:play-routes-compiler_2.13": {
       "shasums": {
-        "jar": "be5a40321eb4dc7bfb814b8b1bf47347ab1ef357c1dc84007c5e663b4f28adea",
-        "sources": "8594d9c784d8b284ce801f18fce9f0890467c4011351b93b7b6bffdb5c94f550"
+        "jar": "919b88cca89e4f2eeec969686b5d73e9e273162f73600e96764fd6e5e5ccd890",
+        "sources": "a1d9b67b8624d9211b70672fab10bd59da8454ee1741298acff42c1e66d380db"
       },
-      "version": "3.0.11"
+      "version": "3.0.12"
     },
     "org.scala-lang.modules:scala-parallel-collections_2.13": {
       "shasums": {
